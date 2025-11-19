@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sean - Precision Analytics Portfolio</title>
+    <meta name="description" content="Purdue University Student, BS in Business Analytics & Information Management. Bridging strategy and code.">
+
+    <!-- Preconnect to improve performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>">
+</head>
+<body>
+    <!-- System Status Console (Fixed UI) -->
+    <div id="system-status-console" class="system-console">
+        <div class="console-header">SYSTEM STATUS</div>
+        <div class="console-content">
+            <div class="status-item">
+                <span class="status-label">Compute Load:</span>
+                <span class="status-value" id="compute-load">Low</span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">Latency:</span>
+                <span class="status-value" id="latency">22ms</span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">AI Training:</span>
+                <span class="status-value" id="ai-training">85%</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hidden Terminal Easter Egg -->
+    <div id="terminal-overlay" class="terminal-overlay hidden">
+        <div class="terminal-window">
+            <div class="terminal-header">
+                <span>TERMINAL v1.0</span>
+                <button class="terminal-close" onclick="closeTerminal()">×</button>
+            </div>
+            <div class="terminal-output" id="terminal-output">
+                <div class="terminal-line">Type 'help' for available commands.</div>
+            </div>
+            <div class="terminal-input-line">
+                <span class="terminal-prompt">></span>
+                <input type="text" class="terminal-input" id="terminal-input" autofocus>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="main-nav">
+        <div class="nav-container">
+            <a href="#hero" class="nav-logo">SEAN.EXEC</a>
+            <ul class="nav-links">
+                <li><a href="#about">About</a></li>
+                <li><a href="#experience">Experience</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#awards">Awards</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero-section">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    BRIDGING STRATEGY. EXECUTING CODE.<br>
+                    <span class="hero-subtitle-tech">(A.I. → G.T.M.)</span>
+                </h1>
+                <p class="hero-subtitle">
+                    Purdue University Student, B.S. in Business Analytics & Information Management.
+                </p>
+                <div class="hero-location">
+                    <span class="location-dot"></span>
+                    Indianapolis, IN
+                </div>
+                <a href="#projects" class="cta-button">View Production Models</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about-section">
+        <div class="container">
+            <h2 class="section-title">THE LEARNING ALGORITHM.</h2>
+            <div class="about-content">
+                <div class="about-narrative" id="about-narrative-en">
+                    <p>During college, I struggled to find classes or clubs that truly engaged me—so I decided to build my own path. I started launching personal projects, like ApeX, because I believe the best way to learn is by doing. Even when I didn't know how to do something, I trusted that I could figure it out. That mindset led to plenty of failed attempts, but each one taught me something new and pushed me toward more ambitious, impactful work.</p>
+
+                    <p>My drive is simple: I am constantly iterating on new startup ideas and side projects, and always seeking new challenges. Skilled in SQL, Python, data visualization, and AI tooling, I believe "failure" is just a stepping stone to refinement. I am ready to connect ambitious students, university partners, and industry recruiters through the power of real, self-driven work.</p>
+                </div>
+
+                <div class="about-narrative hidden" id="about-narrative-es">
+                    <p>Durante la universidad, me costó encontrar clases o clubes que realmente me involucraran, así que decidí construir mi propio camino. Comencé a lanzar proyectos personales, como ApeX, porque creo que la mejor manera de aprender es haciendo. Incluso cuando no sabía cómo hacer algo, confié en que podría resolverlo. Esa mentalidad llevó a muchos intentos fallidos, pero cada uno me enseñó algo nuevo y me empujó hacia un trabajo más ambicioso e impactante.</p>
+
+                    <p>Mi motivación es simple: estoy constantemente iterando en nuevas ideas de startups y proyectos paralelos, y siempre busco nuevos desafíos. Experto en SQL, Python, visualización de datos y herramientas de IA, creo que el "fracaso" es solo un trampolín hacia el refinamiento. Estoy listo para conectar estudiantes ambiciosos, socios universitarios y reclutadores de la industria a través del poder del trabajo real y autodirigido.</p>
+                </div>
+
+                <div class="kpi-grid">
+                    <div class="kpi-item" data-tooltip="Professional connections on LinkedIn">
+                        <div class="kpi-value">84+</div>
+                        <div class="kpi-label">LinkedIn Connections</div>
+                    </div>
+                    <div class="kpi-item" data-tooltip="Completed projects accessible via ApeX and personal portfolio">
+                        <div class="kpi-value">15+</div>
+                        <div class="kpi-label">Projects Completed</div>
+                    </div>
+                    <div class="kpi-item" data-tooltip="Seriously though, every day" id="lebron-counter">
+                        <div class="kpi-value">∞</div>
+                        <div class="kpi-label">Times I've thought about LeBron</div>
+                    </div>
+                </div>
+
+                <div class="interests-section">
+                    <h3 class="interests-title">Personal Interests</h3>
+                    <p>Leveraging AI to accelerate learning (languages, business strategy), optimizing fitness (weightlifting), and understanding business mechanics.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="experience-section">
+        <div class="container">
+            <h2 class="section-title">PROCESS LOG: CAREER EVOLUTION.</h2>
+            <div class="experience-timeline">
+                <!-- Experience Item 1 -->
+                <div class="experience-item" data-grid-highlight>
+                    <div class="experience-date">Jun 2025 – Aug 2025</div>
+                    <div class="experience-details">
+                        <h3 class="experience-role">RCFC Consulting/Technology Intern</h3>
+                        <div class="experience-company">
+                            <a href="https://www.crowe.com/" target="_blank" rel="noopener noreferrer">Crowe LLP</a>
+                        </div>
+                        <ul class="experience-achievements">
+                            <li>Developed a ChatGPT-powered HTML/JS tool to standardize 750+ risk statements, cutting manual editing time by <span class="metric" data-tooltip="Saved 100+ hours of manual work">~80%</span> (100+ hours).</li>
+                            <li>Led an AI research initiative, conducting <span class="metric" data-tooltip="12 comprehensive interviews with product stakeholders">12+</span> product owner interviews to uncover <span class="metric" data-tooltip="5 high-impact AI use cases identified">5+</span> high-impact use cases and presented a strategic roadmap to partners.</li>
+                            <li>Co-created an AI-powered ERP screen-capture assistant concept in an internal case competition, placing <span class="metric" data-tooltip="4th place out of 29 competing teams">4th/29</span>.</li>
+                            <li>Initiated a prototype RAG compliance agent for natural-language regulatory queries.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Experience Item 2 -->
+                <div class="experience-item" data-grid-highlight>
+                    <div class="experience-date">May 2024 – Aug 2024</div>
+                    <div class="experience-details">
+                        <h3 class="experience-role">Property Tax Compliance Intern</h3>
+                        <div class="experience-company">
+                            <a href="https://www.dumcinc.com/" target="_blank" rel="noopener noreferrer">DuCharme, McMillen & Associates, Inc.</a>
+                        </div>
+                        <ul class="experience-achievements">
+                            <li>Leveraged data analysis and ChatGPT API to uncover trends from <span class="metric" data-tooltip="200+ employee feedback responses analyzed">200+</span> employee feedback responses, enhancing strategic decision-making.</li>
+                            <li>Prepared and filed BPP tax returns and processed bills on <span class="metric" data-tooltip="$100M+ in assets managed">$100M+</span> in assets, ensuring compliance.</li>
+                            <li>Supported an SOC audit, participating in internal control processes.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Experience Item 3 -->
+                <div class="experience-item" data-grid-highlight>
+                    <div class="experience-date">Jan 2024 – May 2025</div>
+                    <div class="experience-details">
+                        <h3 class="experience-role">Intern</h3>
+                        <div class="experience-company">
+                            <a href="https://griswoldconsulting.com/" target="_blank" rel="noopener noreferrer">Griswold Consulting</a>
+                        </div>
+                        <ul class="experience-achievements">
+                            <li>Collaborated with Indianapolis Chamber of Commerce for actionable business insights via data analysis.</li>
+                            <li>Used Tableau to analyze <span class="metric" data-tooltip="82,000+ data points processed">82,000+</span> data lines, creating interactive visualization for <span class="metric" data-tooltip="100+ manufacturers in the dataset">100+</span> EV/battery manufacturers.</li>
+                            <li>Partnered with Madison County Economic Development for 5-year economic impact projections.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Experience Item 4 -->
+                <div class="experience-item" data-grid-highlight>
+                    <div class="experience-date">Aug 2022 – Dec 2024</div>
+                    <div class="experience-details">
+                        <h3 class="experience-role">Vice President of External Events</h3>
+                        <div class="experience-company">
+                            Larsen Leadership Academy
+                        </div>
+                        <ul class="experience-achievements">
+                            <li>Organized a PowerBI workshop for Larsen members.</li>
+                            <li>Helped guide <span class="metric" data-tooltip="600+ students in Purdue's largest learning community">600+</span> students in leadership/professional development on Purdue's largest learning community executive board.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Experience Item 5 -->
+                <div class="experience-item" data-grid-highlight>
+                    <div class="experience-date">Sep 2024 – Dec 2024</div>
+                    <div class="experience-details">
+                        <h3 class="experience-role">Study Abroad Program</h3>
+                        <div class="experience-company">
+                            UC3M (Madrid, Spain)
+                        </div>
+                        <ul class="experience-achievements">
+                            <li>Completed <span id="spanish-trigger" class="metric spanish-trigger" data-tooltip="Hold for 3 seconds to translate the About section to Spanish">A2-level Spanish</span> coursework while living with a host family.</li>
+                            <li>Visited nine European countries, navigating diverse customs and deepening adaptability.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="projects-section">
+        <div class="container">
+            <h2 class="section-title">PROJECTS: CODE & COMMERCIALIZATION.</h2>
+            <div class="projects-grid" id="projects-grid">
+                <!-- Projects will be dynamically loaded from config.js -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="skills-section">
+        <div class="container">
+            <h2 class="section-title">TOOLKIT & COMMAND SET.</h2>
+            <div class="skills-grid">
+                <div class="skill-category">
+                    <h3 class="skill-category-title">Technical & Programming</h3>
+                    <ul class="skill-list">
+                        <li>Python</li>
+                        <li id="vibe-coding">
+                            <span>Vibe-coding</span>
+                            <label class="font-toggle">
+                                <input type="checkbox" id="font-toggle-switch">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </li>
+                        <li>HTML</li>
+                        <li>SQL</li>
+                        <li>Supabase</li>
+                    </ul>
+                </div>
+
+                <div class="skill-category">
+                    <h3 class="skill-category-title">APIs & AI Tools</h3>
+                    <ul class="skill-list">
+                        <li>Gemini API</li>
+                        <li>ChatGPT API</li>
+                        <li>Google Maps API</li>
+                        <li>AI Tooling</li>
+                    </ul>
+                </div>
+
+                <div class="skill-category">
+                    <h3 class="skill-category-title">Data & Analytics</h3>
+                    <ul class="skill-list">
+                        <li>Tableau</li>
+                        <li>Microsoft Excel</li>
+                        <li>Data Visualization</li>
+                        <li>Data Analysis</li>
+                    </ul>
+                </div>
+
+                <div class="skill-category">
+                    <h3 class="skill-category-title">Business & Strategy</h3>
+                    <ul class="skill-list">
+                        <li>Agile Project Management</li>
+                        <li>Market Research</li>
+                        <li>Economic Impact Analysis</li>
+                        <li>Commercialization Strategy</li>
+                        <li>Digital Marketing</li>
+                    </ul>
+                </div>
+
+                <div class="skill-category">
+                    <h3 class="skill-category-title">Creative & Languages</h3>
+                    <ul class="skill-list">
+                        <li>Final Cut Pro</li>
+                        <li>UI/UX Design (Conceptual)</li>
+                        <li class="spanish-trigger">Spanish (A2 Level - learning!)</li>
+                    </ul>
+                </div>
+
+                <div class="skill-category">
+                    <h3 class="skill-category-title">Certifications</h3>
+                    <ul class="skill-list certification-list">
+                        <li>Atlassian Agile Project Management Professional Certificate</li>
+                        <li>Google Fundamentals of Digital Marketing Certificate</li>
+                        <li>EBEC Python Certificate</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Awards Section -->
+    <section id="awards" class="awards-section">
+        <div class="container">
+            <h2 class="section-title">VALIDATED ACHIEVEMENTS.</h2>
+            <div class="awards-list">
+                <div class="award-item">
+                    <div class="award-rank">1st Place</div>
+                    <div class="award-details">
+                        <div class="award-name">Ascend Case Competition</div>
+                        <div class="award-description">Coffee shop business plan, analyzed 100+ survey responses.</div>
+                    </div>
+                </div>
+
+                <div class="award-item">
+                    <div class="award-rank">2nd Place</div>
+                    <div class="award-details">
+                        <div class="award-name">NSSE Endress Hauser Case Competition</div>
+                        <div class="award-description">Training plan for new flow control devices.</div>
+                    </div>
+                </div>
+
+                <div class="award-item">
+                    <div class="award-rank">2nd Place</div>
+                    <div class="award-details">
+                        <div class="award-name">Wabash Larsen Case Competition</div>
+                        <div class="award-description">Shipping container strategy for 5-year revenue doubling.</div>
+                    </div>
+                </div>
+
+                <div class="award-item">
+                    <div class="award-rank">Participant</div>
+                    <div class="award-details">
+                        <div class="award-name">Wisconsin Invitational Consulting Case Competition</div>
+                        <div class="award-description">Designed EV Class 8 integration plan.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <h2 class="section-title">INITIATE CONNECTION.</h2>
+            <div class="contact-content">
+                <div class="contact-links">
+                    <a href="mailto:your.email@example.com" class="contact-link" id="email-link">
+                        <span class="contact-label">Email:</span>
+                        <span class="contact-value">your.email@example.com</span>
+                    </a>
+                    <a href="https://linkedin.com/in/elijb" target="_blank" rel="noopener noreferrer" class="contact-link">
+                        <span class="contact-label">LinkedIn:</span>
+                        <span class="contact-value">linkedin.com/in/elijb</span>
+                    </a>
+                    <a href="https://yourwebsite.com" target="_blank" rel="noopener noreferrer" class="contact-link" id="apex-link">
+                        <span class="contact-label">Projects Hub:</span>
+                        <span class="contact-value">ApeX Platform</span>
+                    </a>
+                </div>
+
+                <div class="contact-form-container">
+                    <h3>Send a Message</h3>
+                    <form id="contact-form" class="contact-form">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="submit-button">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="container">
+            <p>&copy; 2025 Sean. All rights reserved. <a href="#" id="training-log-link" class="hidden-link">Training Log</a></p>
+        </div>
+    </footer>
+
+    <!-- Fitness Log Modal -->
+    <div id="fitness-modal" class="modal hidden">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeFitnessModal()">×</button>
+            <h3 class="modal-title">TRAINING LOG</h3>
+            <div class="modal-body">
+                <div class="metric-item">
+                    <span class="metric-label">Max Deadlift:</span>
+                    <span class="metric-value">Undisclosed</span>
+                </div>
+                <div class="metric-item">
+                    <span class="metric-label">Weekly AI Learning Hours:</span>
+                    <span class="metric-value">30+</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- LeBron Counter Modal -->
+    <div id="lebron-modal" class="modal hidden">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeLebronModal()">×</button>
+            <h3 class="modal-title">LEBRON THOUGHT LOG</h3>
+            <div class="modal-body">
+                <p>Count logged: <span id="lebron-count">1</span></p>
+                <p>Timestamp: <span id="lebron-timestamp"></span></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Project Modal -->
+    <div id="project-modal" class="modal hidden">
+        <div class="modal-content project-modal-content">
+            <button class="modal-close" onclick="closeProjectModal()">×</button>
+            <div id="project-modal-body"></div>
+        </div>
+    </div>
+
+    <!-- Configuration & Scripts -->
+    <script src="config.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

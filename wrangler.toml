@@ -1,0 +1,65 @@
+# Cloudflare Pages / Workers configuration
+# This file is optional but helps with advanced configurations
+
+name = "personal-website"
+compatibility_date = "2025-01-15"
+
+# For static sites, this is usually all you need
+# Cloudflare Pages will auto-detect and deploy
+
+[build]
+command = ""
+cwd = ""
+watch_dirs = []
+
+# Production environment
+[env.production]
+# Add any environment-specific variables here
+
+# Headers for security and performance
+[[headers]]
+for = "/*"
+
+[headers.values]
+X-Frame-Options = "DENY"
+X-Content-Type-Options = "nosniff"
+X-XSS-Protection = "1; mode=block"
+Referrer-Policy = "strict-origin-when-cross-origin"
+Permissions-Policy = "geolocation=(), microphone=(), camera=()"
+
+# Cache static assets
+[[headers]]
+for = "*.css"
+
+[headers.values]
+Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+for = "*.js"
+
+[headers.values]
+Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+for = "*.jpg"
+
+[headers.values]
+Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+for = "*.png"
+
+[headers.values]
+Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+for = "*.webp"
+
+[headers.values]
+Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+for = "*.svg"
+
+[headers.values]
+Cache-Control = "public, max-age=31536000, immutable"

@@ -1,0 +1,26 @@
+# Images Directory
+
+Place your project images, profile pictures, and website videos here.
+
+## Required Images (from config.js):
+- apestackThumbnail.png
+- trucklogo.png
+- lidar.png
+- marketplace.png
+- fantasy.png
+- silicon.png
+
+## Recommended Sizes:
+- Project images: 600x400px (3:2 aspect ratio)
+- Profile pictures: 400x400px (square)
+- Video thumbnails: 1920x1080px (16:9 aspect ratio)
+
+## Supported Formats:
+- Images: .jpg, .jpeg, .png, .webp, .svg
+- Videos: .mp4, .webm
+
+## Tips:
+- Use WebP format for better compression and performance
+- Optimize images before uploading (use tools like TinyPNG, Squoosh)
+- Keep file sizes under 500KB for best performance
+- Use descriptive file names (e.g., "apex-project-screenshot.png")
