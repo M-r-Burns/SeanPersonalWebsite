@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Projects and Production Models - Global Learning Canvas">
+    <title>Projects | Global Learning Canvas</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Inter:wght@300;400;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Drawing Canvas -->
+    <canvas id="drawing-canvas"></canvas>
+
+    <!-- Navigation -->
+    <nav id="navbar" class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">GLOBAL LEARNING CANVAS</a>
+            <div class="nav-menu" id="nav-menu">
+                <a href="index.html#hero" class="nav-link">Profile</a>
+                <a href="index.html#experience" class="nav-link">Experience</a>
+                <a href="projects.html" class="nav-link active">Projects</a>
+                <a href="index.html#skills" class="nav-link">Skills</a>
+                <a href="index.html#contact" class="nav-link">Contact</a>
+            </div>
+            <div class="nav-hamburger" id="nav-hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Projects Header -->
+        <section class="projects-header section">
+            <div class="container">
+                <h1 class="page-title">PRODUCTION MODELS</h1>
+                <p class="page-subtitle">Turning ideas into reality through code, strategy, and execution.</p>
+
+                <!-- Filter Buttons -->
+                <div class="project-filters">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="software">Software</button>
+                    <button class="filter-btn" data-filter="strategy">Strategy</button>
+                    <button class="filter-btn" data-filter="design">Design</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Grid -->
+        <section class="projects-showcase section">
+            <div class="container">
+                <div class="projects-grid" id="projects-grid">
+                    <!-- Content loaded from content.js -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; <span id="current-year"></span> Global Learning Canvas</p>
+            <p><a href="index.html" class="footer-link">← Back to Home</a></p>
+        </div>
+    </footer>
+
+    <!-- Project Detail Modal -->
+    <div id="project-modal" class="modal">
+        <div class="modal-content large">
+            <span class="modal-close">&times;</span>
+            <div id="modal-body"></div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="content.js"></script>
+    <script>
+        // Set current year
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+
+        // Load projects
+        document.addEventListener('DOMContentLoaded', loadProjectsPage);
+
+        function loadProjectsPage() {
+            const projectsGrid = document.getElementById('projects-grid');
+            if (!projectsGrid || !window.SITE_CONFIG) return;
+
+            window.SITE_CONFIG.projects.forEach((project, index) => {
+                const projectCard = createProjectCard(project, index);
+                projectsGrid.appendChild(projectCard);
+            });
+
+            // Initialize filters
+            initializeFilters();
+            // Initialize modal
+            initializeProjectModal();
+        }
+
+        function createProjectCard(project, index) {
+            const card = document.createElement('div');
+            card.className = 'project-card';
+            card.dataset.projectIndex = index;
+            card.dataset.category = project.type.toLowerCase().split(/[\/\s-]/)[0];
+
+            const techTags = project.techStack.map(tech =>
+                `<span class="tech-tag">${tech}</span>`
+            ).join('');
+
+            card.innerHTML = `
+                <div class="project-image">
+                    <span class="project-icon">${project.imageIcon}</span>
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">${project.title}</h3>
+                    <div class="project-type">${project.type}</div>
+                    <p class="project-description">${project.description}</p>
+                    <div class="project-tech">
+                        <div class="tech-label">TECH STACK:</div>
+                        <div class="tech-stack">${techTags}</div>
+                    </div>
+                    <div class="project-links">
+                        ${project.demoUrl ? `<a href="${project.demoUrl}" target="_blank" class="project-link">Demo →</a>` : ''}
+                        ${project.blogUrl ? `<a href="${project.blogUrl.replace('.md', '.html')}" class="project-link">Read More →</a>` : ''}
+                    </div>
+                </div>
+            `;
+
+            card.addEventListener('click', function(e) {
+                if (e.target.tagName !== 'A') {
+                    showProjectModal(project, index);
+                }
+            });
+
+            return card;
+        }
+
+        function initializeFilters() {
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            const projectCards = document.querySelectorAll('.project-card');
+
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // Update active state
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+
+                    const filter = this.dataset.filter;
+
+                    // Filter projects
+                    projectCards.forEach(card => {
+                        if (filter === 'all' || card.dataset.category === filter) {
+                            card.style.display = 'block';
+                            setTimeout(() => card.style.opacity = '1', 10);
+                        } else {
+                            card.style.opacity = '0';
+                            setTimeout(() => card.style.display = 'none', 300);
+                        }
+                    });
+                });
+            });
+        }
+
+        function showProjectModal(project, index) {
+            const modal = document.getElementById('project-modal');
+            const modalBody = document.getElementById('modal-body');
+
+            const techTags = project.techStack.map(tech =>
+                `<span class="tech-tag">${tech}</span>`
+            ).join('');
+
+            modalBody.innerHTML = `
+                <h2 style="font-family: var(--font-heading); font-size: 2rem; margin-bottom: 1rem;">${project.title}</h2>
+                <div style="color: var(--color-accent); font-family: var(--font-mono); margin-bottom: 2rem;">${project.type}</div>
+                <div style="line-height: 1.8; white-space: pre-line; margin-bottom: 2rem;">${project.fullDescription || project.description}</div>
+                <div style="border-top: 1px solid var(--color-black); padding-top: 1rem; margin-top: 2rem;">
+                    <div style="font-family: var(--font-mono); font-size: 0.9rem; font-weight: 600; margin-bottom: 1rem;">TECH STACK:</div>
+                    <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2rem;">${techTags}</div>
+                </div>
+                ${project.demoUrl ? `<a href="${project.demoUrl}" target="_blank" class="cta-button">View Demo</a>` : ''}
+                ${project.blogUrl ? `<a href="${project.blogUrl.replace('.md', '.html')}" class="cta-button secondary" style="margin-left: 1rem;">Read Full Story</a>` : ''}
+            `;
+
+            modal.classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function initializeProjectModal() {
+            const modal = document.getElementById('project-modal');
+            const closeBtn = modal.querySelector('.modal-close');
+
+            closeBtn.addEventListener('click', () => {
+                modal.classList.remove('show');
+                document.body.style.overflow = 'auto';
+            });
+
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.classList.remove('show');
+                    document.body.style.overflow = 'auto';
+                }
+            });
+        }
+
+        // Mobile menu
+        const hamburger = document.getElementById('nav-hamburger');
+        const navMenu = document.getElementById('nav-menu');
+
+        if (hamburger) {
+            hamburger.addEventListener('click', () => {
+                navMenu.classList.toggle('active');
+            });
+        }
+    </script>
+</body>
+</html>
