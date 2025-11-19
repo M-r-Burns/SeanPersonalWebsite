@@ -1,0 +1,50 @@
+# Operating System Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# Editor Files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.settings/
+
+# Node modules (if you add any build tools)
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Environment variables (if you use them)
+.env
+.env.local
+.env.production
+
+# Build outputs (if you add any)
+dist/
+build/
+
+# Temporary files
+*.tmp
+*.temp
+*.log
+
+# Large media files (optional - remove if you want to track them)
+# *.mp4
+# *.mov
+# *.avi
+
+# Cache
+.cache/
+*.cache
+
+# Cloudflare local dev
+.wrangler/
+wrangler.toml.local

@@ -1,0 +1,38 @@
+# Cloudflare Pages Headers Configuration
+# This file sets HTTP headers for better performance and security
+
+/*
+  # Security Headers
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  X-XSS-Protection: 1; mode=block
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
+
+  # Cache Control
+  Cache-Control: public, max-age=3600, must-revalidate
+
+# Static Assets - Aggressive Caching
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# CSS and JS - Medium Caching
+/*.css
+  Cache-Control: public, max-age=86400, must-revalidate
+  Content-Type: text/css
+
+/*.js
+  Cache-Control: public, max-age=86400, must-revalidate
+  Content-Type: application/javascript
+
+# Images - Long Caching
+/assets/images/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Videos - Long Caching
+/assets/videos/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# HTML - No Caching (or short)
+/*.html
+  Cache-Control: public, max-age=0, must-revalidate
