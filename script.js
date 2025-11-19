@@ -655,3 +655,182 @@ if ('serviceWorker' in navigator && window.location.protocol === 'https:') {
         // navigator.serviceWorker.register('/sw.js');
     });
 }
+
+/* ============================================
+   MOBILE NAVIGATION TOGGLE
+   ============================================ */
+class MobileNav {
+    constructor() {
+        this.toggle = document.getElementById('nav-toggle');
+        this.navLinks = document.getElementById('nav-links');
+
+        if (this.toggle && this.navLinks) {
+            this.init();
+        }
+    }
+
+    init() {
+        this.toggle.addEventListener('click', () => this.toggleMenu());
+
+        // Close menu when clicking a link
+        const links = this.navLinks.querySelectorAll('.nav-link');
+        links.forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth <= 768) {
+                    this.closeMenu();
+                }
+            });
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!this.toggle.contains(e.target) && !this.navLinks.contains(e.target)) {
+                this.closeMenu();
+            }
+        });
+    }
+
+    toggleMenu() {
+        this.toggle.classList.toggle('active');
+        this.navLinks.classList.toggle('active');
+    }
+
+    closeMenu() {
+        this.toggle.classList.remove('active');
+        this.navLinks.classList.remove('active');
+    }
+}
+
+/* ============================================
+   EXPERIENCE EXPAND/COLLAPSE
+   ============================================ */
+class ExperienceAccordion {
+    constructor() {
+        this.items = document.querySelectorAll('.experience-item-compact');
+        this.init();
+    }
+
+    init() {
+        this.items.forEach(item => {
+            const expandBtn = item.querySelector('.expand-btn');
+            if (expandBtn) {
+                expandBtn.addEventListener('click', () => this.toggle(item));
+            }
+        });
+
+        // Auto-expand first item on desktop
+        if (window.innerWidth > 768 && this.items.length > 0) {
+            this.toggle(this.items[0]);
+        }
+    }
+
+    toggle(item) {
+        const isExpanded = item.classList.contains('expanded');
+
+        if (!isExpanded) {
+            item.classList.add('expanded');
+        } else {
+            item.classList.remove('expanded');
+        }
+    }
+}
+
+/* ============================================
+   PROJECT FILTERS (for projects page)
+   ============================================ */
+class ProjectFilter {
+    constructor() {
+        this.filterBtns = document.querySelectorAll('.filter-btn');
+        this.projectCards = document.querySelectorAll('.project-card[data-category]');
+
+        if (this.filterBtns.length > 0) {
+            this.init();
+        }
+    }
+
+    init() {
+        this.filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const filter = btn.getAttribute('data-filter');
+                this.filter(filter);
+
+                // Update active state
+                this.filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+            });
+        });
+    }
+
+    filter(category) {
+        this.projectCards.forEach(card => {
+            if (category === 'all') {
+                card.style.display = '';
+                card.classList.add('fade-in-section', 'visible');
+            } else {
+                if (card.getAttribute('data-category') === category) {
+                    card.style.display = '';
+                    card.classList.add('fade-in-section', 'visible');
+                } else {
+                    card.style.display = 'none';
+                }
+            }
+        });
+    }
+}
+
+/* ============================================
+   ENHANCED PARTICLE BACKGROUND
+   Make it globally accessible for easter eggs
+   ============================================ */
+let particleBackgroundInstance = null;
+
+// Override the original ParticleBackground initialization
+document.addEventListener('DOMContentLoaded', () => {
+    // Wait a bit for the original initialization
+    setTimeout(() => {
+        if (typeof ParticleBackground !== 'undefined' && !particleBackgroundInstance) {
+            particleBackgroundInstance = new ParticleBackground();
+            window.particleBackground = particleBackgroundInstance;
+        }
+    }, 100);
+
+    // Initialize new features
+    new MobileNav();
+    new ExperienceAccordion();
+    new ProjectFilter();
+});
+
+/* ============================================
+   PROJECT PREVIEW CARD CLICKS
+   ============================================ */
+document.addEventListener('DOMContentLoaded', () => {
+    const previewCards = document.querySelectorAll('.project-preview-card');
+    previewCards.forEach(card => {
+        card.addEventListener('click', () => {
+            window.location.href = 'projects.html';
+        });
+
+        // Make it clear they're clickable
+        card.style.cursor = 'pointer';
+    });
+});
+
+/* ============================================
+   SMOOTH SCROLL OFFSET FOR FIXED NAV
+   ============================================ */
+document.addEventListener('DOMContentLoaded', () => {
+    // Update smooth scroll to account for mobile nav height
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                const offsetTop = target.offsetTop - 80; // Nav height
+                window.scrollTo({
+                    top: offsetTop,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+});

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <title>Elijah Burns - Business Analytics & Technical Solutions</title>
     <meta name="description" content="Purdue student bridging business needs and technical solutions through AI, data analytics, and strategic thinking.">
 
@@ -16,12 +16,24 @@
     <!-- Styles -->
     <link rel="stylesheet" href="styles.css">
 
-    <!-- Favicon (placeholder - add your own) -->
+    <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
 </head>
 <body>
     <!-- Background particle animation canvas -->
     <canvas id="particle-canvas"></canvas>
+
+    <!-- Click Ripple Effect Container -->
+    <div id="ripple-container"></div>
+
+    <!-- Achievement Toast -->
+    <div id="achievement-toast" class="achievement-toast hidden">
+        <div class="achievement-icon">🏆</div>
+        <div class="achievement-content">
+            <div class="achievement-title">Achievement Unlocked!</div>
+            <div class="achievement-description"></div>
+        </div>
+    </div>
 
     <!-- System Status Corner -->
     <div id="system-status" class="system-status">
@@ -46,6 +58,10 @@
                 <span class="status-label">Network Latency:</span>
                 <span class="status-value" id="latency">42ms</span>
             </div>
+            <div class="status-row">
+                <span class="status-label">Achievements:</span>
+                <span class="status-value" id="achievement-count">0/10</span>
+            </div>
             <div class="status-help">Press Ctrl+Shift+T for terminal</div>
         </div>
     </div>
@@ -65,11 +81,6 @@
         <div class="flow-node" data-section="experience">
             <div class="node-dot"></div>
             <div class="node-label">Experience</div>
-        </div>
-        <div class="flow-line"></div>
-        <div class="flow-node" data-section="projects">
-            <div class="node-dot"></div>
-            <div class="node-label">Projects</div>
         </div>
         <div class="flow-line"></div>
         <div class="flow-node" data-section="skills">
@@ -107,10 +118,15 @@
     <nav class="nav">
         <div class="nav-content">
             <div class="nav-logo">EB</div>
-            <div class="nav-links">
+            <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <div class="nav-links" id="nav-links">
                 <a href="#about" class="nav-link">About</a>
                 <a href="#experience" class="nav-link">Experience</a>
-                <a href="#projects" class="nav-link">Projects</a>
+                <a href="projects.html" class="nav-link">Projects</a>
                 <a href="#skills" class="nav-link">Skills</a>
                 <a href="#contact" class="nav-link nav-link-cta">Contact</a>
             </div>
@@ -150,7 +166,7 @@
                         </div>
                     </div>
                     <div class="hero-cta">
-                        <a href="#projects" class="btn btn-primary">View My Work</a>
+                        <a href="projects.html" class="btn btn-primary">View My Work</a>
                         <a href="#contact" class="btn btn-secondary">Get In Touch</a>
                     </div>
                 </div>
@@ -192,7 +208,7 @@
             </div>
         </section>
 
-        <!-- Experience Section -->
+        <!-- Experience Section - Compact Version -->
         <section id="experience" class="experience section">
             <div class="container">
                 <div class="section-header fade-in-section">
@@ -200,293 +216,173 @@
                     <div class="section-divider"></div>
                 </div>
 
-                <div class="experience-timeline">
-                    <!-- Experience Item 1 -->
-                    <div class="experience-item card fade-in-section">
-                        <div class="experience-header">
-                            <div class="experience-title-group">
-                                <h3 class="experience-title">RCFC Consulting/Technology Intern</h3>
-                                <p class="experience-company">
+                <div class="experience-compact">
+                    <!-- Experience Item 1 - Compact -->
+                    <div class="experience-item-compact card fade-in-section">
+                        <div class="experience-header-compact">
+                            <div>
+                                <h3 class="experience-title-compact">RCFC Consulting/Technology Intern</h3>
+                                <p class="experience-company-compact">
                                     <a href="https://www.crowe.com" target="_blank" rel="noopener" class="company-link">Crowe LLP</a>
+                                    <span class="experience-date-compact">June 2025 - Aug 2025</span>
                                 </p>
                             </div>
-                            <div class="experience-meta">
-                                <span class="experience-date">June 2025 - Aug 2025</span>
-                            </div>
+                            <button class="expand-btn" aria-label="Expand details">
+                                <span class="expand-icon">+</span>
+                            </button>
                         </div>
-                        <ul class="experience-list">
-                            <li>Developed a ChatGPT‑powered HTML/JS tool to standardize 750+ risk statements, cutting manual editing time by ~80% (100+ hours).</li>
-                            <li>Led an AI research initiative in RCFC, conducting 12+ product owner interviews to uncover 5+ high‑impact use cases and presented a strategic roadmap to partners.</li>
-                            <li>Co-created an AI‑powered ERP screen‑capture assistant concept in an internal case competition, placing 4th/29 with a strategic presentation to leadership.</li>
-                            <li>Initiated a prototype RAG compliance agent for natural‑language regulatory queries, streamlining research workflows.</li>
-                        </ul>
+                        <div class="experience-details">
+                            <ul class="experience-list-compact">
+                                <li>Developed a ChatGPT‑powered HTML/JS tool to standardize 750+ risk statements, cutting manual editing time by ~80%</li>
+                                <li>Led an AI research initiative conducting 12+ product owner interviews to uncover 5+ high‑impact use cases</li>
+                                <li>Co-created an AI‑powered ERP screen‑capture assistant, placing 4th/29 in internal case competition</li>
+                                <li>Initiated a prototype RAG compliance agent for natural‑language regulatory queries</li>
+                            </ul>
+                        </div>
                     </div>
 
-                    <!-- Experience Item 2 -->
-                    <div class="experience-item card fade-in-section">
-                        <div class="experience-header">
-                            <div class="experience-title-group">
-                                <h3 class="experience-title">Property Tax Compliance Intern</h3>
-                                <p class="experience-company">
-                                    <a href="https://dmacpas.com" target="_blank" rel="noopener" class="company-link">DuCharme, McMillen & Associates, Inc.</a>
+                    <!-- Experience Item 2 - Compact -->
+                    <div class="experience-item-compact card fade-in-section">
+                        <div class="experience-header-compact">
+                            <div>
+                                <h3 class="experience-title-compact">Property Tax Compliance Intern</h3>
+                                <p class="experience-company-compact">
+                                    <a href="https://dmacpas.com" target="_blank" rel="noopener" class="company-link">DuCharme, McMillen & Associates</a>
+                                    <span class="experience-date-compact">May 2024 - Aug 2024</span>
                                 </p>
                             </div>
-                            <div class="experience-meta">
-                                <span class="experience-date">May 2024 - Aug 2024</span>
-                            </div>
+                            <button class="expand-btn" aria-label="Expand details">
+                                <span class="expand-icon">+</span>
+                            </button>
                         </div>
-                        <ul class="experience-list">
-                            <li>Leveraged data analysis and ChatGPT API to uncover trends from 200+ employee feedback responses, enhancing strategic decision-making.</li>
-                            <li>Prepared and filed BPP tax returns and processed bills on $100M+ in assets, ensuring compliance.</li>
-                            <li>Utilized property tax software for efficient data management and analysis.</li>
-                            <li>Supported an SOC audit, participating in internal control processes.</li>
-                        </ul>
+                        <div class="experience-details">
+                            <ul class="experience-list-compact">
+                                <li>Leveraged data analysis and ChatGPT API to uncover trends from 200+ employee feedback responses</li>
+                                <li>Prepared and filed BPP tax returns on $100M+ in assets</li>
+                                <li>Utilized property tax software for efficient data management</li>
+                                <li>Supported an SOC audit, participating in internal control processes</li>
+                            </ul>
+                        </div>
                     </div>
 
-                    <!-- Experience Item 3 -->
-                    <div class="experience-item card fade-in-section">
-                        <div class="experience-header">
-                            <div class="experience-title-group">
-                                <h3 class="experience-title">Intern</h3>
-                                <p class="experience-company">Griswold Consulting</p>
+                    <!-- Experience Item 3 - Compact -->
+                    <div class="experience-item-compact card fade-in-section">
+                        <div class="experience-header-compact">
+                            <div>
+                                <h3 class="experience-title-compact">Intern</h3>
+                                <p class="experience-company-compact">
+                                    Griswold Consulting
+                                    <span class="experience-date-compact">Jan 2024 – May 2025</span>
+                                </p>
                             </div>
-                            <div class="experience-meta">
-                                <span class="experience-date">Jan 2024 – May 2025</span>
-                            </div>
+                            <button class="expand-btn" aria-label="Expand details">
+                                <span class="expand-icon">+</span>
+                            </button>
                         </div>
-                        <ul class="experience-list">
-                            <li>Collaborated with Indianapolis Chamber of Commerce for actionable business insights via data analysis.</li>
-                            <li>Used Tableau to analyze 82,000+ data lines, creating interactive visualization for 100+ EV/battery manufacturers.</li>
-                            <li>Partnered with Madison County Economic Development for 5-year economic impact projections (reservoir, semiconductor plant) using ImpactDataSource.</li>
-                        </ul>
+                        <div class="experience-details">
+                            <ul class="experience-list-compact">
+                                <li>Collaborated with Indianapolis Chamber of Commerce for actionable business insights</li>
+                                <li>Used Tableau to analyze 82,000+ data lines for 100+ EV/battery manufacturers</li>
+                                <li>Partnered with Madison County Economic Development for 5-year economic impact projections</li>
+                            </ul>
+                        </div>
                     </div>
 
-                    <!-- Experience Item 4 -->
-                    <div class="experience-item card fade-in-section">
-                        <div class="experience-header">
-                            <div class="experience-title-group">
-                                <h3 class="experience-title">Vice President of External Events</h3>
-                                <p class="experience-company">Larsen Leadership Academy</p>
+                    <!-- Experience Item 4 - Compact -->
+                    <div class="experience-item-compact card fade-in-section">
+                        <div class="experience-header-compact">
+                            <div>
+                                <h3 class="experience-title-compact">VP of External Events</h3>
+                                <p class="experience-company-compact">
+                                    Larsen Leadership Academy
+                                    <span class="experience-date-compact">Aug 2022 - Dec 2024</span>
+                                </p>
                             </div>
-                            <div class="experience-meta">
-                                <span class="experience-date">Aug 2022 - Dec 2024</span>
-                            </div>
+                            <button class="expand-btn" aria-label="Expand details">
+                                <span class="expand-icon">+</span>
+                            </button>
                         </div>
-                        <ul class="experience-list">
-                            <li>Organized a PowerBI workshop for Larsen members.</li>
-                            <li>Helped guide 600+ students in leadership/professional development on Purdue's largest learning community executive board.</li>
-                        </ul>
+                        <div class="experience-details">
+                            <ul class="experience-list-compact">
+                                <li>Organized PowerBI workshop for Larsen members</li>
+                                <li>Helped guide 600+ students in leadership/professional development on Purdue's largest learning community executive board</li>
+                            </ul>
+                        </div>
                     </div>
 
-                    <!-- Experience Item 5 -->
-                    <div class="experience-item card fade-in-section">
-                        <div class="experience-header">
-                            <div class="experience-title-group">
-                                <h3 class="experience-title">Study Abroad Program</h3>
-                                <p class="experience-company">UC3M (Madrid, Spain)</p>
+                    <!-- Experience Item 5 - Compact -->
+                    <div class="experience-item-compact card fade-in-section">
+                        <div class="experience-header-compact">
+                            <div>
+                                <h3 class="experience-title-compact">Study Abroad Program</h3>
+                                <p class="experience-company-compact">
+                                    UC3M (Madrid, Spain)
+                                    <span class="experience-date-compact">Sep 2024 - Dec 2024</span>
+                                </p>
                             </div>
-                            <div class="experience-meta">
-                                <span class="experience-date">Sep 2024 - Dec 2024</span>
-                            </div>
+                            <button class="expand-btn" aria-label="Expand details">
+                                <span class="expand-icon">+</span>
+                            </button>
                         </div>
-                        <ul class="experience-list">
-                            <li>Completed A2-level Spanish coursework while living with a host family that spoke exclusively Spanish.</li>
-                            <li>Visited nine European countries, navigating diverse customs and deepening adaptability.</li>
-                        </ul>
+                        <div class="experience-details">
+                            <ul class="experience-list-compact">
+                                <li>Completed A2-level Spanish coursework while living with a Spanish-only host family</li>
+                                <li>Visited nine European countries, navigating diverse customs and deepening adaptability</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Projects Section -->
-        <section id="projects" class="projects section">
+        <!-- Projects Preview Section -->
+        <section id="projects-preview" class="projects-preview section">
             <div class="container">
                 <div class="section-header fade-in-section">
-                    <h2 class="section-title">Portfolio & Projects</h2>
+                    <h2 class="section-title">Featured Projects</h2>
                     <div class="section-divider"></div>
+                    <p class="section-description">
+                        A glimpse at my work in software, strategy, and design
+                    </p>
                 </div>
 
-                <div class="projects-grid">
-                    <!-- Project 1: ApeX -->
-                    <div class="project-card card fade-in-section">
-                        <div class="project-media">
-                            <div class="media-placeholder project-image">
-                                <div class="placeholder-icon">🎯</div>
-                                <p class="placeholder-text">Project Screenshot/Video</p>
-                                <p class="placeholder-hint">Add to assets/images/apex.jpg</p>
-                            </div>
-                        </div>
-                        <div class="project-content">
-                            <h3 class="project-title">ApeX Student Project Hub</h3>
-                            <p class="project-subtitle">Software</p>
-                            <p class="project-description">
-                                Launched a public platform for university students to share apps, websites, and research projects.
-                            </p>
-                            <div class="project-highlights">
-                                <p><strong>The Build:</strong> Built and deployed the full product solo using Supabase for the backend and the Gemini API for an AI-powered "paper to website" tool.</p>
-                                <p><strong>Key Features:</strong> Designed a fast project submission flow (&lt;2 minutes). Personally designed 8+ webapp tools and games for the library.</p>
-                            </div>
-                            <div class="project-tech">
-                                <span class="tech-tag">HTML</span>
-                                <span class="tech-tag">CSS</span>
-                                <span class="tech-tag">JavaScript</span>
-                                <span class="tech-tag">Gemini API</span>
-                                <span class="tech-tag">Supabase</span>
-                                <span class="tech-tag">UI/UX</span>
-                            </div>
-                            <div class="project-links">
-                                <a href="#" class="project-link demo-link" target="_blank" rel="noopener">
-                                    <span class="link-text">Demo</span>
-                                    <span class="link-arrow">→</span>
-                                </a>
-                                <a href="blog/ApeX.md" class="project-link blog-link">
-                                    <span class="link-text">Reflection Blog</span>
-                                    <span class="link-arrow">→</span>
-                                </a>
-                            </div>
+                <div class="projects-grid-preview">
+                    <!-- Project Preview 1 -->
+                    <div class="project-preview-card card fade-in-section">
+                        <div class="project-preview-icon">🎯</div>
+                        <h3 class="project-preview-title">ApeX Student Project Hub</h3>
+                        <p class="project-preview-desc">Platform for university students to share apps and research projects</p>
+                        <div class="project-preview-tags">
+                            <span class="tech-tag-small">Gemini API</span>
+                            <span class="tech-tag-small">Supabase</span>
                         </div>
                     </div>
 
-                    <!-- Project 2: Truck Simulator -->
-                    <div class="project-card card fade-in-section">
-                        <div class="project-media">
-                            <div class="media-placeholder project-image">
-                                <div class="placeholder-icon">🚚</div>
-                                <p class="placeholder-text">Project Screenshot/Video</p>
-                                <p class="placeholder-hint">Add to assets/images/truck-sim.jpg</p>
-                            </div>
-                        </div>
-                        <div class="project-content">
-                            <h3 class="project-title">Class 8 Truck Trip Simulator</h3>
-                            <p class="project-subtitle">Software</p>
-                            <p class="project-description">
-                                Web-based simulation tool comparing Diesel vs. Electric Class 8 trucks on real‐world routes.
-                            </p>
-                            <div class="project-highlights">
-                                <p><strong>The Build:</strong> Simulates routes with an hour-by-hour log. Integrated Google Maps APIs for route geometry, Hours of Service rules, and dynamic refueling/charging.</p>
-                                <p><strong>Key Features:</strong> Built a cost-modeling engine for TCO analysis with break-even points.</p>
-                            </div>
-                            <div class="project-tech">
-                                <span class="tech-tag">JavaScript</span>
-                                <span class="tech-tag">Google Maps API</span>
-                                <span class="tech-tag">Cost Modeling</span>
-                                <span class="tech-tag">Logistics Simulation</span>
-                            </div>
-                            <div class="project-links">
-                                <a href="#" class="project-link demo-link" target="_blank" rel="noopener">
-                                    <span class="link-text">Demo</span>
-                                    <span class="link-arrow">→</span>
-                                </a>
-                                <a href="blog/truckSimulator.md" class="project-link blog-link">
-                                    <span class="link-text">Reflection Blog</span>
-                                    <span class="link-arrow">→</span>
-                                </a>
-                            </div>
+                    <!-- Project Preview 2 -->
+                    <div class="project-preview-card card fade-in-section">
+                        <div class="project-preview-icon">🚚</div>
+                        <h3 class="project-preview-title">Truck Trip Simulator</h3>
+                        <p class="project-preview-desc">Web-based tool comparing Diesel vs. Electric Class 8 trucks</p>
+                        <div class="project-preview-tags">
+                            <span class="tech-tag-small">JavaScript</span>
+                            <span class="tech-tag-small">Google Maps API</span>
                         </div>
                     </div>
 
-                    <!-- Project 3: MEBA LiDAR -->
-                    <div class="project-card card fade-in-section">
-                        <div class="project-media">
-                            <div class="media-placeholder project-image">
-                                <div class="placeholder-icon">🌲</div>
-                                <p class="placeholder-text">Project Screenshot/Video</p>
-                                <p class="placeholder-hint">Add to assets/images/lidar.jpg</p>
-                            </div>
-                        </div>
-                        <div class="project-content">
-                            <h3 class="project-title">MEBA LiDAR Backpack Commercialization</h3>
-                            <p class="project-subtitle">Strategy</p>
-                            <p class="project-description">
-                                Developed a commercialization strategy for a LiDAR-equipped forestry backpack.
-                            </p>
-                            <div class="project-highlights">
-                                <p><strong>The Build:</strong> Collaborated with a Mechanical Engineering capstone team. Engineered a Python NLP tool (Gemini API) for survey data analysis.</p>
-                                <p><strong>Key Features:</strong> Conducted market research for customer segments, pricing, and competitive positioning.</p>
-                            </div>
-                            <div class="project-tech">
-                                <span class="tech-tag">Python</span>
-                                <span class="tech-tag">Gemini API</span>
-                                <span class="tech-tag">NLP</span>
-                                <span class="tech-tag">Market Research</span>
-                            </div>
-                            <div class="project-links">
-                                <a href="blog/LiDARBackpack.md" class="project-link blog-link">
-                                    <span class="link-text">Reflection Blog</span>
-                                    <span class="link-arrow">→</span>
-                                </a>
-                            </div>
+                    <!-- Project Preview 3 -->
+                    <div class="project-preview-card card fade-in-section">
+                        <div class="project-preview-icon">🌲</div>
+                        <h3 class="project-preview-title">LiDAR Backpack Strategy</h3>
+                        <p class="project-preview-desc">Commercialization strategy for forestry technology</p>
+                        <div class="project-preview-tags">
+                            <span class="tech-tag-small">Python</span>
+                            <span class="tech-tag-small">Market Research</span>
                         </div>
                     </div>
+                </div>
 
-                    <!-- Project 4: Marketplace Messenger -->
-                    <div class="project-card card fade-in-section">
-                        <div class="project-media">
-                            <div class="media-placeholder project-image">
-                                <div class="placeholder-icon">💬</div>
-                                <p class="placeholder-text">Project Screenshot/Video</p>
-                                <p class="placeholder-hint">Add to assets/images/messenger.jpg</p>
-                            </div>
-                        </div>
-                        <div class="project-content">
-                            <h3 class="project-title">Marketplace Messenger</h3>
-                            <p class="project-subtitle">Software - Java</p>
-                            <p class="project-description">
-                                Team project: a concurrent messaging program with a JavaFX GUI.
-                            </p>
-                            <div class="project-highlights">
-                                <p><strong>The Build:</strong> Developed program architecture with a JavaFX-based GUI. Managed file and server I/O using Agile principles.</p>
-                            </div>
-                            <div class="project-tech">
-                                <span class="tech-tag">Java</span>
-                                <span class="tech-tag">JavaFX</span>
-                                <span class="tech-tag">Agile</span>
-                                <span class="tech-tag">Git</span>
-                            </div>
-                            <div class="project-links">
-                                <a href="blog/marketplaceMessenger.md" class="project-link blog-link">
-                                    <span class="link-text">Reflection Blog</span>
-                                    <span class="link-arrow">→</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Project 5: Fantasy Football eBook -->
-                    <div class="project-card card fade-in-section">
-                        <div class="project-media">
-                            <div class="media-placeholder project-image">
-                                <div class="placeholder-icon">🏈</div>
-                                <p class="placeholder-text">Project Screenshot/Video</p>
-                                <p class="placeholder-hint">Add to assets/images/ebook.jpg</p>
-                            </div>
-                        </div>
-                        <div class="project-content">
-                            <h3 class="project-title">Beyond the Basics: Fantasy Football eBook</h3>
-                            <p class="project-subtitle">Design/Marketing</p>
-                            <p class="project-description">
-                                Created, marketed, and sold a 30-page fantasy football eBook.
-                            </p>
-                            <div class="project-highlights">
-                                <p><strong>The Result:</strong> Achieved a 30% conversion rate from Facebook ads, using Final Cut Pro for marketing videos.</p>
-                            </div>
-                            <div class="project-tech">
-                                <span class="tech-tag">Digital Publishing</span>
-                                <span class="tech-tag">Facebook Ads</span>
-                                <span class="tech-tag">Final Cut Pro</span>
-                            </div>
-                            <div class="project-links">
-                                <a href="#" class="project-link demo-link" target="_blank" rel="noopener">
-                                    <span class="link-text">Buy Link</span>
-                                    <span class="link-arrow">→</span>
-                                </a>
-                                <a href="blog/beyondTheBasics.md" class="project-link blog-link">
-                                    <span class="link-text">Reflection Blog</span>
-                                    <span class="link-arrow">→</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
+                <div class="projects-cta fade-in-section">
+                    <a href="projects.html" class="btn btn-primary">View All Projects →</a>
                 </div>
             </div>
         </section>
@@ -702,6 +598,7 @@
                 <p class="footer-text">
                     &copy; <span id="current-year"></span> Elijah Burns. Built with purpose.
                 </p>
+                <p class="footer-hint">💡 Hint: Try clicking around and exploring...</p>
             </div>
         </footer>
     </main>
@@ -709,5 +606,6 @@
     <!-- Scripts -->
     <script src="config.js"></script>
     <script src="script.js"></script>
+    <script src="easter-eggs.js"></script>
 </body>
 </html>
