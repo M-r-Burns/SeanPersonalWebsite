@@ -2,8 +2,579 @@
 // CONFIGURATION & CONSTANTS
 // ========================================
 
-// This will be loaded from config.js
 let CONFIG = window.CONFIG || {};
+
+// ========================================
+// PARTICLE NETWORK BACKGROUND
+// ========================================
+
+class ParticleNetwork {
+    constructor(canvasId) {
+        this.canvas = document.getElementById(canvasId);
+        if (!this.canvas) return;
+
+        this.ctx = this.canvas.getContext('2d');
+        this.particles = [];
+        this.animationId = null;
+        this.mouse = { x: null, y: null };
+
+        this.resize();
+        this.init();
+        this.animate();
+
+        window.addEventListener('resize', () => this.resize());
+        window.addEventListener('mousemove', (e) => this.handleMouseMove(e));
+    }
+
+    resize() {
+        this.canvas.width = window.innerWidth;
+        this.canvas.height = window.innerHeight;
+    }
+
+    init() {
+        const particleCount = Math.floor((this.canvas.width * this.canvas.height) / 15000);
+        this.particles = [];
+
+        for (let i = 0; i < particleCount; i++) {
+            this.particles.push({
+                x: Math.random() * this.canvas.width,
+                y: Math.random() * this.canvas.height,
+                vx: (Math.random() - 0.5) * 0.3,
+                vy: (Math.random() - 0.5) * 0.3,
+                radius: Math.random() * 1.5 + 0.5
+            });
+        }
+    }
+
+    handleMouseMove(e) {
+        this.mouse.x = e.clientX;
+        this.mouse.y = e.clientY;
+    }
+
+    animate() {
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+        const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+        const particleColor = isDark ? 'rgba(0, 255, 136, 0.08)' : 'rgba(0, 102, 255, 0.15)';
+        const lineColor = isDark ? 'rgba(0, 255, 136, 0.05)' : 'rgba(0, 102, 255, 0.08)';
+
+        // Update and draw particles
+        this.particles.forEach((particle, i) => {
+            particle.x += particle.vx;
+            particle.y += particle.vy;
+
+            // Bounce off edges
+            if (particle.x < 0 || particle.x > this.canvas.width) particle.vx *= -1;
+            if (particle.y < 0 || particle.y > this.canvas.height) particle.vy *= -1;
+
+            // Keep in bounds
+            particle.x = Math.max(0, Math.min(this.canvas.width, particle.x));
+            particle.y = Math.max(0, Math.min(this.canvas.height, particle.y));
+
+            // Draw connections
+            this.particles.forEach((other, j) => {
+                if (i < j) {
+                    const dx = other.x - particle.x;
+                    const dy = other.y - particle.y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < 120) {
+                        this.ctx.strokeStyle = lineColor;
+                        this.ctx.lineWidth = 0.5;
+                        this.ctx.globalAlpha = 1 - (distance / 120);
+                        this.ctx.beginPath();
+                        this.ctx.moveTo(particle.x, particle.y);
+                        this.ctx.lineTo(other.x, other.y);
+                        this.ctx.stroke();
+                    }
+                }
+            });
+
+            // Draw particle
+            this.ctx.globalAlpha = 1;
+            this.ctx.fillStyle = particleColor;
+            this.ctx.beginPath();
+            this.ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
+            this.ctx.fill();
+        });
+
+        this.animationId = requestAnimationFrame(() => this.animate());
+    }
+
+    destroy() {
+        if (this.animationId) {
+            cancelAnimationFrame(this.animationId);
+        }
+    }
+}
+
+// ========================================
+// SKILL CONSTELLATION (Interactive Background)
+// ========================================
+
+class SkillConstellation {
+    constructor(canvasId) {
+        this.canvas = document.getElementById(canvasId);
+        if (!this.canvas) return;
+
+        this.ctx = this.canvas.getContext('2d');
+        this.skills = [];
+        this.isDragging = false;
+        this.dragOffset = { x: 0, y: 0 };
+        this.animationId = null;
+
+        this.resize();
+        this.initSkills();
+        this.animate();
+        this.attachEvents();
+
+        window.addEventListener('resize', () => this.resize());
+    }
+
+    resize() {
+        this.canvas.width = window.innerWidth;
+        this.canvas.height = window.innerHeight;
+    }
+
+    initSkills() {
+        const skillNames = ['Python', 'JavaScript', 'SQL', 'AI', 'Data', 'GTM', 'Strategy', 'UI/UX'];
+        const centerX = this.canvas.width / 2;
+        const centerY = this.canvas.height / 2;
+        const radius = Math.min(this.canvas.width, this.canvas.height) / 3;
+
+        this.skills = skillNames.map((name, i) => {
+            const angle = (i / skillNames.length) * Math.PI * 2;
+            return {
+                name,
+                x: centerX + Math.cos(angle) * radius,
+                y: centerY + Math.sin(angle) * radius,
+                baseX: centerX + Math.cos(angle) * radius,
+                baseY: centerY + Math.sin(angle) * radius,
+                radius: 30,
+                vx: 0,
+                vy: 0
+            };
+        });
+    }
+
+    attachEvents() {
+        this.canvas.addEventListener('mousedown', (e) => this.handleMouseDown(e));
+        this.canvas.addEventListener('mousemove', (e) => this.handleMouseMove(e));
+        this.canvas.addEventListener('mouseup', () => this.handleMouseUp());
+        this.canvas.addEventListener('mouseleave', () => this.handleMouseUp());
+    }
+
+    handleMouseDown(e) {
+        const rect = this.canvas.getBoundingClientRect();
+        const mouseX = e.clientX - rect.left;
+        const mouseY = e.clientY - rect.top;
+
+        this.skills.forEach(skill => {
+            const dx = mouseX - skill.x;
+            const dy = mouseY - skill.y;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+
+            if (distance < skill.radius) {
+                this.isDragging = true;
+                this.draggedSkill = skill;
+                this.dragOffset = { x: dx, y: dy };
+            }
+        });
+    }
+
+    handleMouseMove(e) {
+        if (this.isDragging && this.draggedSkill) {
+            const rect = this.canvas.getBoundingClientRect();
+            this.draggedSkill.x = (e.clientX - rect.left) - this.dragOffset.x;
+            this.draggedSkill.y = (e.clientY - rect.top) - this.dragOffset.y;
+        }
+    }
+
+    handleMouseUp() {
+        if (this.isDragging && this.draggedSkill) {
+            // Spring back to base position
+            const skill = this.draggedSkill;
+            const dx = skill.baseX - skill.x;
+            const dy = skill.baseY - skill.y;
+            skill.vx = dx * 0.1;
+            skill.vy = dy * 0.1;
+        }
+        this.isDragging = false;
+        this.draggedSkill = null;
+    }
+
+    animate() {
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+        const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+        const accentColor = isDark ? '#00ff88' : '#0066ff';
+        const lineColor = isDark ? 'rgba(0, 255, 136, 0.2)' : 'rgba(0, 102, 255, 0.2)';
+
+        // Update positions with spring physics
+        this.skills.forEach(skill => {
+            if (skill !== this.draggedSkill) {
+                skill.x += skill.vx;
+                skill.y += skill.vy;
+
+                // Apply spring force towards base position
+                const dx = skill.baseX - skill.x;
+                const dy = skill.baseY - skill.y;
+                skill.vx += dx * 0.01;
+                skill.vy += dy * 0.01;
+
+                // Damping
+                skill.vx *= 0.95;
+                skill.vy *= 0.95;
+            }
+        });
+
+        // Draw connections
+        this.skills.forEach((skill1, i) => {
+            this.skills.forEach((skill2, j) => {
+                if (i < j) {
+                    const dx = skill2.x - skill1.x;
+                    const dy = skill2.y - skill1.y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < 300) {
+                        this.ctx.strokeStyle = lineColor;
+                        this.ctx.lineWidth = 1;
+                        this.ctx.globalAlpha = 1 - (distance / 300);
+                        this.ctx.beginPath();
+                        this.ctx.moveTo(skill1.x, skill1.y);
+                        this.ctx.lineTo(skill2.x, skill2.y);
+                        this.ctx.stroke();
+                    }
+                }
+            });
+        });
+
+        // Draw skill nodes
+        this.skills.forEach(skill => {
+            this.ctx.globalAlpha = 1;
+
+            // Outer glow
+            this.ctx.fillStyle = accentColor;
+            this.ctx.globalAlpha = 0.2;
+            this.ctx.beginPath();
+            this.ctx.arc(skill.x, skill.y, skill.radius + 5, 0, Math.PI * 2);
+            this.ctx.fill();
+
+            // Main circle
+            this.ctx.globalAlpha = 0.8;
+            this.ctx.fillStyle = accentColor;
+            this.ctx.beginPath();
+            this.ctx.arc(skill.x, skill.y, skill.radius, 0, Math.PI * 2);
+            this.ctx.fill();
+
+            // Text
+            this.ctx.globalAlpha = 1;
+            this.ctx.fillStyle = isDark ? '#000' : '#fff';
+            this.ctx.font = 'bold 12px "Roboto Mono", monospace';
+            this.ctx.textAlign = 'center';
+            this.ctx.textBaseline = 'middle';
+            this.ctx.fillText(skill.name, skill.x, skill.y);
+        });
+
+        this.animationId = requestAnimationFrame(() => this.animate());
+    }
+
+    destroy() {
+        if (this.animationId) {
+            cancelAnimationFrame(this.animationId);
+        }
+    }
+}
+
+// ========================================
+// SYSTEM STATUS COMPONENT
+// ========================================
+
+class SystemStatus {
+    constructor() {
+        this.createDOM();
+        this.startUpdates();
+    }
+
+    createDOM() {
+        const statusHTML = `
+            <div class="system-status">
+                <div class="system-status-header">
+                    <span class="status-indicator"></span>
+                    <span>SYSTEM STATUS</span>
+                </div>
+                <div class="system-status-item">
+                    <span class="system-status-label">Uptime:</span>
+                    <span class="system-status-value" id="uptime">99.99%</span>
+                </div>
+                <div class="system-status-item">
+                    <span class="system-status-label">Data Streams:</span>
+                    <span class="system-status-value" id="streams">Active (3)</span>
+                </div>
+                <div class="system-status-item">
+                    <span class="system-status-label">Network:</span>
+                    <span class="system-status-value" id="latency">42ms</span>
+                </div>
+                <div class="system-status-expand">
+                    <div class="system-status-item">
+                        <span class="system-status-label">Tech Stack:</span>
+                        <span class="system-status-value">Active</span>
+                    </div>
+                    <div class="system-status-item">
+                        <span class="system-status-label">Projects:</span>
+                        <span class="system-status-value">15+</span>
+                    </div>
+                    <div class="system-status-item">
+                        <span class="system-status-label">API Status:</span>
+                        <span class="system-status-value">Ready</span>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        document.body.insertAdjacentHTML('beforeend', statusHTML);
+    }
+
+    startUpdates() {
+        setInterval(() => {
+            // Update with random but realistic values
+            const latency = Math.floor(Math.random() * 20) + 35;
+            const latencyEl = document.getElementById('latency');
+            if (latencyEl) latencyEl.textContent = `${latency}ms`;
+
+            const uptime = (99.9 + Math.random() * 0.09).toFixed(2);
+            const uptimeEl = document.getElementById('uptime');
+            if (uptimeEl) uptimeEl.textContent = `${uptime}%`;
+        }, 3000);
+    }
+}
+
+// ========================================
+// TERMINAL EASTER EGG
+// ========================================
+
+class TerminalEasterEgg {
+    constructor() {
+        this.commands = {
+            help: 'Available commands: help, whoami, list_projects, skills, contact_me, clear',
+            whoami: 'Elijah - Business Analytics & Software Developer\nI build things that bridge business needs and technical solutions.',
+            list_projects: '1. ApeX Student Project Hub\n2. Class 8 Truck Trip Simulator\n3. MEBA LiDAR Backpack Commercialization\n4. Marketplace Messenger\n5. Beyond the Basics: Fantasy Football eBook',
+            skills: 'Python | JavaScript | SQL | Data Visualization | AI Tooling\nAgile | Market Research | UI/UX | Final Cut Pro',
+            contact_me: 'LinkedIn: linkedin.com/in/elijb\nFeel free to reach out!',
+            clear: '[CLEAR]'
+        };
+
+        this.history = [];
+        this.createDOM();
+        this.attachEvents();
+    }
+
+    createDOM() {
+        const terminalHTML = `
+            <div class="terminal-overlay" id="terminal-overlay">
+                <div class="terminal">
+                    <div class="terminal-header">
+                        <span class="terminal-title">terminal.exe</span>
+                        <button class="terminal-close" id="terminal-close"></button>
+                    </div>
+                    <div class="terminal-body" id="terminal-body">
+                        <div class="terminal-line">
+                            <span class="terminal-prompt">$</span> Welcome to the terminal!
+                        </div>
+                        <div class="terminal-line">
+                            <span class="terminal-prompt">$</span> Type 'help' for available commands
+                        </div>
+                        <div class="terminal-hint">
+                            Hint: Press Ctrl+Shift+T (or Cmd+Shift+T on Mac) to toggle terminal
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        document.body.insertAdjacentHTML('beforeend', terminalHTML);
+    }
+
+    attachEvents() {
+        // Keyboard shortcut
+        document.addEventListener('keydown', (e) => {
+            if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'T') {
+                e.preventDefault();
+                this.toggle();
+            }
+            if (e.key === 'Escape') {
+                this.close();
+            }
+        });
+
+        // Close button
+        const closeBtn = document.getElementById('terminal-close');
+        if (closeBtn) {
+            closeBtn.addEventListener('click', () => this.close());
+        }
+
+        // Click outside to close
+        const overlay = document.getElementById('terminal-overlay');
+        if (overlay) {
+            overlay.addEventListener('click', (e) => {
+                if (e.target === overlay) {
+                    this.close();
+                }
+            });
+        }
+
+        // Add input handling
+        this.addInputLine();
+    }
+
+    addInputLine() {
+        const terminalBody = document.getElementById('terminal-body');
+        if (!terminalBody) return;
+
+        const inputLineHTML = `
+            <div class="terminal-line">
+                <span class="terminal-prompt">$</span>
+                <input type="text" class="terminal-input" id="terminal-input" placeholder="Enter command..." autocomplete="off">
+            </div>
+        `;
+
+        terminalBody.insertAdjacentHTML('beforeend', inputLineHTML);
+
+        const input = document.getElementById('terminal-input');
+        if (input) {
+            input.focus();
+            input.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    this.executeCommand(input.value.trim().toLowerCase());
+                    input.value = '';
+                }
+            });
+        }
+    }
+
+    executeCommand(cmd) {
+        const terminalBody = document.getElementById('terminal-body');
+        if (!terminalBody) return;
+
+        // Remove current input line
+        const currentInput = document.getElementById('terminal-input');
+        if (currentInput && currentInput.parentElement) {
+            currentInput.parentElement.remove();
+        }
+
+        // Show command
+        const cmdLine = `<div class="terminal-line"><span class="terminal-prompt">$</span> ${cmd}</div>`;
+        terminalBody.insertAdjacentHTML('beforeend', cmdLine);
+
+        // Execute command
+        if (cmd === 'clear') {
+            terminalBody.innerHTML = '';
+        } else if (this.commands[cmd]) {
+            const output = this.commands[cmd];
+            output.split('\n').forEach(line => {
+                terminalBody.insertAdjacentHTML('beforeend', `<div class="terminal-line">${line}</div>`);
+            });
+        } else if (cmd) {
+            terminalBody.insertAdjacentHTML('beforeend', `<div class="terminal-line">Command not found: ${cmd}. Type 'help' for available commands.</div>`);
+        }
+
+        // Add new input line
+        this.addInputLine();
+
+        // Scroll to bottom
+        terminalBody.scrollTop = terminalBody.scrollHeight;
+    }
+
+    toggle() {
+        const overlay = document.getElementById('terminal-overlay');
+        if (overlay) {
+            overlay.classList.toggle('active');
+            if (overlay.classList.contains('active')) {
+                const input = document.getElementById('terminal-input');
+                if (input) {
+                    setTimeout(() => input.focus(), 100);
+                }
+            }
+        }
+    }
+
+    close() {
+        const overlay = document.getElementById('terminal-overlay');
+        if (overlay) {
+            overlay.classList.remove('active');
+        }
+    }
+}
+
+// ========================================
+// STRATEGY FLOW PATH
+// ========================================
+
+class StrategyFlow {
+    constructor() {
+        this.nodes = [
+            { id: 'hero', label: 'INIT' },
+            { id: 'about', label: 'PROFILE' },
+            { id: 'experience', label: 'HISTORY' },
+            { id: 'projects', label: 'WORK' },
+            { id: 'skills', label: 'STACK' },
+            { id: 'contact', label: 'CONNECT' }
+        ];
+
+        this.createDOM();
+        this.setupObserver();
+    }
+
+    createDOM() {
+        const flowHTML = `
+            <div class="strategy-flow">
+                ${this.nodes.map(node => `
+                    <div class="flow-node" data-section="${node.id}" data-label="${node.label}"></div>
+                `).join('')}
+            </div>
+        `;
+
+        document.body.insertAdjacentHTML('beforeend', flowHTML);
+    }
+
+    setupObserver() {
+        const sections = document.querySelectorAll('.section');
+        const flowNodes = document.querySelectorAll('.flow-node');
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const sectionId = entry.target.id;
+                        flowNodes.forEach(node => {
+                            if (node.dataset.section === sectionId) {
+                                node.classList.add('active');
+                            } else {
+                                node.classList.remove('active');
+                            }
+                        });
+                    }
+                });
+            },
+            {
+                rootMargin: '-50% 0px -50% 0px',
+                threshold: 0
+            }
+        );
+
+        sections.forEach(section => observer.observe(section));
+
+        // Click to scroll
+        flowNodes.forEach(node => {
+            node.addEventListener('click', () => {
+                const targetSection = document.getElementById(node.dataset.section);
+                if (targetSection) {
+                    targetSection.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    }
+}
 
 // ========================================
 // THEME MANAGEMENT
@@ -11,7 +582,7 @@ let CONFIG = window.CONFIG || {};
 
 class ThemeManager {
     constructor() {
-        this.theme = localStorage.getItem('theme') || 'dark';
+        this.theme = localStorage.getItem('theme') || CONFIG.theme?.defaultTheme || 'dark';
         this.init();
     }
 
@@ -54,7 +625,7 @@ class LazyLoader {
         this.imageObserver = new IntersectionObserver(
             (entries) => this.handleImageIntersection(entries),
             {
-                rootMargin: '50px 0px', // Start loading 50px before element enters viewport
+                rootMargin: '50px 0px',
                 threshold: 0.01
             }
         );
@@ -106,7 +677,6 @@ class LazyLoader {
                         element.src = src;
                         element.onloadeddata = () => {
                             element.classList.add('loaded');
-                            // Auto-play video on hover
                             element.parentElement.addEventListener('mouseenter', () => {
                                 element.play();
                             });
@@ -144,7 +714,6 @@ class Preloader {
     }
 
     preloadImages() {
-        // Get all image sources from data attributes
         const imageSources = Array.from(document.querySelectorAll('[data-src]'))
             .filter(el => el.tagName === 'IMG')
             .map(el => el.getAttribute('data-src'))
@@ -160,7 +729,6 @@ class Preloader {
     }
 
     preloadVideos() {
-        // Preload video metadata
         const videoSources = Array.from(document.querySelectorAll('[data-src]'))
             .filter(el => el.tagName === 'VIDEO')
             .map(el => el.getAttribute('data-src'))
@@ -204,13 +772,8 @@ class Preloader {
     }
 
     init() {
-        // Preload critical images immediately
         setTimeout(() => this.preloadImages(), 1000);
-
-        // Preload videos after a delay
         setTimeout(() => this.preloadVideos(), 2000);
-
-        // Preload next section when user scrolls near it
         this.setupScrollPreloading();
     }
 
@@ -229,7 +792,7 @@ class Preloader {
                 });
             },
             {
-                rootMargin: '200px 0px', // Preload when section is 200px away
+                rootMargin: '200px 0px',
                 threshold: 0
             }
         );
@@ -263,7 +826,6 @@ class NavigationManager {
             });
         });
 
-        // Active link highlighting
         this.setupActiveNavigation();
     }
 
@@ -319,17 +881,15 @@ class DataVisualizations {
         const width = canvas.width;
         const height = canvas.height;
 
-        // Animated bar chart
         let animationFrame = 0;
 
         const drawBarChart = () => {
             ctx.clearRect(0, 0, width, height);
 
-            // Get theme colors
             const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
             const accentColor = isDark ? '#00ff88' : '#0066ff';
             const textColor = isDark ? '#b0b0b0' : '#495057';
-            const gridColor = isDark ? '#2a2a2a' : '#dee2e6';
+            const gridColor = isDark ? '#3a3a3f' : '#dee2e6';
 
             // Grid lines
             ctx.strokeStyle = gridColor;
@@ -354,7 +914,6 @@ class DataVisualizations {
                 const barHeight = (baseHeight + wave) * height;
                 const y = height - barHeight;
 
-                // Gradient
                 const gradient = ctx.createLinearGradient(0, y, 0, height);
                 gradient.addColorStop(0, accentColor);
                 gradient.addColorStop(1, accentColor + '40');
@@ -384,11 +943,9 @@ class DataVisualizations {
         const width = canvas.width;
         const height = canvas.height;
 
-        // Network graph
         const nodes = [];
         const numNodes = 12;
 
-        // Create nodes
         for (let i = 0; i < numNodes; i++) {
             nodes.push({
                 x: Math.random() * width,
@@ -404,22 +961,18 @@ class DataVisualizations {
 
             const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
             const accentColor = isDark ? '#00ff88' : '#0066ff';
-            const lineColor = isDark ? '#2a2a2a' : '#dee2e6';
+            const lineColor = isDark ? '#3a3a3f' : '#dee2e6';
 
-            // Update and draw nodes
             nodes.forEach((node, i) => {
                 node.x += node.vx;
                 node.y += node.vy;
 
-                // Bounce off edges
                 if (node.x < 0 || node.x > width) node.vx *= -1;
                 if (node.y < 0 || node.y > height) node.vy *= -1;
 
-                // Keep in bounds
                 node.x = Math.max(0, Math.min(width, node.x));
                 node.y = Math.max(0, Math.min(height, node.y));
 
-                // Draw connections
                 nodes.forEach((other, j) => {
                     if (i < j) {
                         const dx = other.x - node.x;
@@ -438,7 +991,6 @@ class DataVisualizations {
                     }
                 });
 
-                // Draw node
                 ctx.globalAlpha = 1;
                 ctx.fillStyle = accentColor;
                 ctx.beginPath();
@@ -476,10 +1028,9 @@ class ContactFormHandler {
         const formData = new FormData(this.form);
         const data = Object.fromEntries(formData);
 
-        // Get Formspree endpoint from config
         const formspreeEndpoint = CONFIG.formspreeEndpoint || '';
 
-        if (!formspreeEndpoint) {
+        if (!formspreeEndpoint || formspreeEndpoint === 'YOUR_FORMSPREE_ENDPOINT_HERE') {
             this.showStatus('error', 'Formspree API key not configured. Please add it to config.js');
             return;
         }
@@ -524,7 +1075,6 @@ class ExternalLinksManager {
     }
 
     init() {
-        // Apply external links from config
         this.applyCompanyLinks();
         this.applyProjectLinks();
     }
@@ -543,7 +1093,6 @@ class ExternalLinksManager {
     }
 
     applyProjectLinks() {
-        // Demo links
         const demoLinks = document.querySelectorAll('[data-project-demo]');
         demoLinks.forEach(link => {
             const project = link.getAttribute('data-project-demo');
@@ -555,7 +1104,6 @@ class ExternalLinksManager {
             }
         });
 
-        // Buy links
         const buyLinks = document.querySelectorAll('[data-project-buy]');
         buyLinks.forEach(link => {
             const project = link.getAttribute('data-project-buy');
@@ -567,40 +1115,10 @@ class ExternalLinksManager {
             }
         });
 
-        // Blog links (local)
         const blogLinks = document.querySelectorAll('[data-blog-link]');
         blogLinks.forEach(link => {
             link.target = '_blank';
         });
-    }
-}
-
-// ========================================
-// TYPING ANIMATION
-// ========================================
-
-class TypingAnimation {
-    constructor(element, text, speed = 50) {
-        this.element = element;
-        this.text = text;
-        this.speed = speed;
-        this.currentIndex = 0;
-        this.init();
-    }
-
-    init() {
-        if (!this.element) return;
-
-        this.element.textContent = '';
-        this.type();
-    }
-
-    type() {
-        if (this.currentIndex < this.text.length) {
-            this.element.textContent += this.text.charAt(this.currentIndex);
-            this.currentIndex++;
-            setTimeout(() => this.type(), this.speed);
-        }
     }
 }
 
@@ -614,32 +1132,24 @@ class PerformanceOptimizer {
     }
 
     init() {
-        // Defer non-critical resources
         this.deferResources();
-
-        // Add loading states
         this.addLoadingStates();
-
-        // Optimize images
         this.optimizeImages();
     }
 
     deferResources() {
-        // Defer non-critical styles
         window.addEventListener('load', () => {
-            // Load additional resources after page load
+            // Resources loaded
         });
     }
 
     addLoadingStates() {
-        // Remove loading class when page is fully loaded
         window.addEventListener('load', () => {
             document.body.classList.add('loaded');
         });
     }
 
     optimizeImages() {
-        // Add loading="lazy" to images
         const images = document.querySelectorAll('img');
         images.forEach(img => {
             if (!img.hasAttribute('loading')) {
@@ -654,8 +1164,49 @@ class PerformanceOptimizer {
 // ========================================
 
 document.addEventListener('DOMContentLoaded', () => {
+    // Wrap content in main-content div for z-index layering
+    const body = document.body;
+    const wrapper = document.createElement('div');
+    wrapper.className = 'main-content';
+
+    // Move all existing children to wrapper (except scripts)
+    const elementsToMove = Array.from(body.children).filter(child =>
+        child.tagName !== 'SCRIPT' &&
+        !child.id.includes('canvas') &&
+        !child.classList.contains('system-status') &&
+        !child.classList.contains('strategy-flow') &&
+        !child.classList.contains('terminal-overlay')
+    );
+
+    elementsToMove.forEach(el => wrapper.appendChild(el));
+
+    // Add canvases first (background layers)
+    const canvasesHTML = `
+        <canvas id="particle-canvas"></canvas>
+        <canvas id="constellation-canvas"></canvas>
+    `;
+    body.insertAdjacentHTML('afterbegin', canvasesHTML);
+
+    // Add wrapper after canvases (if there were elements to move)
+    if (elementsToMove.length > 0) {
+        body.appendChild(wrapper);
+    }
+
     // Initialize all components
     const themeManager = new ThemeManager();
+
+    // Background animations
+    if (CONFIG.features?.enableDataVisualizations !== false) {
+        const particleNetwork = new ParticleNetwork('particle-canvas');
+        const skillConstellation = new SkillConstellation('constellation-canvas');
+    }
+
+    // Interactive components
+    const systemStatus = new SystemStatus();
+    const terminal = new TerminalEasterEgg();
+    const strategyFlow = new StrategyFlow();
+
+    // Core functionality
     const lazyLoader = new LazyLoader();
     const preloader = new Preloader();
     const navigationManager = new NavigationManager();
@@ -667,25 +1218,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // Start preloading
     preloader.init();
 
-    // Add typing animation to hero (optional - can be enabled/disabled)
-    // const typingElement = document.querySelector('.typing-text');
-    // if (typingElement) {
-    //     const text = typingElement.textContent;
-    //     new TypingAnimation(typingElement, text);
-    // }
-
-    console.log('🚀 Website initialized successfully!');
+    console.log('🚀 Enhanced website initialized!');
+    console.log('💡 Tip: Press Ctrl+Shift+T (or Cmd+Shift+T) to open the terminal');
 });
-
-// ========================================
-// SERVICE WORKER (for PWA capabilities)
-// ========================================
-
-if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-        // Uncomment to enable service worker
-        // navigator.serviceWorker.register('/sw.js')
-        //     .then(registration => console.log('SW registered:', registration))
-        //     .catch(error => console.log('SW registration failed:', error));
-    });
-}
