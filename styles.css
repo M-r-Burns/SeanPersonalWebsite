@@ -2099,3 +2099,400 @@ textarea:focus-visible {
         border: 1px solid black;
     }
 }
+
+/* ============================================
+   COMPACT FEATURED PROJECTS
+   ============================================ */
+.section-compact {
+    padding: var(--spacing-2xl) 0;
+}
+
+.projects-grid-preview-compact {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+}
+
+.project-preview-card-compact {
+    position: relative;
+    padding: var(--spacing-md);
+    text-align: center;
+    cursor: pointer;
+    height: 140px;
+    perspective: 1000px;
+}
+
+.card-front,
+.card-back {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-md);
+    backface-visibility: hidden;
+    transition: transform 0.6s;
+}
+
+.card-front {
+    transform: rotateY(0deg);
+}
+
+.card-back {
+    transform: rotateY(180deg);
+    background: var(--color-bg-secondary);
+}
+
+.project-preview-card-compact.flipped .card-front {
+    transform: rotateY(180deg);
+}
+
+.project-preview-card-compact.flipped .card-back {
+    transform: rotateY(360deg);
+}
+
+.project-preview-icon-small {
+    font-size: 32px;
+    margin-bottom: var(--spacing-xs);
+}
+
+.project-preview-title-small {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.project-preview-desc-small {
+    font-size: 12px;
+    color: var(--color-text-secondary);
+}
+
+.card-back-text {
+    font-size: 11px;
+    color: var(--color-text-secondary);
+    line-height: 1.4;
+    margin-bottom: var(--spacing-xs);
+}
+
+.project-preview-tags-small {
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.tech-tag-mini {
+    background: var(--color-bg-primary);
+    color: var(--color-text-secondary);
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 9px;
+    font-family: var(--font-mono);
+}
+
+.projects-cta-compact {
+    text-align: center;
+    margin-top: var(--spacing-md);
+}
+
+.btn-sm {
+    font-size: 14px;
+    padding: var(--spacing-xs) var(--spacing-md);
+}
+
+/* ============================================
+   FLOATING ACTION BUTTON (FAB)
+   ============================================ */
+.fab {
+    position: fixed;
+    bottom: var(--spacing-md);
+    right: var(--spacing-md);
+    z-index: 1500;
+}
+
+.fab-trigger {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--color-accent);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow-lg);
+    transition: all var(--transition-base);
+}
+
+.fab-trigger:hover {
+    transform: scale(1.1);
+    box-shadow: var(--shadow-glow);
+}
+
+.fab-trigger.active {
+    transform: rotate(45deg);
+}
+
+.fab-icon {
+    font-size: 24px;
+}
+
+.fab-menu {
+    position: absolute;
+    bottom: 70px;
+    right: 0;
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-xs);
+    min-width: 200px;
+    box-shadow: var(--shadow-lg);
+}
+
+.fab-menu.hidden {
+    display: none;
+}
+
+.fab-item {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-sm);
+    background: none;
+    border: none;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    color: var(--color-text-primary);
+    font-family: var(--font-primary);
+    font-size: 14px;
+}
+
+.fab-item:hover {
+    background: var(--color-bg-secondary);
+}
+
+.fab-item.active {
+    background: var(--color-accent);
+    color: var(--color-bg-primary);
+}
+
+.fab-item-icon {
+    font-size: 18px;
+}
+
+.fab-item-label {
+    flex: 1;
+    text-align: left;
+}
+
+/* ============================================
+   LIGHT MODE (for dark mode toggle)
+   ============================================ */
+body.light-mode {
+    --color-bg-primary: #FAFAFA;
+    --color-bg-secondary: #FFFFFF;
+    --color-bg-card: #F5F5F5;
+    --color-text-primary: #18181B;
+    --color-text-secondary: #52525B;
+    --color-border: rgba(0, 0, 0, 0.1);
+}
+
+body.light-mode #particle-canvas {
+    opacity: 0.2;
+}
+
+/* ============================================
+   SKILL CONSTELLATION (already in interactive-components.js)
+   Extra styling
+   ============================================ */
+#skill-constellation {
+    cursor: grab;
+}
+
+#skill-constellation:active {
+    cursor: grabbing;
+}
+
+/* ============================================
+   SNAKE GAME CONTAINER
+   ============================================ */
+#snake-game {
+    box-shadow: var(--shadow-lg);
+}
+
+#snake-game canvas {
+    cursor: default;
+}
+
+/* ============================================
+   MUSIC VISUALIZER
+   ============================================ */
+#music-visualizer {
+    mix-blend-mode: screen;
+}
+
+/* ============================================
+   CARD FLIP ENHANCEMENTS
+   ============================================ */
+.project-preview-card-compact:hover {
+    transform: translateY(-2px);
+}
+
+/* ============================================
+   MOBILE ADJUSTMENTS FOR NEW COMPONENTS
+   ============================================ */
+@media (max-width: 768px) {
+    .fab {
+        bottom: 80px; /* Above mobile nav if present */
+    }
+
+    .fab-trigger {
+        width: 48px;
+        height: 48px;
+    }
+
+    .fab-icon {
+        font-size: 20px;
+    }
+
+    .fab-menu {
+        right: 0;
+        min-width: 180px;
+    }
+
+    .projects-grid-preview-compact {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-sm);
+    }
+
+    .project-preview-card-compact {
+        height: 120px;
+    }
+
+    #snake-game {
+        bottom: 80px;
+        right: 10px;
+    }
+
+    #snake-game canvas {
+        width: 150px;
+        height: 150px;
+    }
+}
+
+@media (max-width: 480px) {
+    .section-compact {
+        padding: var(--spacing-xl) 0;
+    }
+
+    .project-preview-icon-small {
+        font-size: 28px;
+    }
+
+    .project-preview-title-small {
+        font-size: 14px;
+    }
+
+    .project-preview-desc-small {
+        font-size: 11px;
+    }
+
+    .fab-menu {
+        bottom: 60px;
+        right: -10px;
+    }
+}
+
+/* ============================================
+   ANIMATION CLASSES FOR EASTER EGGS
+   ============================================ */
+.shake {
+    animation: shake 0.5s;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-10px); }
+    20%, 40%, 60%, 80% { transform: translateX(10px); }
+}
+
+.glow-pulse {
+    animation: glowPulse 2s infinite;
+}
+
+@keyframes glowPulse {
+    0%, 100% { box-shadow: 0 0 5px var(--color-accent); }
+    50% { box-shadow: 0 0 20px var(--color-accent); }
+}
+
+/* ============================================
+   SMOOTH SCROLLING FOR COMPACT SECTIONS
+   ============================================ */
+.section-compact + .section {
+    scroll-margin-top: 80px;
+}
+
+/* ============================================
+   ENHANCED INTERACTIVITY INDICATORS
+   ============================================ */
+.interactive-hint {
+    position: relative;
+}
+
+.interactive-hint::after {
+    content: '✨';
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    font-size: 16px;
+    animation: float 2s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+/* ============================================
+   RESPONSIVE LAYOUT FOR ALL INTERACTIVE ELEMENTS
+   ============================================ */
+@media (max-width: 1024px) {
+    .projects-grid-preview-compact {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 640px) {
+    .projects-grid-preview-compact {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ============================================
+   ACCESSIBILITY FOR INTERACTIVE COMPONENTS
+   ============================================ */
+.fab-trigger:focus-visible,
+.fab-item:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+}
+
+/* Reduce motion for easter eggs */
+@media (prefers-reduced-motion: reduce) {
+    .card-front,
+    .card-back {
+        transition: none;
+    }
+
+    .project-preview-card-compact.flipped .card-front,
+    .project-preview-card-compact.flipped .card-back {
+        transition: none;
+    }
+}

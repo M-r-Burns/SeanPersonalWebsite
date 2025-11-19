@@ -72,6 +72,15 @@ class AchievementSystem {
     }
 
     unlock(achievementKey) {
+        // Check if already unlocked in localStorage
+        if (localStorage.getItem(`achievement_${achievementKey}`) === 'true') {
+            if (!this.achievements[achievementKey].unlocked) {
+                this.achievements[achievementKey].unlocked = true;
+                this.updateAchievementCount();
+            }
+            return; // Don't show notification again
+        }
+
         if (this.achievements[achievementKey] && !this.achievements[achievementKey].unlocked) {
             this.achievements[achievementKey].unlocked = true;
             this.showAchievement(this.achievements[achievementKey]);
@@ -127,30 +136,11 @@ class KonamiCode {
     }
 }
 
-// Click Ripple Effect
+// Click Ripple Effect - DISABLED (was annoying)
 class RippleEffect {
     constructor() {
-        this.container = document.getElementById('ripple-container');
-        if (!this.container) {
-            this.container = document.createElement('div');
-            this.container.id = 'ripple-container';
-            document.body.appendChild(this.container);
-        }
-
-        document.addEventListener('click', (e) => this.createRipple(e));
-    }
-
-    createRipple(e) {
-        const ripple = document.createElement('div');
-        ripple.className = 'ripple';
-        ripple.style.left = e.clientX + 'px';
-        ripple.style.top = e.clientY + 'px';
-
-        this.container.appendChild(ripple);
-
-        setTimeout(() => {
-            ripple.remove();
-        }, 1000);
+        // Disabled - was too annoying
+        this.enabled = false;
     }
 }
 
