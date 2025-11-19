@@ -1,0 +1,14 @@
+# robots.txt for Personal Website
+
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://your-website-name.pages.dev/sitemap.xml
+
+# Crawl delay (optional, prevents aggressive crawling)
+Crawl-delay: 10
+
+# Disallow specific paths if needed
+# Disallow: /private/
+# Disallow: /temp/

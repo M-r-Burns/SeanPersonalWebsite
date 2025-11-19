@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Global GTM Navigator - Strategy & Execution Portfolio">
+    <meta name="author" content="Your Name">
+
+    <title>Global GTM Navigator | Strategy & AI Portfolio</title>
+
+    <!-- Preconnect for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- Google Fonts - Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+
+    <!-- Favicon (optional - add your own) -->
+    <!-- <link rel="icon" type="image/png" href="assets/images/favicon.png"> -->
+</head>
+<body>
+    <!-- World Map Background Canvas -->
+    <canvas id="worldMap" class="world-map-background"></canvas>
+
+    <!-- Map Overlay for Highlights -->
+    <div id="mapOverlay" class="map-overlay"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#hero" class="nav-logo">
+                <span class="nav-logo-icon">◆</span>
+                <span class="nav-logo-text">GTM Navigator</span>
+            </a>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#hero" class="nav-link">Mission</a></li>
+                <li><a href="#about" class="nav-link">Algorithm</a></li>
+                <li><a href="#experience" class="nav-link">Mission Logs</a></li>
+                <li><a href="#projects" class="nav-link">Blueprints</a></li>
+                <li><a href="#skills" class="nav-link">Resources</a></li>
+                <li><a href="#awards" class="nav-link">Recognition</a></li>
+                <li><a href="#contact" class="nav-link">Transmit</a></li>
+            </ul>
+            <div class="nav-toggle" id="navToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero section-padding">
+        <div class="container">
+            <div class="hero-content">
+                <div class="location-badge" id="locationBadge">
+                    <span class="location-icon">📍</span>
+                    <span id="currentLocation">Indianapolis, IN</span>
+                </div>
+
+                <h1 class="hero-headline glitch" data-text="BRIDGING STRATEGY. EXECUTING CODE.">
+                    <span id="heroHeadline">BRIDGING STRATEGY. EXECUTING CODE.</span>
+                </h1>
+
+                <div class="hero-subheadline">
+                    <span class="arrow-accent">A.I.</span>
+                    <span class="arrow">→</span>
+                    <span class="arrow-accent">G.T.M.</span>
+                </div>
+
+                <p class="hero-description" id="heroDescription">
+                    Purdue University Student, B.S. in Business Analytics & Information Management.
+                </p>
+
+                <div class="hero-cta">
+                    <a href="#projects" class="btn btn-primary" id="heroCTA">
+                        <span>View Production Models</span>
+                        <span class="btn-arrow">→</span>
+                    </a>
+                </div>
+
+                <!-- Interactive Map Controls -->
+                <div class="map-controls">
+                    <button class="map-control-btn" data-location="purdue">Purdue</button>
+                    <button class="map-control-btn active" data-location="indianapolis">Indianapolis</button>
+                    <button class="map-control-btn" data-location="madrid">Madrid</button>
+                </div>
+            </div>
+
+            <!-- Scroll Indicator -->
+            <div class="scroll-indicator">
+                <span>Scroll to Navigate</span>
+                <div class="scroll-arrow"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Me Section -->
+    <section id="about" class="about section-padding">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title" id="aboutHeadline">THE LEARNING ALGORITHM.</h2>
+                <div class="section-line"></div>
+            </div>
+
+            <div class="about-content">
+                <div class="about-narrative">
+                    <p class="narrative-text" id="aboutNarrative">
+                        <!-- Loaded from config.js -->
+                    </p>
+                </div>
+
+                <!-- Operational Metrics -->
+                <div class="metrics-grid" id="metricsGrid">
+                    <!-- Loaded from config.js -->
+                </div>
+
+                <!-- Personal Interests -->
+                <div class="interests-section">
+                    <h3 class="interests-title">Personal Interests</h3>
+                    <ul class="interests-list" id="interestsList">
+                        <!-- Loaded from config.js -->
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Professional Experience Section -->
+    <section id="experience" class="experience section-padding">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">MISSION LOGS: FIELD EXPERIENCE.</h2>
+                <div class="section-line"></div>
+            </div>
+
+            <div class="experience-timeline" id="experienceTimeline">
+                <!-- Loaded from config.js -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects / Portfolio Section -->
+    <section id="projects" class="projects section-padding">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">OPERATIONAL BLUEPRINTS.</h2>
+                <div class="section-line"></div>
+            </div>
+
+            <div class="projects-grid" id="projectsGrid">
+                <!-- Loaded from config.js -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills & Certifications Section -->
+    <section id="skills" class="skills section-padding">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">RESOURCE MANIFEST.</h2>
+                <div class="section-line"></div>
+            </div>
+
+            <div class="skills-content">
+                <!-- Skills Categories -->
+                <div class="skills-categories" id="skillsCategories">
+                    <!-- Loaded from config.js -->
+                </div>
+
+                <!-- Certifications -->
+                <div class="certifications-section">
+                    <h3 class="subsection-title">Certifications</h3>
+                    <ul class="certifications-list" id="certificationsList">
+                        <!-- Loaded from config.js -->
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Awards Section -->
+    <section id="awards" class="awards section-padding">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">RECOGNIZED INTELLIGENCE.</h2>
+                <div class="section-line"></div>
+            </div>
+
+            <div class="awards-grid" id="awardsGrid">
+                <!-- Loaded from config.js -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact section-padding">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title" id="contactHeadline">SET TRANSMISSION COORDINATES.</h2>
+                <div class="section-line"></div>
+            </div>
+
+            <div class="contact-content">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <span class="contact-label">Email:</span>
+                        <a href="mailto:your.email@example.com" id="contactEmail" class="contact-link">your.email@example.com</a>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-label">LinkedIn:</span>
+                        <a href="#" id="contactLinkedIn" class="contact-link" target="_blank" rel="noopener">View Profile</a>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-label">Projects Hub:</span>
+                        <a href="#" id="contactApex" class="contact-link" target="_blank" rel="noopener">ApeX Platform</a>
+                    </div>
+                </div>
+
+                <!-- Contact Form -->
+                <form id="contactForm" class="contact-form">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="subject">Subject</label>
+                        <input type="text" id="subject" name="subject" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        <span>Send Transmission</span>
+                        <span class="btn-arrow">→</span>
+                    </button>
+                    <div id="formStatus" class="form-status"></div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <p>&copy; <span id="currentYear"></span> Global GTM Navigator. All rights reserved.</p>
+
+                <!-- Language Toggle (Easter Egg) -->
+                <div class="language-toggle">
+                    <button id="languageToggle" class="language-btn" title="Translate">
+                        <span class="flag-icon">🇪🇸</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Project Modal -->
+    <div id="projectModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <div id="modalBody" class="modal-body">
+                <!-- Project details loaded dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Strategy Diagram Modal (Easter Egg) -->
+    <div id="strategyModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" id="strategyClose">&times;</span>
+            <div class="modal-body">
+                <h2>My Ideal GTM Strategy Pipeline</h2>
+                <div class="strategy-diagram">
+                    <div class="strategy-step">
+                        <div class="strategy-node">Market Research</div>
+                        <div class="strategy-arrow">→</div>
+                    </div>
+                    <div class="strategy-step">
+                        <div class="strategy-node">Product Development</div>
+                        <div class="strategy-arrow">→</div>
+                    </div>
+                    <div class="strategy-step">
+                        <div class="strategy-node">Customer Validation</div>
+                        <div class="strategy-arrow">→</div>
+                    </div>
+                    <div class="strategy-step">
+                        <div class="strategy-node">Go-to-Market</div>
+                        <div class="strategy-arrow">→</div>
+                    </div>
+                    <div class="strategy-step">
+                        <div class="strategy-node">Scale & Iterate</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay">
+        <div class="loader"></div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/config.js"></script>
+    <script src="js/worldMap.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>
