@@ -11,6 +11,10 @@ const SITE_CONFIG = {
     linkedinUrl: 'https://linkedin.com/in/elijb',
     apexUrl: '#', // Add your ApeX hub URL here
 
+    // ========== PROFILE INFO ==========
+    profileName: 'Your Name', // Add your name here
+    profileBio: `Builder. Strategist. Learner. I create solutions by bridging strategy with execution, from AI-powered tools to go-to-market strategies. Always learning, always building.`,
+
     // ========== ABOUT ME ==========
     aboutText: `During college, I struggled to find classes or clubs that truly engaged me—so I decided to build my own path. I started launching personal projects, like ApeX, because I believe the best way to learn is by doing. Even when I didn't know how to do something, I trusted that I could figure it out. That mindset led to plenty of failed attempts, but each one taught me something new and pushed me toward more ambitious, impactful work. My drive is simple: I am constantly iterating on new startup ideas and side projects, and always seeking new challenges. Skilled in SQL, Python, data visualization, and AI tooling, I believe "failure" is just a stepping stone to refinement. I am ready to connect ambitious students, university partners, and industry recruiters through the power of real, self-driven work.`,
 
@@ -234,6 +238,35 @@ What I learned: The importance of user research in understanding real-world cons
         { spanish: 'Aprendizaje continuo', english: 'Continuous learning' }
     ],
 
+    // ========== LANGUAGE QUIZ QUESTIONS ==========
+    quizQuestions: [
+        {
+            question: '¿Qué significa "La estrategia"?',
+            options: ['The strategy', 'The structure', 'The student', 'The system'],
+            correct: 0
+        },
+        {
+            question: '¿Qué significa "Análisis de datos"?',
+            options: ['Data entry', 'Data analysis', 'Data storage', 'Data backup'],
+            correct: 1
+        },
+        {
+            question: '¿Qué significa "Gestión de proyectos"?',
+            options: ['Project funding', 'Project management', 'Project planning', 'Project testing'],
+            correct: 1
+        },
+        {
+            question: '¿Qué significa "Inteligencia artificial"?',
+            options: ['Internet access', 'Artificial intelligence', 'Information architecture', 'Interactive application'],
+            correct: 1
+        },
+        {
+            question: '¿Qué significa "Aprendizaje continuo"?',
+            options: ['Continuous learning', 'Complete learning', 'Core learning', 'Casual learning'],
+            correct: 0
+        }
+    ],
+
     // ========== EASTER EGGS ==========
     easterEggs: {
         purdueMottoText: 'Boiler Up.',
@@ -270,18 +303,28 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 function loadContent() {
+    // Load Profile Data
+    const profileName = document.getElementById('profile-name');
+    const profileBio = document.getElementById('profile-bio');
+    if (profileName && SITE_CONFIG.profileName) {
+        profileName.textContent = SITE_CONFIG.profileName;
+    }
+    if (profileBio && SITE_CONFIG.profileBio) {
+        profileBio.textContent = SITE_CONFIG.profileBio;
+    }
+
     // Load About Text
     const aboutTextElement = document.getElementById('about-text');
     if (aboutTextElement) {
         aboutTextElement.textContent = SITE_CONFIG.aboutText;
     }
 
-    // Load Experience Timeline
+    // Load Experience Timeline (Compact Expandable Layout)
     const timelineElement = document.getElementById('experience-timeline');
     if (timelineElement) {
         SITE_CONFIG.experience.forEach(exp => {
-            const timelineItem = document.createElement('div');
-            timelineItem.className = 'timeline-item';
+            const experienceItem = document.createElement('div');
+            experienceItem.className = 'experience-item';
 
             const achievementsList = exp.achievements.map(achievement =>
                 `<li>${achievement}</li>`
@@ -290,17 +333,24 @@ function loadContent() {
             const companyClass = exp.isPurdue ? ' purdue-hover' : '';
             const dataAttr = exp.isMadrid ? ' data-madrid="true"' : '';
 
-            timelineItem.innerHTML = `
-                <div class="timeline-header">
-                    <h3 class="timeline-title">${exp.title}</h3>
-                    <div class="timeline-company${companyClass}"${dataAttr}>${exp.company}</div>
-                    <div class="timeline-date">${exp.date}</div>
+            experienceItem.innerHTML = `
+                <div class="experience-header">
+                    <div class="experience-header-left">
+                        <h3 class="experience-title">${exp.title}</h3>
+                        <div class="experience-company${companyClass}"${dataAttr}>${exp.company}</div>
+                    </div>
+                    <div class="experience-header-right">
+                        <div class="experience-date">${exp.date}</div>
+                        <div class="expand-icon">▼</div>
+                    </div>
                 </div>
-                <ul class="timeline-achievements">
-                    ${achievementsList}
-                </ul>
+                <div class="experience-details">
+                    <ul class="experience-achievements">
+                        ${achievementsList}
+                    </ul>
+                </div>
             `;
-            timelineElement.appendChild(timelineItem);
+            timelineElement.appendChild(experienceItem);
         });
     }
 
@@ -334,7 +384,39 @@ function loadContent() {
         });
     }
 
-    // Load Skills
+    // Load Skills (Compact Layout)
+    const skillsTechnical = document.getElementById('skills-technical');
+    if (skillsTechnical) {
+        SITE_CONFIG.skills.forEach(skillCategory => {
+            const skillItems = skillCategory.items.map(skill => {
+                const isVibeCoding = skill === 'Vibe-coding';
+                const vibeBox = isVibeCoding ? `
+                    <div class="vibe-box">
+# Python
+def hello():
+    return "AI"
+
+-- SQL
+SELECT * FROM ideas
+
+<!-- HTML -->
+<div>Build</div>
+                    </div>
+                ` : '';
+                return `<span class="skill-tag${isVibeCoding ? ' vibe-coding' : ''}">${skill}${vibeBox}</span>`;
+            }).join('');
+
+            const categoryDiv = document.createElement('div');
+            categoryDiv.className = 'skill-group';
+            categoryDiv.innerHTML = `
+                <h4 class="skill-group-title">${skillCategory.category}</h4>
+                <div class="skill-tags">${skillItems}</div>
+            `;
+            skillsTechnical.appendChild(categoryDiv);
+        });
+    }
+
+    // Load Skills (OLD FORMAT - for backward compatibility)
     const skillsContent = document.getElementById('skills-content');
     if (skillsContent) {
         SITE_CONFIG.skills.forEach(skillCategory => {
@@ -388,18 +470,28 @@ SELECT * FROM ideas
         skillsContent.appendChild(certsDiv);
     }
 
-    // Load Awards
+    // Load Certifications (Compact Layout)
+    const certificationsList = document.getElementById('certifications-list');
+    if (certificationsList) {
+        SITE_CONFIG.certifications.forEach(cert => {
+            const certItem = document.createElement('div');
+            certItem.className = 'cert-item';
+            const className = cert.hasEasterEgg ? ' certification-name' : '';
+            const dataAttr = cert.hasEasterEgg ? ' data-easter-egg="true"' : '';
+            certItem.innerHTML = `<span class="${className}"${dataAttr}>✓ ${cert.name}</span>`;
+            certificationsList.appendChild(certItem);
+        });
+    }
+
+    // Load Awards (Compact Layout)
     const awardsList = document.getElementById('awards-list');
     if (awardsList) {
         SITE_CONFIG.awards.forEach(award => {
             const awardItem = document.createElement('div');
-            awardItem.className = 'award-item';
+            awardItem.className = 'award-item-compact';
             awardItem.innerHTML = `
-                <div class="award-rank">${award.rank}</div>
-                <div class="award-content">
-                    <div class="award-title">${award.title}</div>
-                    <div class="award-description">${award.description}</div>
-                </div>
+                <span class="award-rank-compact">${award.rank}</span>
+                <span class="award-title-compact">${award.title}</span>
             `;
             awardsList.appendChild(awardItem);
         });

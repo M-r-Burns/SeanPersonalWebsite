@@ -20,6 +20,15 @@ document.addEventListener('DOMContentLoaded', function () {
     initializeBackgroundPreloading();
     initializeScrollAnimations();
 
+    // NEW FEATURES FOR RESTRUCTURED LAYOUT
+    initializeProfileImage();
+    initializeExpandableExperiences();
+    initializeStatAnimations();
+    initializeDrawingCanvas();
+    initializeAIChat();
+    initializeLanguageQuiz();
+    initializeKonamiCode();
+
     // Hide loading screen after everything is loaded
     setTimeout(() => {
         const loadingScreen = document.getElementById('loading-screen');
@@ -481,16 +490,16 @@ function initializeEasterEggs() {
     initializeAIQuote();
 }
 
-// 1. Hidden Terminal (Ctrl+Alt+I)
+// 1. Hidden Terminal (Ctrl+Shift+T)
 function initializeHiddenTerminal() {
     const terminal = document.getElementById('terminal');
     const terminalOutput = document.getElementById('terminal-output');
     const terminalInput = document.getElementById('terminal-input');
     const terminalClose = terminal ? terminal.querySelector('.terminal-close') : null;
 
-    // Open terminal with Ctrl+Alt+I
+    // Open terminal with Ctrl+Shift+T
     document.addEventListener('keydown', (e) => {
-        if (e.ctrlKey && e.altKey && e.key === 'i') {
+        if (e.ctrlKey && e.shiftKey && e.key === 'T') {
             e.preventDefault();
             if (terminal) {
                 terminal.classList.add('show');
@@ -643,6 +652,382 @@ function initializeAIQuote() {
     }
 }
 
+// ========== NEW FEATURES FOR RESTRUCTURED LAYOUT ==========
+
+// Profile Image Loading
+function initializeProfileImage() {
+    const profileImage = document.getElementById('profile-image');
+    const profilePlaceholder = document.getElementById('profile-placeholder');
+
+    if (profileImage && profilePlaceholder) {
+        // Try to load profile image
+        profileImage.onload = function() {
+            profilePlaceholder.style.display = 'none';
+            profileImage.style.display = 'block';
+        };
+
+        profileImage.onerror = function() {
+            // Keep placeholder if image fails to load
+            profilePlaceholder.style.display = 'flex';
+            profileImage.style.display = 'none';
+        };
+
+        // Check if image should load
+        if (profileImage.src) {
+            const img = new Image();
+            img.onload = function() {
+                profilePlaceholder.style.display = 'none';
+                profileImage.style.display = 'block';
+            };
+            img.src = profileImage.src;
+        }
+    }
+}
+
+// Expandable Experience Cards
+function initializeExpandableExperiences() {
+    const experienceHeaders = document.querySelectorAll('.experience-header');
+
+    experienceHeaders.forEach(header => {
+        header.addEventListener('click', function() {
+            const item = this.closest('.experience-item');
+            item.classList.toggle('expanded');
+        });
+    });
+}
+
+// Stat Animations
+function initializeStatAnimations() {
+    const statItems = document.querySelectorAll('.stat-item');
+
+    statItems.forEach(item => {
+        item.addEventListener('click', function() {
+            const statNumber = this.querySelector('.stat-number');
+            if (statNumber) {
+                statNumber.classList.add('ripple');
+                setTimeout(() => {
+                    statNumber.classList.remove('ripple');
+                }, 600);
+            }
+        });
+    });
+}
+
+// Drawing Canvas (Press D to toggle)
+function initializeDrawingCanvas() {
+    const canvas = document.getElementById('drawing-canvas');
+    const indicator = document.getElementById('draw-mode-indicator');
+    const clearBtn = document.getElementById('clear-canvas-btn');
+    const exitBtn = document.getElementById('exit-draw-mode');
+
+    if (!canvas || !indicator) return;
+
+    let isDrawing = false;
+    let drawingEnabled = false;
+    let ctx = canvas.getContext('2d');
+
+    // Set canvas size
+    function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    // Toggle drawing mode with D key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'd' || e.key === 'D') {
+            // Don't toggle if typing in an input
+            if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+
+            e.preventDefault();
+            drawingEnabled = !drawingEnabled;
+
+            if (drawingEnabled) {
+                canvas.classList.add('active');
+                indicator.classList.add('show');
+            } else {
+                canvas.classList.remove('active');
+                indicator.classList.remove('show');
+            }
+        }
+    });
+
+    // Drawing functionality
+    canvas.addEventListener('mousedown', (e) => {
+        if (!drawingEnabled) return;
+        isDrawing = true;
+        ctx.beginPath();
+        ctx.moveTo(e.clientX, e.clientY);
+    });
+
+    canvas.addEventListener('mousemove', (e) => {
+        if (!drawingEnabled || !isDrawing) return;
+        ctx.lineTo(e.clientX, e.clientY);
+        ctx.strokeStyle = '#111111';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+    });
+
+    canvas.addEventListener('mouseup', () => {
+        isDrawing = false;
+    });
+
+    canvas.addEventListener('mouseleave', () => {
+        isDrawing = false;
+    });
+
+    // Clear canvas
+    if (clearBtn) {
+        clearBtn.addEventListener('click', () => {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        });
+    }
+
+    // Exit drawing mode
+    if (exitBtn) {
+        exitBtn.addEventListener('click', () => {
+            drawingEnabled = false;
+            canvas.classList.remove('active');
+            indicator.classList.remove('show');
+        });
+    }
+}
+
+// AI Chat Widget
+function initializeAIChat() {
+    const chatWidget = document.getElementById('ai-chat-widget');
+    const chatTrigger = document.getElementById('ai-chat-trigger');
+    const chatClose = document.getElementById('chat-close');
+    const chatInput = document.getElementById('chat-input');
+    const chatSend = document.getElementById('chat-send');
+    const chatMessages = document.getElementById('chat-messages');
+
+    if (!chatWidget || !chatTrigger) return;
+
+    // Toggle chat
+    chatTrigger.addEventListener('click', () => {
+        chatWidget.classList.toggle('show');
+        if (chatWidget.classList.contains('show')) {
+            chatInput.focus();
+        }
+    });
+
+    if (chatClose) {
+        chatClose.addEventListener('click', () => {
+            chatWidget.classList.remove('show');
+        });
+    }
+
+    // Send message
+    function sendMessage() {
+        const message = chatInput.value.trim();
+        if (!message) return;
+
+        // Add user message
+        addMessage(message, 'user');
+        chatInput.value = '';
+
+        // Simulate AI response
+        setTimeout(() => {
+            const response = getAIResponse(message);
+            addMessage(response, 'ai');
+        }, 500);
+    }
+
+    chatSend.addEventListener('click', sendMessage);
+    chatInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            sendMessage();
+        }
+    });
+
+    function addMessage(text, sender) {
+        const messageDiv = document.createElement('div');
+        messageDiv.className = `chat-message ${sender}`;
+        messageDiv.textContent = text;
+        chatMessages.appendChild(messageDiv);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function getAIResponse(input) {
+        const lowerInput = input.toLowerCase();
+
+        // Simple pattern matching responses
+        if (lowerInput.includes('project')) {
+            return 'I have several exciting projects! Check out ApeX Student Hub, the Class 8 Truck Simulator, and more. Click on the Projects page to explore them!';
+        } else if (lowerInput.includes('experience')) {
+            return 'I have experience in consulting, tax compliance, and data analytics. I\'ve worked with Crowe LLP, DuCharme McMillen, and more. Scroll down to see my full experience!';
+        } else if (lowerInput.includes('skill')) {
+            return 'My skills include Python, SQL, JavaScript, data visualization with Tableau, and AI tooling. I also know Spanish at an A2 level!';
+        } else if (lowerInput.includes('contact') || lowerInput.includes('email')) {
+            return 'You can reach me through the contact form at the bottom of the page, or connect with me on LinkedIn!';
+        } else if (lowerInput.includes('hello') || lowerInput.includes('hi') || lowerInput.includes('hey')) {
+            return 'Hello! I\'m your AI assistant. Feel free to ask about projects, experience, skills, or anything else!';
+        } else if (lowerInput.includes('apex')) {
+            return 'ApeX is a student project hub I built to showcase university student work. It uses Supabase and the Gemini API. Check it out in the Projects section!';
+        } else if (lowerInput.includes('truck') || lowerInput.includes('simulator')) {
+            return 'The Class 8 Truck Simulator compares diesel vs. electric trucks using real-world logistics constraints. It integrates Google Maps API and Hours of Service rules!';
+        } else {
+            return 'That\'s an interesting question! Feel free to explore the site to learn more, or ask me about "projects", "experience", or "skills"!';
+        }
+    }
+}
+
+// Language Quiz Feature
+function initializeLanguageQuiz() {
+    const quizBtn = document.getElementById('lang-quiz-btn');
+    const quizModal = document.getElementById('language-quiz-modal');
+    const quizQuestion = document.getElementById('quiz-question');
+    const quizOptions = document.getElementById('quiz-options');
+    const quizResult = document.getElementById('quiz-result');
+    const modalClose = quizModal ? quizModal.querySelector('.modal-close') : null;
+
+    if (!quizBtn || !quizModal || !window.SITE_CONFIG?.quizQuestions) return;
+
+    let currentQuestionIndex = 0;
+    let score = 0;
+    let quizStarted = false;
+
+    // Open quiz
+    quizBtn.addEventListener('click', () => {
+        quizModal.classList.add('show');
+        document.body.style.overflow = 'hidden';
+        if (!quizStarted) {
+            startQuiz();
+            quizStarted = true;
+        } else {
+            loadQuestion();
+        }
+    });
+
+    // Close quiz
+    if (modalClose) {
+        modalClose.addEventListener('click', () => {
+            quizModal.classList.remove('show');
+            document.body.style.overflow = 'auto';
+        });
+    }
+
+    function startQuiz() {
+        currentQuestionIndex = 0;
+        score = 0;
+        loadQuestion();
+    }
+
+    function loadQuestion() {
+        const questions = window.SITE_CONFIG.quizQuestions;
+        const question = questions[currentQuestionIndex];
+
+        quizQuestion.textContent = question.question;
+        quizOptions.innerHTML = '';
+        quizResult.textContent = '';
+        quizResult.classList.remove('show');
+
+        question.options.forEach((option, index) => {
+            const optionDiv = document.createElement('div');
+            optionDiv.className = 'quiz-option';
+            optionDiv.textContent = option;
+            optionDiv.addEventListener('click', () => checkAnswer(index, question.correct));
+            quizOptions.appendChild(optionDiv);
+        });
+    }
+
+    function checkAnswer(selected, correct) {
+        const options = quizOptions.querySelectorAll('.quiz-option');
+
+        if (selected === correct) {
+            options[selected].classList.add('correct');
+            score++;
+            quizResult.textContent = '✓ Correct!';
+        } else {
+            options[selected].classList.add('incorrect');
+            options[correct].classList.add('correct');
+            quizResult.textContent = '✗ Incorrect';
+        }
+
+        quizResult.classList.add('show');
+
+        // Disable all options
+        options.forEach(opt => {
+            opt.style.pointerEvents = 'none';
+        });
+
+        // Move to next question after delay
+        setTimeout(() => {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < window.SITE_CONFIG.quizQuestions.length) {
+                loadQuestion();
+            } else {
+                showResults();
+            }
+        }, 2000);
+    }
+
+    function showResults() {
+        const totalQuestions = window.SITE_CONFIG.quizQuestions.length;
+        quizQuestion.textContent = 'Quiz Complete!';
+        quizOptions.innerHTML = `
+            <div style="text-align: center; padding: 2rem; border: 2px solid var(--color-black);">
+                <div style="font-size: 2rem; font-weight: 700; margin-bottom: 1rem;">
+                    ${score} / ${totalQuestions}
+                </div>
+                <div style="font-size: 1.1rem;">
+                    ${score === totalQuestions ? '¡Perfecto! 🎉' : score >= totalQuestions / 2 ? '¡Bien hecho! 👍' : '¡Sigue practicando! 📚'}
+                </div>
+            </div>
+        `;
+        quizResult.textContent = 'Click outside to close';
+        quizResult.classList.add('show');
+        quizStarted = false;
+    }
+}
+
+// Konami Code (↑↑↓↓←→AI)
+function initializeKonamiCode() {
+    const sequence = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'a', 'i'];
+    let currentIndex = 0;
+
+    document.addEventListener('keydown', (e) => {
+        // Don't track if typing in input
+        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') {
+            currentIndex = 0;
+            return;
+        }
+
+        const key = e.key.toLowerCase();
+
+        if (key === sequence[currentIndex].toLowerCase()) {
+            currentIndex++;
+            if (currentIndex === sequence.length) {
+                activateAIMode();
+                currentIndex = 0;
+            }
+        } else {
+            currentIndex = 0;
+        }
+    });
+
+    function activateAIMode() {
+        const overlay = document.getElementById('ai-mode-overlay');
+        if (overlay) {
+            overlay.classList.add('show');
+            setTimeout(() => {
+                overlay.classList.remove('show');
+                // Open AI chat after overlay
+                const chatWidget = document.getElementById('ai-chat-widget');
+                const chatInput = document.getElementById('chat-input');
+                if (chatWidget) {
+                    chatWidget.classList.add('show');
+                    if (chatInput) {
+                        chatInput.focus();
+                    }
+                }
+            }, 2000);
+        }
+    }
+}
+
 // ========== UTILITY FUNCTIONS ==========
 // Debounce function for performance
 function debounce(func, wait) {
@@ -659,4 +1044,6 @@ function debounce(func, wait) {
 
 // Log initialization for debugging
 console.log('%c🌍 Global Learning Canvas Initialized', 'color: #304FFE; font-size: 16px; font-weight: bold;');
-console.log('%cPress Ctrl+Alt+I to open Insights Terminal', 'color: #00FF00; font-family: monospace;');
+console.log('%cPress Ctrl+Shift+T to open Insights Terminal', 'color: #00FF00; font-family: monospace;');
+console.log('%cPress D to toggle Drawing Mode', 'color: #304FFE; font-family: monospace;');
+console.log('%cKonami Code: ↑↑↓↓←→AI for AI Mode', 'color: #304FFE; font-family: monospace;');
