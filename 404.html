@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - Page Not Found | Global Learning Canvas</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&family=Inter:wght@400;600&family=Fira+Code&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #FFFFFF;
+            color: #111111;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .container {
+            text-align: center;
+            border: 2px solid #111111;
+            padding: 3rem;
+            max-width: 600px;
+        }
+
+        h1 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 8rem;
+            font-weight: 700;
+            color: #304FFE;
+            margin-bottom: 1rem;
+        }
+
+        h2 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            letter-spacing: 2px;
+        }
+
+        p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+
+        .code {
+            font-family: 'Fira Code', monospace;
+            background: #F8F8F8;
+            padding: 1rem;
+            border: 1px solid #111111;
+            margin: 1.5rem 0;
+            font-size: 0.9rem;
+        }
+
+        .home-button {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            border: 2px solid #111111;
+            background: #FFFFFF;
+            color: #111111;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+        }
+
+        .home-button:hover {
+            background: #111111;
+            color: #FFFFFF;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>404</h1>
+        <h2>PAGE NOT FOUND</h2>
+        <p>The page you're looking for doesn't exist or has been moved.</p>
+        <div class="code">
+            ERROR: Route not found in production models.<br>
+            STATUS: 404 | Resource unavailable
+        </div>
+        <a href="/" class="home-button">Return to Home</a>
+    </div>
+</body>
+</html>

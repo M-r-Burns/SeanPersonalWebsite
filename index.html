@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Purdue University Student, B.S. in Business Analytics & Information Management. Bridging Strategy. Executing Code.">
+    <title>Global Learning Canvas | Portfolio</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Inter:wght@300;400;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- Preload critical assets -->
+    <link rel="preload" as="image" href="assets/images/world-map.svg">
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="loading-screen">
+        <div class="loading-content">
+            <div class="loading-text">INITIALIZING...</div>
+            <div class="loading-bar"></div>
+        </div>
+    </div>
+
+    <!-- Language Learning Widget -->
+    <div id="language-widget" class="language-widget">
+        <div class="language-text" id="language-text">La estrategia del mercado</div>
+        <div class="language-translation" id="language-translation">Market strategy</div>
+    </div>
+
+    <!-- Navigation -->
+    <nav id="navbar" class="navbar">
+        <div class="nav-container">
+            <a href="#hero" class="nav-logo">GLOBAL LEARNING CANVAS</a>
+            <div class="nav-menu" id="nav-menu">
+                <a href="#about" class="nav-link">About</a>
+                <a href="#experience" class="nav-link">Experience</a>
+                <a href="#projects" class="nav-link">Projects</a>
+                <a href="#skills" class="nav-link">Skills</a>
+                <a href="#awards" class="nav-link">Awards</a>
+                <a href="#contact" class="nav-link">Contact</a>
+            </div>
+            <div class="nav-hamburger" id="nav-hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Background World Map -->
+    <div class="world-map-background" id="world-map"></div>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section id="hero" class="hero section">
+            <div class="container">
+                <div class="hero-content">
+                    <h1 class="hero-title">
+                        BRIDGING STRATEGY. EXECUTING CODE.<br>
+                        <span class="hero-subtitle">(A.I. → G.T.M.)</span>
+                    </h1>
+                    <div class="hero-tagline">
+                        <p>Purdue University Student, B.S. in Business Analytics & Information Management.</p>
+                        <p class="location">
+                            <span class="map-pin" id="map-pin">📍</span> Indianapolis, IN
+                        </p>
+                    </div>
+                    <a href="#projects" class="cta-button">View Production Models</a>
+                </div>
+
+                <!-- Map Pin Tooltip -->
+                <div class="map-tooltip" id="map-tooltip">
+                    Current Strategic Focus: Business Analytics
+                </div>
+            </div>
+        </section>
+
+        <!-- About Me Section -->
+        <section id="about" class="about section">
+            <div class="container">
+                <h2 class="section-title">THE LEARNING ALGORITHM.</h2>
+                <div class="about-content">
+                    <div class="about-text" id="about-text">
+                        <!-- Content loaded from content.js -->
+                    </div>
+
+                    <div class="metrics-grid">
+                        <div class="metric-card">
+                            <div class="metric-number" id="metric-connections">84+</div>
+                            <div class="metric-label">LinkedIn Connections</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-number" id="metric-projects">15+</div>
+                            <div class="metric-label">Projects Completed</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-number lebron-metric" id="metric-lebron">∞</div>
+                            <div class="metric-label">Times I've thought about LeBron</div>
+                        </div>
+                    </div>
+
+                    <div class="interests-section">
+                        <h3>Personal Interests:</h3>
+                        <div class="interests-grid">
+                            <div class="interest-item">
+                                <span class="interest-icon">🤖</span>
+                                <span>Leveraging AI to accelerate learning</span>
+                            </div>
+                            <div class="interest-item">
+                                <span class="interest-icon fitness-icon" id="fitness-icon">💪</span>
+                                <span>Optimizing fitness (weightlifting)</span>
+                            </div>
+                            <div class="interest-item">
+                                <span class="interest-icon">💼</span>
+                                <span>Understanding business mechanics</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Professional Experience Section -->
+        <section id="experience" class="experience section">
+            <div class="container">
+                <h2 class="section-title">TRAINING DATA: APPLIED INSIGHTS.</h2>
+                <div class="timeline" id="experience-timeline">
+                    <!-- Content loaded from content.js -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Portfolio & Projects Section -->
+        <section id="projects" class="projects section">
+            <div class="container">
+                <h2 class="section-title">PRODUCTION MODELS.</h2>
+                <div class="projects-grid" id="projects-grid">
+                    <!-- Content loaded from content.js -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills & Certifications Section -->
+        <section id="skills" class="skills section">
+            <div class="container">
+                <h2 class="section-title">CURRENT PARAMETERS.</h2>
+                <div class="skills-content" id="skills-content">
+                    <!-- Content loaded from content.js -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Awards Section -->
+        <section id="awards" class="awards section">
+            <div class="container">
+                <h2 class="section-title">MODEL VALIDATION.</h2>
+                <div class="awards-list" id="awards-list">
+                    <!-- Content loaded from content.js -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="contact section">
+            <div class="container">
+                <h2 class="section-title">SYNCHRONIZE/CONNECT.</h2>
+                <div class="contact-content">
+                    <div class="contact-links">
+                        <a href="#" class="contact-link" id="linkedin-link" target="_blank" rel="noopener">
+                            <span class="link-icon">in</span>
+                            <span>LinkedIn</span>
+                        </a>
+                        <a href="#" class="contact-link" id="apex-link" target="_blank" rel="noopener">
+                            <span class="link-icon">🚀</span>
+                            <span>ApeX Projects Hub</span>
+                        </a>
+                    </div>
+
+                    <form class="contact-form" id="contact-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="name">Name</label>
+                                <input type="text" id="name" name="name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" id="email" name="email" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="subject">Subject</label>
+                            <input type="text" id="subject" name="subject" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="submit-button">Initiate Connection</button>
+                        <div class="form-status" id="form-status"></div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; <span id="current-year"></span> Global Learning Canvas. All rights reserved.</p>
+            <p class="footer-hint">Press Ctrl+Alt+I for insights...</p>
+        </div>
+    </footer>
+
+    <!-- Modals -->
+    <!-- Project Detail Modal -->
+    <div id="project-modal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <div id="modal-body"></div>
+        </div>
+    </div>
+
+    <!-- Fitness Timer Modal -->
+    <div id="fitness-modal" class="modal">
+        <div class="modal-content timer-modal">
+            <span class="modal-close">&times;</span>
+            <h3>Rest Timer</h3>
+            <div class="timer-display" id="timer-display">00:30</div>
+            <div class="timer-controls">
+                <button id="timer-start" class="timer-button">Start</button>
+                <button id="timer-reset" class="timer-button">Reset</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hidden Terminal -->
+    <div id="terminal" class="terminal">
+        <div class="terminal-header">
+            <span>INSIGHTS TERMINAL</span>
+            <span class="terminal-close">&times;</span>
+        </div>
+        <div class="terminal-body" id="terminal-output">
+            <div>> System initialized. Type 'help' for available commands.</div>
+        </div>
+        <div class="terminal-input-line">
+            <span>> </span>
+            <input type="text" id="terminal-input" class="terminal-input" autocomplete="off">
+        </div>
+    </div>
+
+    <!-- Basketball Animation Container -->
+    <div id="basketball-container"></div>
+
+    <!-- Scripts -->
+    <script src="content.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

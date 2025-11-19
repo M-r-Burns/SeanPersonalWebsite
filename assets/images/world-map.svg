@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
+  <!-- Simple world map outline - continents -->
+  <g stroke="#111111" stroke-width="1" fill="none" opacity="0.2">
+    <!-- North America -->
+    <path d="M100,150 L120,120 L180,110 L220,130 L250,110 L280,120 L300,150 L320,180 L310,220 L280,250 L250,280 L220,300 L180,310 L150,290 L120,260 L100,220 Z"/>
+
+    <!-- South America -->
+    <path d="M220,350 L240,320 L270,340 L280,380 L290,430 L280,480 L260,520 L240,540 L220,520 L210,480 L200,430 L210,380 Z"/>
+
+    <!-- Europe -->
+    <path d="M500,120 L540,110 L580,120 L610,140 L620,170 L600,190 L570,200 L540,190 L510,170 L500,150 Z"/>
+
+    <!-- Africa -->
+    <path d="M500,250 L520,230 L560,240 L590,260 L610,300 L620,350 L610,400 L590,440 L560,470 L520,480 L490,460 L470,420 L480,370 L490,320 L500,280 Z"/>
+
+    <!-- Asia -->
+    <path d="M650,100 L720,90 L800,110 L860,140 L900,180 L920,220 L910,270 L880,300 L840,320 L790,310 L740,280 L700,250 L670,210 L660,160 Z"/>
+
+    <!-- Australia -->
+    <path d="M850,450 L890,440 L920,460 L930,490 L920,520 L890,540 L860,530 L840,510 L840,480 Z"/>
+
+    <!-- Grid lines (latitude/longitude) -->
+    <line x1="0" y1="200" x2="1200" y2="200" stroke="#111111" stroke-width="0.5" opacity="0.1"/>
+    <line x1="0" y1="400" x2="1200" y2="400" stroke="#111111" stroke-width="0.5" opacity="0.1"/>
+    <line x1="0" y1="600" x2="1200" y2="600" stroke="#111111" stroke-width="0.5" opacity="0.1"/>
+    <line x1="300" y1="0" x2="300" y2="800" stroke="#111111" stroke-width="0.5" opacity="0.1"/>
+    <line x1="600" y1="0" x2="600" y2="800" stroke="#111111" stroke-width="0.5" opacity="0.1"/>
+    <line x1="900" y1="0" x2="900" y2="800" stroke="#111111" stroke-width="0.5" opacity="0.1"/>
+  </g>
+</svg>
