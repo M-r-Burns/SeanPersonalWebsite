@@ -1,0 +1,7 @@
+# robots.txt for personal website
+
+User-agent: *
+Allow: /
+
+# Sitemap (update this URL after deploying)
+# Sitemap: https://your-website.pages.dev/sitemap.xml
