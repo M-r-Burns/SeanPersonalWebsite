@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Eli J - Purdue University Student bridging strategy and code, specializing in AI, analytics, and full-stack development">
+    <meta name="keywords" content="Business Analytics, AI, Software Development, Purdue University, Python, Data Visualization">
+    <meta name="author" content="Eli J">
+    <title>Eli J | AI-Powered Learning Studio</title>
+
+    <!-- Preconnect to external resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Fira+Code:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="assets/css/styles.css">
+
+    <!-- Favicon (add your own) -->
+    <link rel="icon" type="image/png" href="assets/images/favicon.png">
+</head>
+<body>
+    <!-- Hidden Easter Egg Console Message -->
+    <script>
+        console.log("%c Welcome, fellow Vibe-Coder. Nice tools you got there. ", "background: #39FF14; color: #1a1a2e; font-size: 16px; padding: 10px; font-family: 'Fira Code', monospace;");
+    </script>
+
+    <!-- Navigation -->
+    <nav class="nav-bar" role="navigation" aria-label="Main navigation">
+        <div class="nav-container">
+            <div class="nav-logo">ELI.J</div>
+            <ul class="nav-menu">
+                <li><a href="#about">About</a></li>
+                <li><a href="#experience">Experience</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#contact">Connect</a></li>
+            </ul>
+            <button class="mobile-menu-toggle" aria-label="Toggle mobile menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero-section">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title gradient-text">
+                    BRIDGING STRATEGY. EXECUTING CODE. <span class="code-accent">(A.I. → G.T.M.)</span>
+                </h1>
+                <p class="hero-subtitle">
+                    Purdue University Student, B.S. in Business Analytics & Information Management
+                </p>
+                <p class="hero-location">
+                    <span class="location-dot"></span> Indianapolis, IN
+                </p>
+                <div class="hero-cta">
+                    <a href="#projects" class="btn btn-primary">View Production Models</a>
+                    <a href="#contact" class="btn btn-secondary">Initiate Connection</a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <!-- Animated network background will be added via JS -->
+                <canvas id="hero-canvas"></canvas>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about-section section">
+        <div class="container">
+            <h2 class="section-title">THE LEARNING ALGORITHM.</h2>
+
+            <div class="about-content">
+                <div class="about-narrative">
+                    <p>
+                        During college, I struggled to find classes or clubs that truly engaged me—so I decided to build my own path. I started launching personal projects, like ApeX, because I believe the best way to learn is by doing. Even when I didn't know how to do something, I trusted that I could figure it out.
+                    </p>
+                    <p>
+                        That mindset led to plenty of failed attempts, but each one taught me something new and pushed me toward more ambitious, impactful work. My drive is simple: I am <span class="constantly-iterating">constantly iterating</span> on new startup ideas and side projects, and always seeking new challenges.
+                    </p>
+                    <p>
+                        Skilled in SQL, Python, data visualization, and AI tooling, I believe "failure" is just a stepping stone to refinement. I am ready to connect ambitious students, university partners, and industry recruiters through the power of real, self-driven work.
+                    </p>
+                </div>
+
+                <div class="about-metrics">
+                    <div class="metric-card glass-card">
+                        <div class="metric-value" id="linkedin-connections">84+</div>
+                        <div class="metric-label">LinkedIn Connections</div>
+                    </div>
+                    <div class="metric-card glass-card">
+                        <div class="metric-value">15+</div>
+                        <div class="metric-label">Projects Completed</div>
+                    </div>
+                    <div class="metric-card glass-card">
+                        <div class="metric-value">∞</div>
+                        <div class="metric-label">Times I've Thought About LeBron</div>
+                    </div>
+                </div>
+
+                <div class="about-interests">
+                    <h3 class="subsection-title">Personal Interests</h3>
+                    <div class="interests-grid">
+                        <div class="interest-item">
+                            <span class="interest-icon">🤖</span>
+                            <span>Leveraging AI to accelerate learning</span>
+                        </div>
+                        <div class="interest-item">
+                            <span class="interest-icon">💪</span>
+                            <span>Optimizing fitness (weightlifting)</span>
+                        </div>
+                        <div class="interest-item">
+                            <span class="interest-icon">📊</span>
+                            <span>Understanding business mechanics</span>
+                        </div>
+                        <div class="interest-item">
+                            <span class="interest-icon">🌍</span>
+                            <span>Languages & cultural exploration</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Network Graph Background -->
+            <canvas id="skill-network-canvas" class="skill-network-canvas"></canvas>
+        </div>
+    </section>
+
+    <!-- Professional Experience Section -->
+    <section id="experience" class="experience-section section">
+        <div class="container">
+            <h2 class="section-title">TRAINING DATA: APPLIED INSIGHTS.</h2>
+
+            <div class="experience-timeline">
+                <!-- Experience Card 1 -->
+                <div class="experience-card glass-card">
+                    <div class="experience-header">
+                        <div>
+                            <h3 class="experience-role">RCFC Consulting/Technology Intern</h3>
+                            <p class="experience-company">
+                                <a href="https://www.crowe.com/" target="_blank" rel="noopener noreferrer" class="company-link">Crowe LLP</a>
+                            </p>
+                        </div>
+                        <div class="experience-meta">
+                            <span class="experience-date">Jun 2025 – Aug 2025</span>
+                        </div>
+                    </div>
+                    <ul class="experience-achievements">
+                        <li>Developed a ChatGPT-powered HTML/JS tool to standardize 750+ risk statements, cutting manual editing time by <span class="highlight">~80%</span> (100+ hours).</li>
+                        <li>Led an <span class="business-term" data-definition="Systematic investigation into AI applications and use cases">AI research initiative</span>, conducting 12+ product owner interviews to uncover 5+ high-impact use cases and presented a strategic roadmap to partners.</li>
+                        <li>Co-created an AI-powered ERP screen-capture assistant concept in an internal case competition, placing 4th/29.</li>
+                        <li>Initiated a prototype RAG compliance agent for natural-language regulatory queries.</li>
+                    </ul>
+                </div>
+
+                <!-- Experience Card 2 -->
+                <div class="experience-card glass-card">
+                    <div class="experience-header">
+                        <div>
+                            <h3 class="experience-role">Property Tax Compliance Intern</h3>
+                            <p class="experience-company">
+                                <a href="https://www.dmainc.com/" target="_blank" rel="noopener noreferrer" class="company-link">DuCharme, McMillen & Associates, Inc.</a>
+                            </p>
+                        </div>
+                        <div class="experience-meta">
+                            <span class="experience-date">May 2024 – Aug 2024</span>
+                        </div>
+                    </div>
+                    <ul class="experience-achievements">
+                        <li>Leveraged data analysis and ChatGPT API to uncover trends from 200+ employee feedback responses, enhancing strategic decision-making.</li>
+                        <li>Prepared and filed BPP tax returns and processed bills on $100M+ in assets, ensuring compliance.</li>
+                        <li>Supported an SOC audit, participating in internal control processes.</li>
+                    </ul>
+                </div>
+
+                <!-- Experience Card 3 -->
+                <div class="experience-card glass-card">
+                    <div class="experience-header">
+                        <div>
+                            <h3 class="experience-role">Intern</h3>
+                            <p class="experience-company">
+                                <a href="https://www.griswoldconsulting.com/" target="_blank" rel="noopener noreferrer" class="company-link">Griswold Consulting</a>
+                            </p>
+                        </div>
+                        <div class="experience-meta">
+                            <span class="experience-date">Jan 2024 – May 2024</span>
+                        </div>
+                    </div>
+                    <ul class="experience-achievements">
+                        <li>Collaborated with Indianapolis Chamber of Commerce for actionable business insights via data analysis.</li>
+                        <li>Used Tableau to analyze 82,000+ data lines, creating interactive visualization for 100+ EV/battery manufacturers.</li>
+                        <li>Partnered with Madison County Economic Development for 5-year economic impact projections.</li>
+                    </ul>
+                </div>
+
+                <!-- Experience Card 4 -->
+                <div class="experience-card glass-card">
+                    <div class="experience-header">
+                        <div>
+                            <h3 class="experience-role">Vice President of External Events</h3>
+                            <p class="experience-company">Larsen Leadership Academy</p>
+                        </div>
+                        <div class="experience-meta">
+                            <span class="experience-date">Aug 2022 – Dec 2024</span>
+                        </div>
+                    </div>
+                    <ul class="experience-achievements">
+                        <li>Organized a PowerBI workshop for Larsen members.</li>
+                        <li>Helped guide 600+ students in leadership/professional development on Purdue's largest learning community executive board.</li>
+                    </ul>
+                </div>
+
+                <!-- Experience Card 5 -->
+                <div class="experience-card glass-card">
+                    <div class="experience-header">
+                        <div>
+                            <h3 class="experience-role">Study Abroad Program</h3>
+                            <p class="experience-company">UC3M (Madrid, Spain)</p>
+                        </div>
+                        <div class="experience-meta">
+                            <span class="experience-date">Sep 2024 – Dec 2024</span>
+                        </div>
+                    </div>
+                    <ul class="experience-achievements">
+                        <li>Completed A2-level Spanish coursework while living with a host family.</li>
+                        <li>Visited nine European countries, navigating diverse customs and deepening adaptability.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="projects-section section">
+        <div class="container">
+            <h2 class="section-title">PRODUCTION MODELS.</h2>
+
+            <div class="projects-grid">
+                <!-- Project Card 1 - ApeX -->
+                <div class="project-card glass-card" data-project="apex">
+                    <div class="project-image-container">
+                        <img src="assets/images/apex-thumbnail.jpg"
+                             alt="ApeX Student Project Hub"
+                             class="project-image lazy-load"
+                             data-src="assets/images/apex-thumbnail.jpg"
+                             loading="lazy">
+                        <div class="project-overlay">
+                            <a href="blog/ApeX.md" class="project-link" target="_blank">Read Full Story →</a>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title">ApeX Student Project Hub</h3>
+                        <p class="project-category">Software</p>
+                        <p class="project-description">
+                            Launched a public platform for university students to share apps, websites, and research projects. Built and deployed the full product solo using Supabase and the Gemini API for an AI-powered "paper to website" tool. Designed 8+ web app tools and games for the library.
+                        </p>
+                        <div class="project-tech">
+                            <span class="tech-tag">HTML</span>
+                            <span class="tech-tag">CSS</span>
+                            <span class="tech-tag">JavaScript</span>
+                            <span class="tech-tag">Gemini API</span>
+                            <span class="tech-tag">Supabase</span>
+                            <span class="tech-tag">UI/UX</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project Card 2 - Truck Simulator -->
+                <div class="project-card glass-card" data-project="truck-simulator">
+                    <div class="project-image-container">
+                        <img src="assets/images/truck-simulator-thumbnail.jpg"
+                             alt="Class 8 Truck Trip Simulator"
+                             class="project-image lazy-load"
+                             data-src="assets/images/truck-simulator-thumbnail.jpg"
+                             loading="lazy">
+                        <div class="project-overlay">
+                            <a href="blog/truckSimulator.md" class="project-link" target="_blank">Read Full Story →</a>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title">Class 8 Truck Trip Simulator</h3>
+                        <p class="project-category">Software</p>
+                        <p class="project-description">
+                            Web-based simulation tool comparing Diesel vs. Electric Class 8 trucks on real-world routes. Integrated Google Maps APIs for route geometry, Hours of Service rules, and dynamic refueling/charging. Built a cost-modeling engine for TCO analysis.
+                        </p>
+                        <div class="project-tech">
+                            <span class="tech-tag">JavaScript</span>
+                            <span class="tech-tag">Google Maps API</span>
+                            <span class="tech-tag">Cost Modeling</span>
+                            <span class="tech-tag">Logistics</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project Card 3 - LiDAR Backpack -->
+                <div class="project-card glass-card" data-project="lidar">
+                    <div class="project-image-container">
+                        <img src="assets/images/lidar-thumbnail.jpg"
+                             alt="MEBA LiDAR Backpack"
+                             class="project-image lazy-load"
+                             data-src="assets/images/lidar-thumbnail.jpg"
+                             loading="lazy">
+                        <div class="project-overlay">
+                            <a href="blog/LiDARBackpack.md" class="project-link" target="_blank">Read Full Story →</a>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title">MEBA LiDAR Backpack Commercialization</h3>
+                        <p class="project-category">Strategy</p>
+                        <p class="project-description">
+                            Developed a commercialization strategy for a LiDAR-equipped forestry backpack. Engineered a Python NLP tool (Gemini API) for survey data analysis. Conducted market research for customer segments, pricing, and competitive positioning.
+                        </p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">Gemini API</span>
+                            <span class="tech-tag">NLP</span>
+                            <span class="tech-tag">Market Research</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project Card 4 - Marketplace Messenger -->
+                <div class="project-card glass-card" data-project="messenger">
+                    <div class="project-image-container">
+                        <img src="assets/images/messenger-thumbnail.jpg"
+                             alt="Marketplace Messenger"
+                             class="project-image lazy-load"
+                             data-src="assets/images/messenger-thumbnail.jpg"
+                             loading="lazy">
+                        <div class="project-overlay">
+                            <a href="blog/marketplaceMessenger.md" class="project-link" target="_blank">Read Full Story →</a>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title">Marketplace Messenger</h3>
+                        <p class="project-category">Software - Java</p>
+                        <p class="project-description">
+                            Team project: a concurrent messaging program with a JavaFX GUI. Developed program architecture and managed file/server I/O using <span class="business-term" data-definition="An iterative project management methodology focusing on flexibility and collaboration">Agile</span> principles.
+                        </p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Java</span>
+                            <span class="tech-tag">JavaFX</span>
+                            <span class="tech-tag">Agile</span>
+                            <span class="tech-tag">Git</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project Card 5 - Fantasy Football eBook -->
+                <div class="project-card glass-card" data-project="ebook">
+                    <div class="project-image-container">
+                        <img src="assets/images/ebook-thumbnail.jpg"
+                             alt="Beyond the Basics Fantasy Football eBook"
+                             class="project-image lazy-load"
+                             data-src="assets/images/ebook-thumbnail.jpg"
+                             loading="lazy">
+                        <div class="project-overlay">
+                            <a href="blog/beyondTheBasics.md" class="project-link" target="_blank">Read Full Story →</a>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title">Beyond the Basics: Fantasy Football eBook</h3>
+                        <p class="project-category">Design/Marketing</p>
+                        <p class="project-description">
+                            Created, marketed, and sold a 30-page fantasy football eBook. Achieved a 30% conversion rate from Facebook ads, using Final Cut Pro for marketing videos.
+                        </p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Digital Publishing</span>
+                            <span class="tech-tag">Facebook Ads</span>
+                            <span class="tech-tag">Final Cut Pro</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project Card 6 - From Sand to Silicon -->
+                <div class="project-card glass-card" data-project="sand-silicon">
+                    <div class="project-image-container">
+                        <img src="assets/images/sand-silicon-thumbnail.jpg"
+                             alt="From Sand to Silicon"
+                             class="project-image lazy-load"
+                             data-src="assets/images/sand-silicon-thumbnail.jpg"
+                             loading="lazy">
+                        <div class="project-overlay">
+                            <a href="blog/fromSandtoSilicon.md" class="project-link" target="_blank">Read Full Story →</a>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title">From Sand to Silicon</h3>
+                        <p class="project-category">Research/Writing</p>
+                        <p class="project-description">
+                            Deep dive into semiconductor manufacturing, exploring the journey from raw materials to cutting-edge computer chips.
+                        </p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Research</span>
+                            <span class="tech-tag">Technical Writing</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="skills-section section">
+        <div class="container">
+            <h2 class="section-title">CURRENT PARAMETERS.</h2>
+
+            <div class="skills-grid">
+                <div class="skill-category glass-card">
+                    <h3 class="skill-category-title">Technical & Programming</h3>
+                    <div class="skills-list">
+                        <span class="skill-item" data-skill="python">Python</span>
+                        <span class="skill-item">Vibe-coding</span>
+                        <span class="skill-item" data-skill="html">HTML</span>
+                        <span class="skill-item" data-skill="sql">SQL</span>
+                        <span class="skill-item">Supabase</span>
+                    </div>
+                </div>
+
+                <div class="skill-category glass-card">
+                    <h3 class="skill-category-title">APIs & AI Tooling</h3>
+                    <div class="skills-list">
+                        <span class="skill-item" data-skill="gemini">Gemini API</span>
+                        <span class="skill-item" data-skill="chatgpt">ChatGPT API</span>
+                        <span class="skill-item">Google Maps API</span>
+                        <span class="skill-item">AI Tooling</span>
+                    </div>
+                </div>
+
+                <div class="skill-category glass-card">
+                    <h3 class="skill-category-title">Data & Analytics</h3>
+                    <div class="skills-list">
+                        <span class="skill-item" data-skill="tableau">Tableau</span>
+                        <span class="skill-item">Microsoft Excel</span>
+                        <span class="skill-item">Data Visualization</span>
+                        <span class="skill-item">Data Analysis</span>
+                    </div>
+                </div>
+
+                <div class="skill-category glass-card">
+                    <h3 class="skill-category-title">Business & Strategy</h3>
+                    <div class="skills-list">
+                        <span class="skill-item"><span class="business-term" data-definition="An iterative project management methodology focusing on flexibility and collaboration">Agile</span> Project Management</span>
+                        <span class="skill-item">Market Research</span>
+                        <span class="skill-item">Economic Impact Analysis</span>
+                        <span class="skill-item"><span class="business-term" data-definition="The process of bringing a product from development to market">Commercialization</span> Strategy</span>
+                        <span class="skill-item">Digital Marketing</span>
+                    </div>
+                </div>
+
+                <div class="skill-category glass-card">
+                    <h3 class="skill-category-title">Creative & Languages</h3>
+                    <div class="skills-list">
+                        <span class="skill-item">Final Cut Pro</span>
+                        <span class="skill-item">UI/UX Design</span>
+                        <span class="skill-item">Spanish (A2 Level)</span>
+                    </div>
+                </div>
+
+                <div class="skill-category glass-card">
+                    <h3 class="skill-category-title">Certifications</h3>
+                    <div class="skills-list certifications-list">
+                        <span class="cert-item">Atlassian Agile Project Management Professional</span>
+                        <span class="cert-item">Google Fundamentals of Digital Marketing</span>
+                        <span class="cert-item">EBEC Python Certificate</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Awards Section -->
+    <section id="awards" class="awards-section section">
+        <div class="container">
+            <h2 class="section-title">MODEL VALIDATION.</h2>
+
+            <div class="awards-grid">
+                <div class="award-card glass-card">
+                    <div class="award-medal">🥇</div>
+                    <div class="award-content">
+                        <h3 class="award-place">1st Place</h3>
+                        <p class="award-title">Ascend Case Competition</p>
+                        <p class="award-description">Coffee shop business plan, analyzed 100+ survey responses</p>
+                    </div>
+                </div>
+
+                <div class="award-card glass-card">
+                    <div class="award-medal">🥈</div>
+                    <div class="award-content">
+                        <h3 class="award-place">2nd Place</h3>
+                        <p class="award-title">NSSE Endress Hauser Case Competition</p>
+                        <p class="award-description">Training plan for new flow control devices</p>
+                    </div>
+                </div>
+
+                <div class="award-card glass-card">
+                    <div class="award-medal">🥈</div>
+                    <div class="award-content">
+                        <h3 class="award-place">2nd Place</h3>
+                        <p class="award-title">Wabash Larsen Case Competition</p>
+                        <p class="award-description">Shipping container strategy for 5-year revenue doubling</p>
+                    </div>
+                </div>
+
+                <div class="award-card glass-card">
+                    <div class="award-medal">🎯</div>
+                    <div class="award-content">
+                        <h3 class="award-place">Participant</h3>
+                        <p class="award-title">Wisconsin Invitational Consulting Case Competition</p>
+                        <p class="award-description">Designed EV Class 8 integration plan</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section section">
+        <div class="container">
+            <h2 class="section-title">SYNCHRONIZE/CONNECT.</h2>
+
+            <div class="contact-content">
+                <div class="contact-info">
+                    <p class="contact-intro">
+                        Ready to collaborate on the next big idea? Let's connect and build something amazing together.
+                    </p>
+
+                    <div class="contact-links">
+                        <a href="mailto:your-email@example.com" class="contact-link" id="email-link">
+                            <span class="contact-icon">📧</span>
+                            <span>your-email@example.com</span>
+                        </a>
+                        <a href="https://linkedin.com/in/elijb" target="_blank" rel="noopener noreferrer" class="contact-link">
+                            <span class="contact-icon">💼</span>
+                            <span>linkedin.com/in/elijb</span>
+                        </a>
+                        <a href="#" id="apex-link" target="_blank" rel="noopener noreferrer" class="contact-link">
+                            <span class="contact-icon">🚀</span>
+                            <span>ApeX Projects Hub</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="contact-form-container glass-card">
+                    <form id="contact-form" class="contact-form">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-submit">
+                            <span class="btn-text">Send Message</span>
+                            <span class="btn-loader"></span>
+                        </button>
+                        <div class="form-status"></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-left">
+                    <p>&copy; 2025 Eli J. Built with iteration and purpose.</p>
+                </div>
+                <div class="footer-right">
+                    <!-- Spanish Word Widget -->
+                    <div class="language-widget">
+                        <span class="widget-label">Today's Word:</span>
+                        <span class="widget-word" id="spanish-word">Aprender</span>
+                        <span class="widget-translation" id="word-translation">(to learn)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Fitness Timer Modal (Easter Egg) -->
+    <div id="fitness-timer-modal" class="modal hidden">
+        <div class="modal-content glass-card">
+            <h3>Rest Timer</h3>
+            <div class="timer-display">
+                <span id="timer-value">30</span>
+            </div>
+            <button id="close-timer" class="btn btn-secondary">Close</button>
+        </div>
+    </div>
+
+    <!-- AI Quote Modal (Easter Egg) -->
+    <div id="quote-modal" class="modal hidden">
+        <div class="modal-content glass-card">
+            <p class="quote-text" id="quote-text"></p>
+            <p class="quote-author" id="quote-author"></p>
+        </div>
+    </div>
+
+    <!-- Business Term Tooltip -->
+    <div id="business-tooltip" class="tooltip hidden"></div>
+
+    <!-- Purdue Easter Egg Overlay -->
+    <div id="purdue-overlay" class="purdue-overlay hidden">
+        <div class="boiler-up">⚒️ BOILER UP! ⚒️</div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="assets/js/config.js"></script>
+    <script src="assets/js/main.js"></script>
+</body>
+</html>

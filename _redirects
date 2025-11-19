@@ -1,0 +1,10 @@
+## Cloudflare Redirects Configuration
+
+# Redirect www to non-www (optional - uncomment if you have a custom domain)
+# https://www.yourdomain.com/*  https://yourdomain.com/:splat  301
+
+# Redirect old URLs to new ones (add your redirects here)
+# /old-page  /new-page  301
+
+# 404 fallback - serve index.html for client-side routing (if needed later)
+# /*  /index.html  200

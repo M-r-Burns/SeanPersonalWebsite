@@ -1,0 +1,8 @@
+# robots.txt for your personal website
+# This file tells search engines which pages to crawl
+
+User-agent: *
+Allow: /
+
+# Sitemap (add this after deploying)
+# Sitemap: https://yourdomain.com/sitemap.xml

@@ -1,0 +1,14 @@
+<svg width="1200" height="800" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#2d1b69;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1a1a2e;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="800" fill="url(#grad1)"/>
+  <text x="600" y="350" font-family="Arial, sans-serif" font-size="72" fill="#39FF14" text-anchor="middle" font-weight="bold">ApeX</text>
+  <text x="600" y="420" font-family="Arial, sans-serif" font-size="32" fill="#ffffff" text-anchor="middle">Student Project Hub</text>
+  <circle cx="600" cy="550" r="80" fill="none" stroke="#39FF14" stroke-width="3" opacity="0.5"/>
+  <circle cx="600" cy="550" r="60" fill="none" stroke="#39FF14" stroke-width="2" opacity="0.7"/>
+  <circle cx="600" cy="550" r="40" fill="#39FF14" opacity="0.3"/>
+</svg>
