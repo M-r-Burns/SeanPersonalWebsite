@@ -9,39 +9,66 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Inter:wght@300;400;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Inter:wght@300;400;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
 
     <!-- Styles -->
     <link rel="stylesheet" href="styles.css">
-
-    <!-- Preload critical assets -->
-    <link rel="preload" as="image" href="assets/images/world-map.svg">
 </head>
 <body>
     <!-- Loading Screen -->
     <div id="loading-screen" class="loading-screen">
         <div class="loading-content">
-            <div class="loading-text">INITIALIZING...</div>
+            <div class="loading-text">INITIALIZING AI SYSTEMS...</div>
             <div class="loading-bar"></div>
         </div>
     </div>
 
-    <!-- Language Learning Widget -->
+    <!-- Drawing Canvas (Graph Paper) -->
+    <canvas id="drawing-canvas"></canvas>
+
+    <!-- Language Learning Widget (Enhanced) -->
     <div id="language-widget" class="language-widget">
+        <div class="widget-header">
+            <span>🗣️ ESPAÑOL</span>
+            <button class="widget-quiz-btn" id="lang-quiz-btn">Quiz</button>
+        </div>
         <div class="language-text" id="language-text">La estrategia del mercado</div>
         <div class="language-translation" id="language-translation">Market strategy</div>
+        <div class="language-progress">
+            <div class="progress-dot"></div>
+            <div class="progress-dot"></div>
+            <div class="progress-dot"></div>
+        </div>
     </div>
+
+    <!-- AI Chat Widget -->
+    <div id="ai-chat-widget" class="ai-chat-widget">
+        <div class="chat-header">
+            <span>🤖 AI Assistant</span>
+            <span class="chat-close" id="chat-close">&times;</span>
+        </div>
+        <div class="chat-messages" id="chat-messages">
+            <div class="chat-message ai">Hi! I'm your AI assistant. Ask me anything about this portfolio, or try commands like "projects", "experience", or "skills"!</div>
+        </div>
+        <div class="chat-input-container">
+            <input type="text" id="chat-input" placeholder="Ask me anything..." autocomplete="off">
+            <button id="chat-send">Send</button>
+        </div>
+    </div>
+    <button class="ai-chat-trigger" id="ai-chat-trigger">
+        <span class="ai-icon">🤖</span>
+        <span class="ai-text">AI</span>
+    </button>
 
     <!-- Navigation -->
     <nav id="navbar" class="navbar">
         <div class="nav-container">
-            <a href="#hero" class="nav-logo">GLOBAL LEARNING CANVAS</a>
+            <a href="index.html" class="nav-logo">GLOBAL LEARNING CANVAS</a>
             <div class="nav-menu" id="nav-menu">
-                <a href="#about" class="nav-link">About</a>
+                <a href="#hero" class="nav-link">Profile</a>
                 <a href="#experience" class="nav-link">Experience</a>
-                <a href="#projects" class="nav-link">Projects</a>
+                <a href="projects.html" class="nav-link">Projects</a>
                 <a href="#skills" class="nav-link">Skills</a>
-                <a href="#awards" class="nav-link">Awards</a>
                 <a href="#contact" class="nav-link">Contact</a>
             </div>
             <div class="nav-hamburger" id="nav-hamburger">
@@ -52,124 +79,101 @@
         </div>
     </nav>
 
-    <!-- Background World Map -->
-    <div class="world-map-background" id="world-map"></div>
-
     <!-- Main Content -->
     <main>
-        <!-- Hero Section -->
+        <!-- Hero/Profile Section -->
         <section id="hero" class="hero section">
             <div class="container">
-                <div class="hero-content">
-                    <h1 class="hero-title">
-                        BRIDGING STRATEGY. EXECUTING CODE.<br>
-                        <span class="hero-subtitle">(A.I. → G.T.M.)</span>
-                    </h1>
-                    <div class="hero-tagline">
-                        <p>Purdue University Student, B.S. in Business Analytics & Information Management.</p>
-                        <p class="location">
+                <div class="hero-profile">
+                    <div class="profile-image-container">
+                        <div class="profile-placeholder" id="profile-placeholder">
+                            <span>👤</span>
+                        </div>
+                        <img src="assets/images/profile.jpg" alt="Profile" class="profile-image" id="profile-image" style="display: none;">
+                    </div>
+                    <div class="profile-content">
+                        <h1 class="profile-name" id="profile-name">Your Name</h1>
+                        <p class="profile-title">Purdue University | Business Analytics & Information Management</p>
+                        <p class="profile-location">
                             <span class="map-pin" id="map-pin">📍</span> Indianapolis, IN
                         </p>
+                        <div class="profile-tagline">
+                            BRIDGING STRATEGY. EXECUTING CODE. (A.I. → G.T.M.)
+                        </div>
+                        <div class="profile-bio" id="profile-bio">
+                            <!-- Loaded from content.js -->
+                        </div>
+                        <div class="profile-actions">
+                            <a href="projects.html" class="cta-button">View Projects</a>
+                            <a href="#contact" class="cta-button secondary">Contact</a>
+                        </div>
                     </div>
-                    <a href="#projects" class="cta-button">View Production Models</a>
                 </div>
 
-                <!-- Map Pin Tooltip -->
-                <div class="map-tooltip" id="map-tooltip">
-                    Current Strategic Focus: Business Analytics
-                </div>
-            </div>
-        </section>
-
-        <!-- About Me Section -->
-        <section id="about" class="about section">
-            <div class="container">
-                <h2 class="section-title">THE LEARNING ALGORITHM.</h2>
-                <div class="about-content">
-                    <div class="about-text" id="about-text">
-                        <!-- Content loaded from content.js -->
+                <!-- Quick Stats -->
+                <div class="quick-stats">
+                    <div class="stat-item clickable" id="stat-connections">
+                        <div class="stat-number">84+</div>
+                        <div class="stat-label">Connections</div>
                     </div>
-
-                    <div class="metrics-grid">
-                        <div class="metric-card">
-                            <div class="metric-number" id="metric-connections">84+</div>
-                            <div class="metric-label">LinkedIn Connections</div>
-                        </div>
-                        <div class="metric-card">
-                            <div class="metric-number" id="metric-projects">15+</div>
-                            <div class="metric-label">Projects Completed</div>
-                        </div>
-                        <div class="metric-card">
-                            <div class="metric-number lebron-metric" id="metric-lebron">∞</div>
-                            <div class="metric-label">Times I've thought about LeBron</div>
-                        </div>
+                    <div class="stat-item clickable" id="stat-projects">
+                        <div class="stat-number">15+</div>
+                        <div class="stat-label">Projects</div>
                     </div>
-
-                    <div class="interests-section">
-                        <h3>Personal Interests:</h3>
-                        <div class="interests-grid">
-                            <div class="interest-item">
-                                <span class="interest-icon">🤖</span>
-                                <span>Leveraging AI to accelerate learning</span>
-                            </div>
-                            <div class="interest-item">
-                                <span class="interest-icon fitness-icon" id="fitness-icon">💪</span>
-                                <span>Optimizing fitness (weightlifting)</span>
-                            </div>
-                            <div class="interest-item">
-                                <span class="interest-icon">💼</span>
-                                <span>Understanding business mechanics</span>
-                            </div>
-                        </div>
+                    <div class="stat-item clickable lebron-metric" id="stat-lebron">
+                        <div class="stat-number">∞</div>
+                        <div class="stat-label">LeBron Thoughts</div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Professional Experience Section -->
-        <section id="experience" class="experience section">
+        <!-- Professional Experience Section (Compact & Expandable) -->
+        <section id="experience" class="experience section compact">
             <div class="container">
-                <h2 class="section-title">TRAINING DATA: APPLIED INSIGHTS.</h2>
-                <div class="timeline" id="experience-timeline">
+                <h2 class="section-title">PROFESSIONAL EXPERIENCE</h2>
+                <div class="experience-compact" id="experience-timeline">
                     <!-- Content loaded from content.js -->
                 </div>
             </div>
         </section>
 
-        <!-- Portfolio & Projects Section -->
-        <section id="projects" class="projects section">
+        <!-- Skills, Certifications & Awards (Combined) -->
+        <section id="skills" class="skills section compact">
             <div class="container">
-                <h2 class="section-title">PRODUCTION MODELS.</h2>
-                <div class="projects-grid" id="projects-grid">
-                    <!-- Content loaded from content.js -->
-                </div>
-            </div>
-        </section>
+                <h2 class="section-title">CAPABILITIES & ACHIEVEMENTS</h2>
+                <div class="capabilities-grid">
+                    <!-- Skills -->
+                    <div class="capability-card">
+                        <h3 class="capability-title">💻 TECHNICAL SKILLS</h3>
+                        <div class="skills-compact" id="skills-technical">
+                            <!-- Loaded from content.js -->
+                        </div>
+                    </div>
 
-        <!-- Skills & Certifications Section -->
-        <section id="skills" class="skills section">
-            <div class="container">
-                <h2 class="section-title">CURRENT PARAMETERS.</h2>
-                <div class="skills-content" id="skills-content">
-                    <!-- Content loaded from content.js -->
-                </div>
-            </div>
-        </section>
+                    <!-- Certifications -->
+                    <div class="capability-card">
+                        <h3 class="capability-title">🎓 CERTIFICATIONS</h3>
+                        <div class="certifications-compact" id="certifications-list">
+                            <!-- Loaded from content.js -->
+                        </div>
+                    </div>
 
-        <!-- Awards Section -->
-        <section id="awards" class="awards section">
-            <div class="container">
-                <h2 class="section-title">MODEL VALIDATION.</h2>
-                <div class="awards-list" id="awards-list">
-                    <!-- Content loaded from content.js -->
+                    <!-- Awards -->
+                    <div class="capability-card">
+                        <h3 class="capability-title">🏆 ACHIEVEMENTS</h3>
+                        <div class="awards-compact" id="awards-list">
+                            <!-- Loaded from content.js -->
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
 
         <!-- Contact Section -->
-        <section id="contact" class="contact section">
+        <section id="contact" class="contact section compact">
             <div class="container">
-                <h2 class="section-title">SYNCHRONIZE/CONNECT.</h2>
+                <h2 class="section-title">CONNECT</h2>
                 <div class="contact-content">
                     <div class="contact-links">
                         <a href="#" class="contact-link" id="linkedin-link" target="_blank" rel="noopener">
@@ -178,30 +182,18 @@
                         </a>
                         <a href="#" class="contact-link" id="apex-link" target="_blank" rel="noopener">
                             <span class="link-icon">🚀</span>
-                            <span>ApeX Projects Hub</span>
+                            <span>ApeX Hub</span>
                         </a>
                     </div>
 
-                    <form class="contact-form" id="contact-form">
+                    <form class="contact-form compact" id="contact-form">
                         <div class="form-row">
-                            <div class="form-group">
-                                <label for="name">Name</label>
-                                <input type="text" id="name" name="name" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="email">Email</label>
-                                <input type="email" id="email" name="email" required>
-                            </div>
+                            <input type="text" id="name" name="name" placeholder="Name *" required>
+                            <input type="email" id="email" name="email" placeholder="Email *" required>
                         </div>
-                        <div class="form-group">
-                            <label for="subject">Subject</label>
-                            <input type="text" id="subject" name="subject" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="message">Message</label>
-                            <textarea id="message" name="message" rows="5" required></textarea>
-                        </div>
-                        <button type="submit" class="submit-button">Initiate Connection</button>
+                        <input type="text" id="subject" name="subject" placeholder="Subject *" required>
+                        <textarea id="message" name="message" rows="4" placeholder="Message *" required></textarea>
+                        <button type="submit" class="submit-button">Send Message</button>
                         <div class="form-status" id="form-status"></div>
                     </form>
                 </div>
@@ -212,17 +204,17 @@
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
-            <p>&copy; <span id="current-year"></span> Global Learning Canvas. All rights reserved.</p>
-            <p class="footer-hint">Press Ctrl+Alt+I for insights...</p>
+            <p>&copy; <span id="current-year"></span> Global Learning Canvas</p>
+            <p class="footer-hint">🎮 Try: Ctrl+Shift+T | Draw Mode: D | AI Mode: ↑↑↓↓←→AI</p>
         </div>
     </footer>
 
     <!-- Modals -->
-    <!-- Project Detail Modal -->
-    <div id="project-modal" class="modal">
+    <!-- Experience Detail Modal -->
+    <div id="experience-modal" class="modal">
         <div class="modal-content">
             <span class="modal-close">&times;</span>
-            <div id="modal-body"></div>
+            <div id="experience-modal-body"></div>
         </div>
     </div>
 
@@ -230,7 +222,7 @@
     <div id="fitness-modal" class="modal">
         <div class="modal-content timer-modal">
             <span class="modal-close">&times;</span>
-            <h3>Rest Timer</h3>
+            <h3>💪 Rest Timer</h3>
             <div class="timer-display" id="timer-display">00:30</div>
             <div class="timer-controls">
                 <button id="timer-start" class="timer-button">Start</button>
@@ -239,10 +231,25 @@
         </div>
     </div>
 
+    <!-- Language Quiz Modal -->
+    <div id="language-quiz-modal" class="modal">
+        <div class="modal-content quiz-modal">
+            <span class="modal-close">&times;</span>
+            <h3>🗣️ Spanish Quiz</h3>
+            <div id="quiz-content">
+                <p class="quiz-question" id="quiz-question">What does "La estrategia" mean?</p>
+                <div class="quiz-options" id="quiz-options">
+                    <!-- Generated dynamically -->
+                </div>
+                <div class="quiz-result" id="quiz-result"></div>
+            </div>
+        </div>
+    </div>
+
     <!-- Hidden Terminal -->
     <div id="terminal" class="terminal">
         <div class="terminal-header">
-            <span>INSIGHTS TERMINAL</span>
+            <span>💻 INSIGHTS TERMINAL</span>
             <span class="terminal-close">&times;</span>
         </div>
         <div class="terminal-body" id="terminal-output">
@@ -256,6 +263,21 @@
 
     <!-- Basketball Animation Container -->
     <div id="basketball-container"></div>
+
+    <!-- AI Mode Overlay -->
+    <div id="ai-mode-overlay" class="ai-mode-overlay">
+        <div class="ai-mode-content">
+            <h2>🤖 AI MODE ACTIVATED</h2>
+            <p>Enhanced AI features enabled!</p>
+        </div>
+    </div>
+
+    <!-- Drawing Mode Indicator -->
+    <div id="draw-mode-indicator" class="draw-mode-indicator">
+        <span>✏️ DRAWING MODE</span>
+        <button id="clear-canvas-btn">Clear</button>
+        <button id="exit-draw-mode">Exit (D)</button>
+    </div>
 
     <!-- Scripts -->
     <script src="content.js"></script>
