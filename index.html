@@ -15,41 +15,21 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- Loading Screen -->
-    <div id="loading-screen" class="loading-screen">
-        <div class="loading-content">
-            <div class="loading-text">INITIALIZING AI SYSTEMS...</div>
-            <div class="loading-bar"></div>
-        </div>
-    </div>
-
     <!-- Drawing Canvas (Graph Paper) -->
     <canvas id="drawing-canvas"></canvas>
 
-    <!-- Dark Mode Toggle -->
-    <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">
-        <span id="theme-icon">🌙</span>
-    </button>
-
-    <!-- Language Learning Widget (Enhanced) -->
-    <div id="language-widget" class="language-widget">
-        <div class="widget-header">
-            <span>🗣️ ESPAÑOL</span>
-            <button class="widget-audio-btn" id="lang-audio-btn">🔊</button>
-        </div>
-        <div class="language-text" id="language-text">La estrategia del mercado</div>
-        <div class="pronunciation" id="language-pronunciation">la es-tra-te-hee-a</div>
-        <div class="language-translation" id="language-translation">Market strategy</div>
-        <div class="language-progress">
-            <div class="progress-dot active"></div>
-            <div class="progress-dot"></div>
-            <div class="progress-dot"></div>
-        </div>
-        <div class="language-streak" id="language-streak">5 day streak 🔥</div>
+    <!-- Language & Theme Toggle -->
+    <div class="top-controls">
+        <button id="lang-toggle" class="control-btn" aria-label="Toggle language">
+            <span id="lang-icon">EN</span>
+        </button>
+        <button id="theme-toggle" class="control-btn" aria-label="Toggle dark mode">
+            <span id="theme-icon">☀</span>
+        </button>
     </div>
 
-    <!-- AI Chat Widget -->
-    <div id="ai-chat-widget" class="ai-chat-widget">
+    <!-- AI Chat Widget (Hidden until AI mode activated) -->
+    <div id="ai-chat-widget" class="ai-chat-widget" style="display: none;">
         <div class="chat-header">
             <span>🤖 AI Assistant</span>
             <span class="chat-close" id="chat-close">&times;</span>
@@ -62,7 +42,7 @@
             <button id="chat-send">Send</button>
         </div>
     </div>
-    <button class="ai-chat-trigger" id="ai-chat-trigger">
+    <button class="ai-chat-trigger" id="ai-chat-trigger" style="display: none;">
         <span class="ai-icon">🤖</span>
         <span class="ai-text">AI</span>
     </button>
@@ -111,8 +91,9 @@
                             <!-- Loaded from content.js -->
                         </div>
                         <div class="profile-actions">
-                            <a href="projects.html" class="cta-button">View Projects</a>
-                            <a href="#contact" class="cta-button secondary">Contact</a>
+                            <a href="projects.html" class="cta-button" data-i18n="hero.viewProjects">View Projects</a>
+                            <a href="#experience" class="cta-button" data-i18n="hero.experience">Experience</a>
+                            <a href="#contact" class="cta-button" data-i18n="hero.contact">Contact</a>
                         </div>
                     </div>
                 </div>
@@ -292,6 +273,7 @@
     </div>
 
     <!-- Scripts -->
+    <script src="i18n.js"></script>
     <script src="content.js"></script>
     <script src="script.js"></script>
 </body>

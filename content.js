@@ -291,7 +291,7 @@ What I learned: The importance of user research in understanding real-world cons
    └─> Deploy
    └─> Measure
    └─> Refine`,
-            help: 'Available commands:\n- whoami\n- list_projects\n- strategy_pipeline\n- help\n- clear'
+            help: 'Available commands:\n- whoami\n- list_projects\n- strategy_pipeline\n- snake (play Snake game)\n- tictactoe (play Tic-Tac-Toe)\n- help\n- clear'
         }
     }
 };

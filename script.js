@@ -26,18 +26,11 @@ document.addEventListener('DOMContentLoaded', function () {
     initializeStatAnimations();
     initializeDrawingCanvas();
     initializeAIChat();
-    initializeLanguageLearning();
     initializeKonamiCode();
     initializeDarkMode();
     initializeExpandableProjects();
-
-    // Hide loading screen after everything is loaded
-    setTimeout(() => {
-        const loadingScreen = document.getElementById('loading-screen');
-        if (loadingScreen) {
-            loadingScreen.classList.add('hidden');
-        }
-    }, 1000);
+    initializeLanguageToggle();
+    initializeTerminalGames();
 });
 
 // ========== WEBSITE INITIALIZATION ==========
@@ -541,6 +534,17 @@ function initializeHiddenTerminal() {
             return;
         }
 
+        // Terminal games
+        if (command === 'snake') {
+            startSnakeGame();
+            return;
+        }
+
+        if (command === 'tictactoe' || command === 'ttt') {
+            startTicTacToeGame();
+            return;
+        }
+
         if (commands[command]) {
             output = commands[command];
         } else if (command) {
@@ -876,80 +880,18 @@ function initializeAIChat() {
     }
 }
 
-// Language Learning Feature (Enhanced)
-function initializeLanguageLearning() {
-    const audioBtn = document.getElementById('lang-audio-btn');
-    const languageText = document.getElementById('language-text');
-    const languageTranslation = document.getElementById('language-translation');
-    const pronunciation = document.getElementById('language-pronunciation');
-    const progressDots = document.querySelectorAll('.language-progress .progress-dot');
+// Language Toggle (i18n)
+function initializeLanguageToggle() {
+    const langToggle = document.getElementById('lang-toggle');
 
-    let currentPhraseIndex = 0;
-    let dayStreak = 5; // Starting streak
+    if (!langToggle || !window.i18nManager) return;
 
-    if (!window.SITE_CONFIG?.languagePhrases) return;
+    // Initialize i18n
+    window.i18nManager.init();
 
-    // Pronunciation map
-    const pronunciationMap = {
-        'La estrategia del mercado': 'la es-tra-te-hee-a del mer-ca-do',
-        'Análisis de datos': 'a-na-lee-sees de da-tos',
-        'Gestión de proyectos': 'hes-tee-on de pro-yek-tos',
-        'Inteligencia artificial': 'in-te-lee-hen-see-a ar-tee-fee-see-al',
-        'Desarrollo de software': 'de-sa-ro-yo de soft-ware',
-        'Investigación de mercado': 'in-ves-tee-ga-see-on de mer-ca-do',
-        'Optimización de procesos': 'op-tee-mee-sa-see-on de pro-se-sos',
-        'Aprendizaje continuo': 'a-pren-dee-sa-he con-tee-noo-o'
-    };
-
-    // Audio pronunciation button
-    if (audioBtn) {
-        audioBtn.addEventListener('click', () => {
-            const currentPhrase = window.SITE_CONFIG.languagePhrases[currentPhraseIndex].spanish;
-
-            // Web Speech API for pronunciation
-            if ('speechSynthesis' in window) {
-                const utterance = new SpeechSynthesisUtterance(currentPhrase);
-                utterance.lang = 'es-ES';
-                utterance.rate = 0.8;
-                window.speechSynthesis.speak(utterance);
-
-                // Animate button
-                audioBtn.style.transform = 'scale(1.2)';
-                setTimeout(() => {
-                    audioBtn.style.transform = 'scale(1)';
-                }, 200);
-            }
-        });
-    }
-
-    // Update progress dots
-    function updateProgress() {
-        progressDots.forEach((dot, index) => {
-            dot.classList.toggle('active', index === currentPhraseIndex % 3);
-        });
-    }
-
-    // Rotate through phrases every 10 seconds
-    setInterval(() => {
-        currentPhraseIndex = (currentPhraseIndex + 1) % window.SITE_CONFIG.languagePhrases.length;
-        const phrase = window.SITE_CONFIG.languagePhrases[currentPhraseIndex];
-
-        if (languageText && languageTranslation && pronunciation) {
-            languageText.style.opacity = '0';
-            languageTranslation.style.opacity = '0';
-            pronunciation.style.opacity = '0';
-
-            setTimeout(() => {
-                languageText.textContent = phrase.spanish;
-                languageTranslation.textContent = phrase.english;
-                pronunciation.textContent = pronunciationMap[phrase.spanish] || '';
-
-                languageText.style.opacity = '1';
-                pronunciation.style.opacity = '1';
-                updateProgress();
-            }, 300);
-        }
-    }, 10000);
+    langToggle.addEventListener('click', () => {
+        window.i18nManager.toggle();
+    });
 }
 
 // Konami Code (↑↑↓↓←→AI)
@@ -1005,10 +947,14 @@ function initializeKonamiCode() {
             overlay.classList.add('show');
             setTimeout(() => {
                 overlay.classList.remove('show');
-                // Open AI chat after overlay
+                // Show AI chat widgets
                 const chatWidget = document.getElementById('ai-chat-widget');
+                const chatTrigger = document.getElementById('ai-chat-trigger');
                 const chatInput = document.getElementById('chat-input');
-                if (chatWidget) {
+
+                if (chatWidget && chatTrigger) {
+                    chatWidget.style.display = 'flex';
+                    chatTrigger.style.display = 'flex';
                     chatWidget.classList.add('show');
                     if (chatInput) {
                         chatInput.focus();
@@ -1019,7 +965,7 @@ function initializeKonamiCode() {
     }
 }
 
-// Dark Mode Toggle
+// Dark Mode Toggle (Simplified)
 function initializeDarkMode() {
     const themeToggle = document.getElementById('theme-toggle');
     const themeIcon = document.getElementById('theme-icon');
@@ -1043,7 +989,7 @@ function initializeDarkMode() {
 
     function updateThemeIcon(theme) {
         if (themeIcon) {
-            themeIcon.textContent = theme === 'light' ? '🌙' : '☀️';
+            themeIcon.textContent = theme === 'light' ? '☀' : '🌙';
         }
     }
 }
@@ -1084,9 +1030,211 @@ function debounce(func, wait) {
     };
 }
 
+// Terminal Games
+function initializeTerminalGames() {
+    // Game functions will be available globally
+    window.startSnakeGame = startSnakeGame;
+    window.startTicTacToeGame = startTicTacToeGame;
+}
+
+function startSnakeGame() {
+    const terminalOutput = document.getElementById('terminal-output');
+    if (!terminalOutput) return;
+
+    const gameDiv = document.createElement('div');
+    gameDiv.innerHTML = `
+        <div style="margin-top: 1rem;">> snake</div>
+        <div style="margin-top: 1rem; padding: 1rem; border: 1px solid #00FF00;">
+            <div style="margin-bottom: 0.5rem;">🐍 SNAKE GAME - Use WASD or Arrow Keys</div>
+            <div id="snake-canvas" style="font-family: monospace; line-height: 1.2;"></div>
+            <div style="margin-top: 0.5rem;">Score: <span id="snake-score">0</span> | Press ESC to quit</div>
+        </div>
+    `;
+    terminalOutput.appendChild(gameDiv);
+    terminalOutput.scrollTop = terminalOutput.scrollHeight;
+
+    const canvas = document.getElementById('snake-canvas');
+    const scoreDisplay = document.getElementById('snake-score');
+    const gridSize = 15;
+    const cellSize = 20;
+    let snake = [{x: 7, y: 7}];
+    let food = {x: 3, y: 3};
+    let direction = {x: 1, y: 0};
+    let score = 0;
+    let gameActive = true;
+
+    function draw() {
+        let grid = Array(gridSize).fill(null).map(() => Array(gridSize).fill('·'));
+
+        // Draw snake
+        snake.forEach((segment, i) => {
+            if (segment.x >= 0 && segment.x < gridSize && segment.y >= 0 && segment.y < gridSize) {
+                grid[segment.y][segment.x] = i === 0 ? '●' : '○';
+            }
+        });
+
+        // Draw food
+        if (food.x >= 0 && food.x < gridSize && food.y >= 0 && food.y < gridSize) {
+            grid[food.y][food.x] = '◆';
+        }
+
+        canvas.innerHTML = grid.map(row => row.join(' ')).join('<br>');
+    }
+
+    function update() {
+        if (!gameActive) return;
+
+        const head = {x: snake[0].x + direction.x, y: snake[0].y + direction.y};
+
+        // Check collision with walls or self
+        if (head.x < 0 || head.x >= gridSize || head.y < 0 || head.y >= gridSize ||
+            snake.some(segment => segment.x === head.x && segment.y === head.y)) {
+            gameActive = false;
+            canvas.innerHTML += '<br><span style="color: #FF0000;">GAME OVER!</span>';
+            return;
+        }
+
+        snake.unshift(head);
+
+        // Check if food eaten
+        if (head.x === food.x && head.y === food.y) {
+            score++;
+            scoreDisplay.textContent = score;
+            food = {
+                x: Math.floor(Math.random() * gridSize),
+                y: Math.floor(Math.random() * gridSize)
+            };
+        } else {
+            snake.pop();
+        }
+
+        draw();
+    }
+
+    function handleKeyPress(e) {
+        if (!gameActive) return;
+
+        const key = e.key.toLowerCase();
+        if (key === 'escape') {
+            gameActive = false;
+            canvas.innerHTML += '<br><span style="color: #FFD700;">Game quit!</span>';
+            document.removeEventListener('keydown', handleKeyPress);
+            return;
+        }
+
+        if ((key === 'w' || key === 'arrowup') && direction.y === 0) {
+            direction = {x: 0, y: -1};
+        } else if ((key === 's' || key === 'arrowdown') && direction.y === 0) {
+            direction = {x: 0, y: 1};
+        } else if ((key === 'a' || key === 'arrowleft') && direction.x === 0) {
+            direction = {x: -1, y: 0};
+        } else if ((key === 'd' || key === 'arrowright') && direction.x === 0) {
+            direction = {x: 1, y: 0};
+        }
+    }
+
+    document.addEventListener('keydown', handleKeyPress);
+    draw();
+    const gameLoop = setInterval(() => {
+        update();
+        if (!gameActive) clearInterval(gameLoop);
+    }, 200);
+}
+
+function startTicTacToeGame() {
+    const terminalOutput = document.getElementById('terminal-output');
+    if (!terminalOutput) return;
+
+    const gameDiv = document.createElement('div');
+    gameDiv.innerHTML = `
+        <div style="margin-top: 1rem;">> tictactoe</div>
+        <div style="margin-top: 1rem; padding: 1rem; border: 1px solid #00FF00;">
+            <div style="margin-bottom: 0.5rem;">⭕ TIC-TAC-TOE - Click to play</div>
+            <div id="ttt-board" style="font-family: monospace; cursor: pointer;"></div>
+            <div style="margin-top: 0.5rem;" id="ttt-status">Your turn (X)</div>
+        </div>
+    `;
+    terminalOutput.appendChild(gameDiv);
+    terminalOutput.scrollTop = terminalOutput.scrollHeight;
+
+    const board = document.getElementById('ttt-board');
+    const status = document.getElementById('ttt-status');
+    let cells = Array(9).fill('');
+    let currentPlayer = 'X';
+    let gameActive = true;
+
+    function draw() {
+        board.innerHTML = `
+            ${cells[0] || '1'} | ${cells[1] || '2'} | ${cells[2] || '3'}<br>
+            ---------<br>
+            ${cells[3] || '4'} | ${cells[4] || '5'} | ${cells[5] || '6'}<br>
+            ---------<br>
+            ${cells[6] || '7'} | ${cells[7] || '8'} | ${cells[8] || '9'}
+        `;
+    }
+
+    function checkWin() {
+        const wins = [
+            [0,1,2], [3,4,5], [6,7,8], // rows
+            [0,3,6], [1,4,7], [2,5,8], // cols
+            [0,4,8], [2,4,6] // diagonals
+        ];
+
+        for (const [a, b, c] of wins) {
+            if (cells[a] && cells[a] === cells[b] && cells[a] === cells[c]) {
+                return cells[a];
+            }
+        }
+
+        return cells.every(cell => cell) ? 'tie' : null;
+    }
+
+    function computerMove() {
+        const empty = cells.map((cell, i) => cell === '' ? i : null).filter(i => i !== null);
+        if (empty.length > 0) {
+            const move = empty[Math.floor(Math.random() * empty.length)];
+            cells[move] = 'O';
+            draw();
+
+            const winner = checkWin();
+            if (winner) {
+                gameActive = false;
+                status.innerHTML = winner === 'tie' ? 'Tie game!' : `<span style="color: #FF0000;">Computer wins!</span>`;
+            } else {
+                currentPlayer = 'X';
+                status.textContent = 'Your turn (X)';
+            }
+        }
+    }
+
+    board.addEventListener('click', (e) => {
+        if (!gameActive || currentPlayer !== 'X') return;
+
+        const text = e.target.textContent.trim();
+        const pos = parseInt(text) - 1;
+
+        if (!isNaN(pos) && pos >= 0 && pos < 9 && cells[pos] === '') {
+            cells[pos] = 'X';
+            draw();
+
+            const winner = checkWin();
+            if (winner) {
+                gameActive = false;
+                status.innerHTML = winner === 'tie' ? 'Tie game!' : `<span style="color: #00FF00;">You win!</span>`;
+            } else {
+                currentPlayer = 'O';
+                status.textContent = 'Computer thinking...';
+                setTimeout(computerMove, 500);
+            }
+        }
+    });
+
+    draw();
+}
+
 // Log initialization for debugging
 console.log('%c🌍 Global Learning Canvas Initialized', 'color: #304FFE; font-size: 16px; font-weight: bold;');
 console.log('%cPress Ctrl+Shift+T to open Insights Terminal', 'color: #00FF00; font-family: monospace;');
 console.log('%cPress D to toggle Drawing Mode', 'color: #304FFE; font-family: monospace;');
 console.log('%cKonami Code: ↑↑↓↓←→AI for AI Mode', 'color: #304FFE; font-family: monospace;');
-console.log('%cClick theme toggle (top-right) for Dark Mode', 'color: #304FFE; font-family: monospace;');
+console.log('%cTerminal Games: snake, tictactoe', 'color: #00FF00; font-family: monospace;');
