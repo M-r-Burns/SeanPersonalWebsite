@@ -26,8 +26,10 @@ document.addEventListener('DOMContentLoaded', function () {
     initializeStatAnimations();
     initializeDrawingCanvas();
     initializeAIChat();
-    initializeLanguageQuiz();
+    initializeLanguageLearning();
     initializeKonamiCode();
+    initializeDarkMode();
+    initializeExpandableProjects();
 
     // Hide loading screen after everything is loaded
     setTimeout(() => {
@@ -874,113 +876,80 @@ function initializeAIChat() {
     }
 }
 
-// Language Quiz Feature
-function initializeLanguageQuiz() {
-    const quizBtn = document.getElementById('lang-quiz-btn');
-    const quizModal = document.getElementById('language-quiz-modal');
-    const quizQuestion = document.getElementById('quiz-question');
-    const quizOptions = document.getElementById('quiz-options');
-    const quizResult = document.getElementById('quiz-result');
-    const modalClose = quizModal ? quizModal.querySelector('.modal-close') : null;
+// Language Learning Feature (Enhanced)
+function initializeLanguageLearning() {
+    const audioBtn = document.getElementById('lang-audio-btn');
+    const languageText = document.getElementById('language-text');
+    const languageTranslation = document.getElementById('language-translation');
+    const pronunciation = document.getElementById('language-pronunciation');
+    const progressDots = document.querySelectorAll('.language-progress .progress-dot');
 
-    if (!quizBtn || !quizModal || !window.SITE_CONFIG?.quizQuestions) return;
+    let currentPhraseIndex = 0;
+    let dayStreak = 5; // Starting streak
 
-    let currentQuestionIndex = 0;
-    let score = 0;
-    let quizStarted = false;
+    if (!window.SITE_CONFIG?.languagePhrases) return;
 
-    // Open quiz
-    quizBtn.addEventListener('click', () => {
-        quizModal.classList.add('show');
-        document.body.style.overflow = 'hidden';
-        if (!quizStarted) {
-            startQuiz();
-            quizStarted = true;
-        } else {
-            loadQuestion();
-        }
-    });
+    // Pronunciation map
+    const pronunciationMap = {
+        'La estrategia del mercado': 'la es-tra-te-hee-a del mer-ca-do',
+        'Análisis de datos': 'a-na-lee-sees de da-tos',
+        'Gestión de proyectos': 'hes-tee-on de pro-yek-tos',
+        'Inteligencia artificial': 'in-te-lee-hen-see-a ar-tee-fee-see-al',
+        'Desarrollo de software': 'de-sa-ro-yo de soft-ware',
+        'Investigación de mercado': 'in-ves-tee-ga-see-on de mer-ca-do',
+        'Optimización de procesos': 'op-tee-mee-sa-see-on de pro-se-sos',
+        'Aprendizaje continuo': 'a-pren-dee-sa-he con-tee-noo-o'
+    };
 
-    // Close quiz
-    if (modalClose) {
-        modalClose.addEventListener('click', () => {
-            quizModal.classList.remove('show');
-            document.body.style.overflow = 'auto';
-        });
-    }
+    // Audio pronunciation button
+    if (audioBtn) {
+        audioBtn.addEventListener('click', () => {
+            const currentPhrase = window.SITE_CONFIG.languagePhrases[currentPhraseIndex].spanish;
 
-    function startQuiz() {
-        currentQuestionIndex = 0;
-        score = 0;
-        loadQuestion();
-    }
+            // Web Speech API for pronunciation
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance(currentPhrase);
+                utterance.lang = 'es-ES';
+                utterance.rate = 0.8;
+                window.speechSynthesis.speak(utterance);
 
-    function loadQuestion() {
-        const questions = window.SITE_CONFIG.quizQuestions;
-        const question = questions[currentQuestionIndex];
-
-        quizQuestion.textContent = question.question;
-        quizOptions.innerHTML = '';
-        quizResult.textContent = '';
-        quizResult.classList.remove('show');
-
-        question.options.forEach((option, index) => {
-            const optionDiv = document.createElement('div');
-            optionDiv.className = 'quiz-option';
-            optionDiv.textContent = option;
-            optionDiv.addEventListener('click', () => checkAnswer(index, question.correct));
-            quizOptions.appendChild(optionDiv);
-        });
-    }
-
-    function checkAnswer(selected, correct) {
-        const options = quizOptions.querySelectorAll('.quiz-option');
-
-        if (selected === correct) {
-            options[selected].classList.add('correct');
-            score++;
-            quizResult.textContent = '✓ Correct!';
-        } else {
-            options[selected].classList.add('incorrect');
-            options[correct].classList.add('correct');
-            quizResult.textContent = '✗ Incorrect';
-        }
-
-        quizResult.classList.add('show');
-
-        // Disable all options
-        options.forEach(opt => {
-            opt.style.pointerEvents = 'none';
-        });
-
-        // Move to next question after delay
-        setTimeout(() => {
-            currentQuestionIndex++;
-            if (currentQuestionIndex < window.SITE_CONFIG.quizQuestions.length) {
-                loadQuestion();
-            } else {
-                showResults();
+                // Animate button
+                audioBtn.style.transform = 'scale(1.2)';
+                setTimeout(() => {
+                    audioBtn.style.transform = 'scale(1)';
+                }, 200);
             }
-        }, 2000);
+        });
     }
 
-    function showResults() {
-        const totalQuestions = window.SITE_CONFIG.quizQuestions.length;
-        quizQuestion.textContent = 'Quiz Complete!';
-        quizOptions.innerHTML = `
-            <div style="text-align: center; padding: 2rem; border: 2px solid var(--color-black);">
-                <div style="font-size: 2rem; font-weight: 700; margin-bottom: 1rem;">
-                    ${score} / ${totalQuestions}
-                </div>
-                <div style="font-size: 1.1rem;">
-                    ${score === totalQuestions ? '¡Perfecto! 🎉' : score >= totalQuestions / 2 ? '¡Bien hecho! 👍' : '¡Sigue practicando! 📚'}
-                </div>
-            </div>
-        `;
-        quizResult.textContent = 'Click outside to close';
-        quizResult.classList.add('show');
-        quizStarted = false;
+    // Update progress dots
+    function updateProgress() {
+        progressDots.forEach((dot, index) => {
+            dot.classList.toggle('active', index === currentPhraseIndex % 3);
+        });
     }
+
+    // Rotate through phrases every 10 seconds
+    setInterval(() => {
+        currentPhraseIndex = (currentPhraseIndex + 1) % window.SITE_CONFIG.languagePhrases.length;
+        const phrase = window.SITE_CONFIG.languagePhrases[currentPhraseIndex];
+
+        if (languageText && languageTranslation && pronunciation) {
+            languageText.style.opacity = '0';
+            languageTranslation.style.opacity = '0';
+            pronunciation.style.opacity = '0';
+
+            setTimeout(() => {
+                languageText.textContent = phrase.spanish;
+                languageTranslation.textContent = phrase.english;
+                pronunciation.textContent = pronunciationMap[phrase.spanish] || '';
+
+                languageText.style.opacity = '1';
+                pronunciation.style.opacity = '1';
+                updateProgress();
+            }, 300);
+        }
+    }, 10000);
 }
 
 // Konami Code (↑↑↓↓←→AI)
@@ -1010,7 +979,29 @@ function initializeKonamiCode() {
 
     function activateAIMode() {
         const overlay = document.getElementById('ai-mode-overlay');
+        const matrixRain = document.getElementById('matrix-rain');
+
         if (overlay) {
+            // Create matrix rain effect
+            if (matrixRain) {
+                matrixRain.innerHTML = '';
+                for (let i = 0; i < 30; i++) {
+                    const column = document.createElement('div');
+                    column.className = 'matrix-column';
+                    column.style.left = `${Math.random() * 100}%`;
+                    column.style.animationDuration = `${2 + Math.random() * 3}s`;
+                    column.style.animationDelay = `${Math.random() * 2}s`;
+
+                    // Random binary characters
+                    let text = '';
+                    for (let j = 0; j < 20; j++) {
+                        text += Math.random() > 0.5 ? '1' : '0';
+                    }
+                    column.textContent = text;
+                    matrixRain.appendChild(column);
+                }
+            }
+
             overlay.classList.add('show');
             setTimeout(() => {
                 overlay.classList.remove('show');
@@ -1023,9 +1014,60 @@ function initializeKonamiCode() {
                         chatInput.focus();
                     }
                 }
-            }, 2000);
+            }, 3000);
         }
     }
+}
+
+// Dark Mode Toggle
+function initializeDarkMode() {
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeIcon = document.getElementById('theme-icon');
+    const html = document.documentElement;
+
+    if (!themeToggle) return;
+
+    // Check for saved theme preference or default to 'light'
+    const currentTheme = localStorage.getItem('theme') || 'light';
+    html.setAttribute('data-theme', currentTheme);
+    updateThemeIcon(currentTheme);
+
+    themeToggle.addEventListener('click', () => {
+        const theme = html.getAttribute('data-theme');
+        const newTheme = theme === 'light' ? 'dark' : 'light';
+
+        html.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+        updateThemeIcon(newTheme);
+    });
+
+    function updateThemeIcon(theme) {
+        if (themeIcon) {
+            themeIcon.textContent = theme === 'light' ? '🌙' : '☀️';
+        }
+    }
+}
+
+// Expandable Project Cards
+function initializeExpandableProjects() {
+    const projectCards = document.querySelectorAll('.project-card');
+
+    projectCards.forEach(card => {
+        card.addEventListener('click', function(e) {
+            // Don't expand if clicking on a link
+            if (e.target.tagName === 'A') return;
+
+            // Close other expanded cards
+            projectCards.forEach(otherCard => {
+                if (otherCard !== this) {
+                    otherCard.classList.remove('expanded');
+                }
+            });
+
+            // Toggle this card
+            this.classList.toggle('expanded');
+        });
+    });
 }
 
 // ========== UTILITY FUNCTIONS ==========
@@ -1047,3 +1089,4 @@ console.log('%c🌍 Global Learning Canvas Initialized', 'color: #304FFE; font-s
 console.log('%cPress Ctrl+Shift+T to open Insights Terminal', 'color: #00FF00; font-family: monospace;');
 console.log('%cPress D to toggle Drawing Mode', 'color: #304FFE; font-family: monospace;');
 console.log('%cKonami Code: ↑↑↓↓←→AI for AI Mode', 'color: #304FFE; font-family: monospace;');
+console.log('%cClick theme toggle (top-right) for Dark Mode', 'color: #304FFE; font-family: monospace;');

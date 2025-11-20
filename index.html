@@ -26,19 +26,26 @@
     <!-- Drawing Canvas (Graph Paper) -->
     <canvas id="drawing-canvas"></canvas>
 
+    <!-- Dark Mode Toggle -->
+    <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">
+        <span id="theme-icon">🌙</span>
+    </button>
+
     <!-- Language Learning Widget (Enhanced) -->
     <div id="language-widget" class="language-widget">
         <div class="widget-header">
             <span>🗣️ ESPAÑOL</span>
-            <button class="widget-quiz-btn" id="lang-quiz-btn">Quiz</button>
+            <button class="widget-audio-btn" id="lang-audio-btn">🔊</button>
         </div>
         <div class="language-text" id="language-text">La estrategia del mercado</div>
+        <div class="pronunciation" id="language-pronunciation">la es-tra-te-hee-a</div>
         <div class="language-translation" id="language-translation">Market strategy</div>
         <div class="language-progress">
-            <div class="progress-dot"></div>
+            <div class="progress-dot active"></div>
             <div class="progress-dot"></div>
             <div class="progress-dot"></div>
         </div>
+        <div class="language-streak" id="language-streak">5 day streak 🔥</div>
     </div>
 
     <!-- AI Chat Widget -->
@@ -180,6 +187,10 @@
                             <span class="link-icon">in</span>
                             <span>LinkedIn</span>
                         </a>
+                        <a href="mailto:your@email.com" class="contact-link" id="email-link">
+                            <span class="link-icon">✉</span>
+                            <span>Email</span>
+                        </a>
                         <a href="#" class="contact-link" id="apex-link" target="_blank" rel="noopener">
                             <span class="link-icon">🚀</span>
                             <span>ApeX Hub</span>
@@ -266,9 +277,10 @@
 
     <!-- AI Mode Overlay -->
     <div id="ai-mode-overlay" class="ai-mode-overlay">
+        <div class="matrix-rain" id="matrix-rain"></div>
         <div class="ai-mode-content">
-            <h2>🤖 AI MODE ACTIVATED</h2>
-            <p>Enhanced AI features enabled!</p>
+            <h2>AI MODE ACTIVATED</h2>
+            <p>NEURAL NETWORK INITIALIZED...</p>
         </div>
     </div>
 

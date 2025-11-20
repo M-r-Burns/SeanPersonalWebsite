@@ -18,6 +18,38 @@
     --transition-speed: 0.3s;
 }
 
+/* Dark Mode Variables */
+[data-theme="dark"] {
+    --color-white: #111111;
+    --color-black: #EEEEEE;
+    --color-gray-light: #1a1a1a;
+    --color-gray-medium: #333333;
+    --color-accent: #5C7CFA;
+}
+
+/* Dark Mode Toggle Button */
+.theme-toggle {
+    position: fixed;
+    top: 80px;
+    right: 2rem;
+    width: 50px;
+    height: 50px;
+    border: 2px solid var(--color-black);
+    background: var(--color-white);
+    cursor: pointer;
+    z-index: 1001;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    transition: all var(--transition-speed);
+}
+
+.theme-toggle:hover {
+    transform: rotate(180deg);
+    box-shadow: 3px 3px 0 var(--color-black);
+}
+
 /* Reset & Base Styles */
 * {
     margin: 0;
@@ -526,10 +558,37 @@ body {
 }
 
 /* Projects Section */
+/* Project Filtering */
+.project-filters {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+}
+
+.filter-btn {
+    padding: 0.75rem 1.5rem;
+    border: 2px solid var(--color-black);
+    background: var(--color-white);
+    color: var(--color-black);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-speed);
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+}
+
+.filter-btn:hover,
+.filter-btn.active {
+    background: var(--color-black);
+    color: var(--color-white);
+}
+
 .projects-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    gap: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
 }
 
 .project-card {
@@ -538,6 +597,12 @@ body {
     cursor: pointer;
     transition: all var(--transition-speed);
     overflow: hidden;
+    height: auto;
+}
+
+.project-card.expanded {
+    grid-column: 1 / -1;
+    max-width: 100%;
 }
 
 .project-card:hover {
@@ -548,15 +613,32 @@ body {
 
 .project-image {
     width: 100%;
-    height: 200px;
+    height: 150px;
     background: var(--color-gray-light);
     border-bottom: var(--border-width) var(--border-style);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 3rem;
+    font-size: 2.5rem;
     position: relative;
     overflow: hidden;
+    transition: height var(--transition-speed);
+}
+
+.project-card.expanded .project-image {
+    height: 250px;
+}
+
+.project-details {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease;
+    padding: 0 1.5rem;
+}
+
+.project-card.expanded .project-details {
+    max-height: 1000px;
+    padding: 1.5rem;
 }
 
 .project-image img {
@@ -782,16 +864,15 @@ body {
 
 /* Contact Section */
 .contact-content {
-    max-width: 700px;
+    max-width: 900px;
     margin: 0 auto;
 }
 
 .contact-links {
-    display: flex;
-    gap: 2rem;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
     margin-bottom: 3rem;
-    flex-wrap: wrap;
 }
 
 .contact-link {
@@ -1480,7 +1561,7 @@ body {
     border-bottom: 1px solid var(--color-black);
 }
 
-.widget-quiz-btn {
+.widget-audio-btn {
     background: var(--color-black);
     color: var(--color-white);
     border: none;
@@ -1491,7 +1572,7 @@ body {
     transition: all var(--transition-speed);
 }
 
-.widget-quiz-btn:hover {
+.widget-audio-btn:hover {
     background: var(--color-accent);
 }
 
@@ -1513,6 +1594,21 @@ body {
 
 .progress-dot.active {
     background: var(--color-black);
+}
+
+.language-streak {
+    font-size: 0.75rem;
+    text-align: center;
+    margin-top: 0.5rem;
+    font-family: var(--font-mono);
+    color: var(--color-accent);
+}
+
+.pronunciation {
+    font-size: 0.8rem;
+    font-style: italic;
+    margin-top: 0.3rem;
+    color: var(--color-gray-medium);
 }
 
 /* Quiz Modal */
@@ -1771,49 +1867,119 @@ body {
     color: var(--color-white);
 }
 
-/* AI Mode Overlay */
+/* AI Mode Overlay - Enhanced */
 .ai-mode-overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(48, 79, 254, 0.95);
+    background: #000;
     z-index: 10000;
     display: none;
     align-items: center;
     justify-content: center;
-    animation: ai-mode-pulse 2s ease;
+    overflow: hidden;
 }
 
 .ai-mode-overlay.show {
     display: flex;
 }
 
-@keyframes ai-mode-pulse {
-    0%, 100% {
-        opacity: 0;
+.ai-mode-overlay::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background:
+        linear-gradient(90deg, transparent 0%, #00ff00 50%, transparent 100%);
+    animation: ai-scan 3s linear infinite;
+    opacity: 0.1;
+}
+
+@keyframes ai-scan {
+    0% {
+        transform: translateY(-100%);
     }
-    50% {
-        opacity: 1;
+    100% {
+        transform: translateY(100%);
     }
 }
 
 .ai-mode-content {
     text-align: center;
-    color: var(--color-white);
+    color: #00ff00;
+    position: relative;
+    z-index: 2;
 }
 
 .ai-mode-content h2 {
-    font-family: var(--font-heading);
+    font-family: var(--font-mono);
     font-size: 3rem;
     margin-bottom: 1rem;
-    letter-spacing: 3px;
+    letter-spacing: 8px;
+    animation: glitch 1s infinite;
 }
 
 .ai-mode-content p {
     font-size: 1.2rem;
     font-family: var(--font-mono);
+    animation: typing 2s steps(40) infinite;
+}
+
+@keyframes glitch {
+    0%, 100% {
+        text-shadow: 2px 2px #ff00ff, -2px -2px #00ffff;
+    }
+    25% {
+        text-shadow: -2px 2px #ff00ff, 2px -2px #00ffff;
+    }
+    50% {
+        text-shadow: 2px -2px #ff00ff, -2px 2px #00ffff;
+    }
+    75% {
+        text-shadow: -2px -2px #ff00ff, 2px 2px #00ffff;
+    }
+}
+
+@keyframes typing {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.7;
+    }
+}
+
+/* Matrix Rain Effect */
+.matrix-rain {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.matrix-column {
+    position: absolute;
+    top: -100%;
+    font-family: var(--font-mono);
+    font-size: 1rem;
+    color: #00ff00;
+    opacity: 0.8;
+    animation: matrix-fall linear infinite;
+}
+
+@keyframes matrix-fall {
+    0% {
+        top: -100%;
+    }
+    100% {
+        top: 100%;
+    }
 }
 
 /* Responsive Design */
@@ -1940,6 +2106,19 @@ body {
     .ai-chat-trigger {
         right: 1rem;
         bottom: 1rem;
+    }
+
+    .theme-toggle {
+        top: 70px;
+        right: 1rem;
+        width: 40px;
+        height: 40px;
+        font-size: 1.2rem;
+    }
+
+    .contact-links {
+        grid-template-columns: 1fr;
+        gap: 1rem;
     }
 }
 
